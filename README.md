@@ -35,6 +35,6 @@ Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.
 
 
 
-Help / Feedback Welcome - Thank You!
+Help / Feedback Welcome - Thank You!!!
 
 Bernhard aka Quasel
