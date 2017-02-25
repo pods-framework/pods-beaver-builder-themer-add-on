@@ -21,7 +21,7 @@ Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.
 - currently no option to choose image size i hope BB will use the same picker as for Media Gallery Fields (ID is in the array)
 
 
-####Field Connector for url, html, string:
+####Field connectors for url, html, string:
 - select dropdown populated with all existing fields for PODS - field_name ( Custom Post Type ) if two pods use the same field-name both are shown in the same line as an Template can be used for multiple "locations"
 - currently uses just plain pods()->display();
 - images fields are only output as url 
