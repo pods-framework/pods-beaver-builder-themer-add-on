@@ -30,6 +30,6 @@ Planned:
 
 
 
-Help / Feedback Welcome - Thank You
+Help / Feedback Welcome - Thank You!
 
 Bernhard aka Quasel
