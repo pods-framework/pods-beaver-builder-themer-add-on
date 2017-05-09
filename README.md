@@ -7,7 +7,11 @@ https://github.com/pods-framework/pods/issues/4004
 ## Requirements
 
 * [Pods](http://pods.io/) 2.4+
-* [Beaver Themer](https://www.wpbeaverbuilder.com) 1.0
+* [Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
+* [Beaver Themer](https://www.wpbeaverbuilder.com) 1.0+
+
+Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
+Please report bugs or request featured on [GitHub](https://github.com/quasel/pods-beaver-themer/issues)
 
 Generally you can use the shortcode `[pods field='your_field']` anywhere ( every text/url/html field ) it's basically the same as with `[wpbb ...]`
 Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.io/docs/build/using-magic-tags/ for more options!
