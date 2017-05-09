@@ -4,7 +4,7 @@
  * Pods String & HTML
  */
 $data = array(
-	'label'       => __( 'Display Field (Dropdown)', 'fl-theme-builder' ),
+	'label'       => __( 'Post Field Display (Dropdown)', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'string', 'html' ),
 	'getter'      => 'PodsPageData::get_field_display',
@@ -33,7 +33,7 @@ FLPageData::add_post_property_settings_fields( 'pods_display', $form );
  * Pods Url
  */
 $data = array(
-	'label'       => __( 'Display Url (Dropdown)', 'fl-theme-builder' ),
+	'label'       => __( 'Url Field (Dropdown)', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'url' ),
 	'getter'      => 'PodsPageData::get_field_display_url',
@@ -60,7 +60,7 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  * Pods Multiple Photos (Images)
  */
 $data = array(
-	'label'       => __( 'Display Multiple Images', 'fl-theme-builder' ),
+	'label'       => __( 'Multiple Images', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'multiple-photos' ),
 	'getter'      => 'PodsPageData::get_field_multiple_photos',
@@ -85,7 +85,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
  * Pods Photos (Images)
  */
 $data = array(
-	'label'       => __( 'Display Image', 'fl-theme-builder' ),
+	'label'       => __( 'Image', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'photo' ),
 	'getter'      => 'PodsPageData::get_field_photo',
@@ -109,10 +109,10 @@ FLPageData::add_post_property_settings_fields( 'pods_photos', $form );
 
 
 /**
- * Pods Templates for HTML & STRING
+ * Pods Templates for HTML & STRING 
  */
 $data = array(
-	'label'       => __( 'Template (Dropdown)', 'fl-theme-builder' ),
+	'label'       => __( 'Post Template (Dropdown)', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'string', 'html' ),
 	'getter'      => 'PodsPageData::get_template',
