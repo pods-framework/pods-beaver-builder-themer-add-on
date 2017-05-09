@@ -111,13 +111,13 @@ final class PodsPageData {
 	 *
 	 * @since 1.0
 	 *
-	 * @param array $options
+	 * @param array $field_options
 	 *
 	 * @return array
 	 * @internal param $option
 	 *
 	 */
-	static public function pods_get_fields( $options = array() ) {
+	static public function pods_get_fields( $field_options = array() ) {
 
 		$fields = array();
 		$pods   = pods_api()->load_pods( array( 'names' => true ) );
@@ -130,15 +130,21 @@ final class PodsPageData {
 
 
 			foreach ( $pod_fields as $field_name => $_field ) {
-				if ( $options ) {
-					foreach ( $options as $_option => $option_value ) {
-						if ( $option_value !== pods_v( $_option, $_field['options'] ) ) { //$pod->fields( $field_name, 'file_type' )
-							continue 2;  // if one option it not matched we don't need the field -> go check the next one
+				if ( $field_options ) {
+					if ( $field_options['type'] == $_field['type'] ) {
+						foreach ( $field_options['options'] as $_option => $option_value ) {
+							if ( $option_value !== pods_v( $_option, $_field['options'] ) ) { //$pod->fields( $field_name, 'file_type' )
+								continue 2;  // if one option it not matched we don't need the field -> go check the next one
+							}
 						}
+
+					} else {
+						continue 1;
 					}
 				}
-
 				$fields[ $field_name ] .= $_field['name'] . " (" . $name . ")  ";
+
+
 			}
 
 		}
@@ -156,8 +162,8 @@ final class PodsPageData {
 	 */
 
 	static public function pods_get_url_fields() {
-		$options['file_format'] = 'url';
-		$fields                 = self::pods_get_fields( $options );
+		$field_options['type'] = 'url';
+		$fields                = self::pods_get_fields( $field_options );
 
 		return $fields;
 	}
@@ -171,8 +177,11 @@ final class PodsPageData {
 	 */
 
 	static public function pods_get_image_fields() {
-		$options['file_format'] = 'images';
-		$fields                 = self::pods_get_fields( $options );
+		$field_options['type']                        = 'file';
+		$field_options['options']['file_type']        = 'images';
+		$field_options['options']['file_format_type'] = 'single';
+		$fields                                       = self::pods_get_fields( $field_options );
+
 
 		return $fields;
 	}
@@ -185,9 +194,10 @@ final class PodsPageData {
 	 * @return array
 	 */
 	static public function pods_get_multiple_images_fields() {
-		$options['file_type']        = 'images';
-		$options['file_format_type'] = 'multi';
-		$fields                      = self::pods_get_fields( $options );
+		$field_options['type']                        = 'file';
+		$field_options['options']['file_type']        = 'images';
+		$field_options['options']['file_format_type'] = 'multi';
+		$fields                                       = self::pods_get_fields( $field_options );
 
 		return $fields;
 	}
