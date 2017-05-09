@@ -12,11 +12,14 @@ Integration with Beaver Builder Themer  (https://www.wpbeaverbuilder.com); Provi
 
 == Description ==
 
-Requires [Pods](https://wordpress.org/plugins/pods/) 2.4+, [Beaver Themer](https://www.wpbeaverbuilder.com) 1.0-alpha.2+.
+Requires
+[Pods](https://wordpress.org/plugins/pods/) 2.4+
+[Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
+[Beaver Themer](https://www.wpbeaverbuilder.com) 1.0+
 
 Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
 
-Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-gravity-forms/)
+Please report bugs or request featured on [GitHub](https://github.com/quasel/pods-beaver-themer/issues)
 
 
 == Screenshots ==
