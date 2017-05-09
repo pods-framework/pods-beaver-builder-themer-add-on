@@ -82,7 +82,7 @@ FLPageData::add_post_property( 'pods_multiple_photos', $data );
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
 
 /**
- * Pods Photos (Images)
+ * Pods Photos (Image)
  */
 $data = array(
 	'label'       => __( 'Image', 'fl-theme-builder' ),
@@ -96,7 +96,8 @@ $form = array(
 	'field' => array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
-		'options'     => 'PodsPageData::pods_get_multiple_images_fields',
+		'options'     => 'PodsPageData::pods_get_image_fields',
+
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
