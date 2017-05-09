@@ -290,9 +290,13 @@ final class PodsPageData {
 				'toggle'      => self::pods_get_option_fields(),
 				'help'        => __( 'Some Help Text', 'fl-theme-builder' ),
 				'description' => __( 'Some Description', 'fl-theme-builder' ),
-				'placeholder' => __( 'Some Placeholder', 'fl-theme-builder' )
-
-			)
+				'placeholder' => __( 'Some Placeholder', 'fl-theme-builder' ),
+			),
+			'image_size' => array(  // add only if selected field is an image field ?
+				'type'    => 'photo-sizes',
+				'label'   => __( 'Image Size', 'fl-theme-builder' ),
+				'default' => 'thumbnail',
+			),
 		);
 
 		$pods = self::pods_get_pods();

@@ -17,7 +17,7 @@ $form = array(
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_fields',
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'description' => __( 'Select one!', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
 
 	)
@@ -48,7 +48,6 @@ $form = array(
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
-
 	)
 );
 
@@ -100,9 +99,9 @@ $form = array(
 
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one', 'fl-theme-builder' ),
-		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
+		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
+	),
 
-	)
 );
 
 FLPageData::add_post_property( 'pods_photos', $data );
@@ -121,14 +120,13 @@ $data = array(
 );
 
 $form = array(
-	'field' => array(
+	'template' => array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_templates',
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
-
 	)
 );
 
