@@ -99,12 +99,9 @@ final class PodsPageData {
 	 * @return string
 	 */
 	static public function get_template( $settings, $property ) {
-		global $post;
-
 		$content = pods( get_post_type(), get_the_ID() )->template( $settings->field );
 
-
-		return $content . ' / Post Type: ' . get_post_type() . ' / Post: ' . $post->post_type . ' / ID: ' . get_the_ID() . ' / Location: ' . print_r( FLThemeBuilderRulesLocation::get_current_page_location() ) . '<hr>';
+		return $content;
 	}
 
 
