@@ -28,6 +28,11 @@ To be done ;)
 
 == Changelog ==
 
+= 0.2.1-beta - May 9, 2017 =
+
+* fixed single image field filtering ( wrong logic )
+
+
 = 0.2-beta - May 9, 2017 =
 
 * added Pods Template Support
