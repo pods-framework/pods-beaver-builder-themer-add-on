@@ -87,6 +87,26 @@ final class PodsPageData {
 		return $content;
 	}
 
+	/**
+	 *
+	 * Returns Pods Template Output
+	 *
+	 * @since 1.0
+	 *
+	 * @param $settings
+	 * @param $property
+	 *
+	 * @return string
+	 */
+	static public function get_template( $settings, $property ) {
+		global $post;
+
+		$content = pods( get_post_type(), get_the_ID() )->template( $settings->field );
+
+
+		return $content . ' / Post Type: ' . get_post_type() . ' / Post: ' . $post->post_type . ' / ID: ' . get_the_ID() . ' / Location: ' . print_r( FLThemeBuilderRulesLocation::get_current_page_location() ) . '<hr>';
+	}
+
 
 	/**
 	 *
@@ -171,6 +191,29 @@ final class PodsPageData {
 		$options['file_type']        = 'images';
 		$options['file_format_type'] = 'multi';
 		$fields                      = self::pods_get_fields( $options );
+
+		return $fields;
+	}
+
+	/**
+	 *
+	 *  Get Pods Templates
+	 *
+	 * @since 1.0
+	 * @return array
+	 */
+	static public function pods_get_templates() {
+
+		$all_templates = (array) pods_api()->load_templates( array() );
+		$fields        = array();
+		/*		$fields = array(
+					'' => '- ' . __( 'Select Template', 'fl-theme-builder' ) . ' -'
+				);*/
+
+		foreach ( $all_templates as $template ) {
+			$fields[ $template['slug'] ] = $template['name'];
+		}
+
 
 		return $fields;
 	}

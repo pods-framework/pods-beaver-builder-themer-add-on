@@ -108,3 +108,31 @@ FLPageData::add_post_property( 'pods_photos', $data );
 FLPageData::add_post_property_settings_fields( 'pods_photos', $form );
 
 
+/**
+ * Pods Templates for HTML & STRING
+ */
+$data = array(
+	'label'       => __( 'Template (Dropdown)', 'fl-theme-builder' ),
+	'group'       => 'pods',
+	'type'        => array( 'string', 'html' ),
+	'getter'      => 'PodsPageData::get_template',
+	'placeholder' => __( 'Lorem Ipsum ...', 'fl-theme-builder' )
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'select',
+		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
+		'options'     => 'PodsPageData::pods_get_templates',
+		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
+		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
+
+	)
+);
+
+// $form = PodsPageData::pods_settings_form();
+
+FLPageData::add_post_property( 'pods_template', $data );
+FLPageData::add_post_property_settings_fields( 'pods_template', $form );
+
