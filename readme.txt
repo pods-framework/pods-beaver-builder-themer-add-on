@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 4.0
 Tested up to: 4.6
-Stable tag: 0.1-aöpha
+Stable tag: 0.2-beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,12 @@ Please report bugs or request featured on [GitHub](https://github.com/pods-frame
 To be done ;)
 
 == Changelog ==
+
+= 0.2-alpha - February 25, 2016 =
+
+* added Pods Template Support
+* Cleanup
+* Improved Naming
 
 = 0.1-alpha - February 25, 2016 =
 
