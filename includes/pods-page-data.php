@@ -35,7 +35,7 @@ FLPageData::add_post_property_settings_fields( 'pods_display', $form );
 $data = array(
 	'label'       => __( 'Url Field (Dropdown)', 'fl-theme-builder' ),
 	'group'       => 'pods',
-	'type'        => array( 'url' ),
+	'type'        => array( 'url', 'custom_field' ),
 	'getter'      => 'PodsPageData::get_field_display_url',
 	'placeholder' => __( 'Lorem Ipsum ...', 'fl-theme-builder' )
 );
