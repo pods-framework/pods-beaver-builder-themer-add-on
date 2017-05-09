@@ -25,12 +25,12 @@ To be done ;)
 
 == Changelog ==
 
-= 0.2-alpha - February 25, 2016 =
+= 0.2-beta - May 9, 2017 =
 
 * added Pods Template Support
 * Cleanup
 * Improved Naming
 
-= 0.1-alpha - February 25, 2016 =
+= 0.1-alpha - February 25, 2017 =
 
 * Initial release
