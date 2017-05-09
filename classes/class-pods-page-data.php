@@ -121,7 +121,7 @@ final class PodsPageData {
 					}
 				}
 
-				$fields[ $field_name ] .= $_field['label'] . " (" . $label . ")  ";
+				$fields[ $field_name ] .= $_field['name'] . " (" . $name . ")  ";
 			}
 
 		}
@@ -132,11 +132,27 @@ final class PodsPageData {
 
 	/**
 	 *
+	 *  Limit fields from pods to url fields ( -> file_format = 'url' )
+	 *
+	 * @since 1.0
+	 * @return array
+	 */
+
+	static public function pods_get_url_fields() {
+		$options['file_format'] = 'url';
+		$fields                 = self::pods_get_fields( $options );
+
+		return $fields;
+	}
+
+	/**
+	 *
 	 *  Limit fields from pods to image fields ( -> file_format = 'images' )
 	 *
 	 * @since 1.0
 	 * @return array
 	 */
+
 	static public function pods_get_image_fields() {
 		$options['file_format'] = 'images';
 		$fields                 = self::pods_get_fields( $options );
