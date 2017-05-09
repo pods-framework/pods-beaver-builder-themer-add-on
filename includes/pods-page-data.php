@@ -6,7 +6,7 @@
 $data = array(
 	'label'       => __( 'Post Field Display (Dropdown)', 'fl-theme-builder' ),
 	'group'       => 'pods',
-	'type'        => array( 'string', 'html' ),
+	'type'        => array( 'string', 'html', 'custom_field' ),
 	'getter'      => 'PodsPageData::get_field_display',
 	'placeholder' => __( 'Lorem Ipsum ...', 'fl-theme-builder' )
 );
