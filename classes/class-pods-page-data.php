@@ -100,7 +100,7 @@ final class PodsPageData {
 	 * @return string
 	 */
 	static public function get_template( $settings, $property ) {
-		$content = pods( get_post_type(), get_the_ID() )->template( $settings->field );
+		$content = pods( get_post_type(), get_the_ID() )->template( $settings->template );
 
 		return $content;
 	}
