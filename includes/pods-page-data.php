@@ -12,15 +12,17 @@ $data = array(
 );
 
 $form = array(
+	'title' => 'TEST',
 	'field' => array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_fields',
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one!', 'fl-theme-builder' ),
-		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
-
-	)
+		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
+		'toggle' => array(),
+	),
+	'test' => array(),
 );
 
 // $form = PodsPageData::pods_settings_form();
@@ -96,11 +98,19 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_image_fields',
-
 		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
 		'description' => __( 'Select one', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
 	),
+	'image_size' => array(
+		'type'    => 'photo-sizes',
+		'label'   => __( 'Image Size', 'fl-theme-builder' ),
+		'default' => 'full-size',
+	),
+	'default_img' => array(
+		'type' => 'photo',
+		'label' => __('Default Image', 'fl-theme-builder')
+	)
 
 );
 
@@ -134,4 +144,33 @@ $form = array(
 
 FLPageData::add_post_property( 'pods_template', $data );
 FLPageData::add_post_property_settings_fields( 'pods_template', $form );
+
+
+/**
+ * Pods All using Magic Tag Syntax
+ */
+$data = array(
+	'label'       => __( 'Advanced (Text Field)', 'fl-theme-builder' ),
+	'group'       => 'pods',
+	'type'        => array( 'string', 'html', 'custom_field', 'photo', 'multiple-photos' ),
+	'getter'      => 'PodsPageData::get_field_display',
+	'placeholder' => __( 'Lorem Ipsum ...', 'fl-theme-builder' )
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'text',
+		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
+		'options'     => 'PodsPageData::pods_get_fields',
+		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
+		'description' => __( 'Field Name, M ', 'fl-theme-builder' ),
+		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
+
+	)
+);
+
+// $form = PodsPageData::pods_settings_form();
+
+FLPageData::add_post_property( 'pods', $data );
+FLPageData::add_post_property_settings_fields( 'pods', $form );
 

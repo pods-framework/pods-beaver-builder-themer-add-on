@@ -78,10 +78,11 @@ final class PodsPageData {
 	static public function get_field_photo( $settings, $property ) {
 
 		$field_id = $settings->field . '.ID';
+		$field_url = $settings->field.'._src.'.$settings->image_size;
 
 		$content = array(
 			'id'  => pods( get_post_type(), get_the_ID() )->display( $field_id ),
-			'url' => pods( get_post_type(), get_the_ID() )->display( $settings->field )
+			'url' => pods( get_post_type(), get_the_ID() )->display( $field_url )
 		);
 
 		return $content;
@@ -119,6 +120,7 @@ final class PodsPageData {
 	 */
 	static public function pods_get_fields( $field_options = array() ) {
 
+		// change to just get_post_type() ?
 		$fields = array();
 		$pods   = pods_api()->load_pods( array( 'names' => true ) );
 
@@ -162,7 +164,7 @@ final class PodsPageData {
 	 */
 
 	static public function pods_get_url_fields() {
-		$field_options['type'] = 'url';
+		$field_options['type'] = 'website';
 		$fields                = self::pods_get_fields( $field_options );
 
 		return $fields;
@@ -299,6 +301,7 @@ final class PodsPageData {
 			),
 		);
 
+		$test = pq_recurse_pod_fields('pods_name');  // Pod Reference from Pods Template Admin!
 		$pods = self::pods_get_pods();
 
 		foreach ( $pods as $name => $label ) {
