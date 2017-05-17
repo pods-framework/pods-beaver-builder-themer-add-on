@@ -55,6 +55,21 @@ function pods_beaver_init() {
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
 
+// Workaround for the in_the_loop()
+// add_action( 'fl_theme_builder_before_render_content', 'fake_loop_true');
+// add_action( 'fl_theme_builder_after_render_content', 'fake_loop_false');
+
+
+function fake_loop_true() {
+	global $wp_query;
+	$wp_query->in_the_loop = true; // Fake being in the loop.
+}
+
+function fake_loop_false() {
+	global $wp_query;
+	$wp_query->in_the_loop = false; // Fake being in the loop.
+}
+
 
 
 /**

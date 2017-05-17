@@ -30,7 +30,8 @@ final class PodsPageData {
 
 		$content = pods( get_post_type(), get_the_ID() )->display( $settings->field );
 
-		return is_string( $content ) ? $content : '';
+		// return is_string( $content ) ? $content : '';
+		return $content;
 	}
 
 	/**
@@ -57,8 +58,8 @@ final class PodsPageData {
 
 		// $content = pods( get_post_type(), get_the_ID() )->display($settings->field)."<hr><pre>".print_r( pods( get_post_type(), get_the_ID() )->field($settings->field) )."<hr><hr></pre>";
 
-		$field   = $settings->field . '.ID';
-		$content = pods( get_post_type(), get_the_ID() )->field( $field );
+		$field_ID   = $settings->field . '.ID';
+		$content = pods( get_post_type(), get_the_ID() )->field( $field_ID );
 
 		return $content;
 		// return is_string($content) ? $content : '';
@@ -77,11 +78,11 @@ final class PodsPageData {
 	 */
 	static public function get_field_photo( $settings, $property ) {
 
-		$field_id = $settings->field . '.ID';
+		$field_ID = $settings->field . '.ID';
 		$field_url = $settings->field.'._src.'.$settings->image_size;
 
 		$content = array(
-			'id'  => pods( get_post_type(), get_the_ID() )->display( $field_id ),
+			'id'  => pods( get_post_type(), get_the_ID() )->display( $field_ID ),
 			'url' => pods( get_post_type(), get_the_ID() )->display( $field_url )
 		);
 
@@ -119,11 +120,19 @@ final class PodsPageData {
 	 *
 	 */
 	static public function pods_get_fields( $field_options = array() ) {
+		global $post;
+
+
 
 		// change to just get_post_type() ?
 		$fields = array();
 		$pods   = pods_api()->load_pods( array( 'names' => true ) );
 
+		$location = FLThemeBuilderRulesLocation::get_preview_location( $post->ID );
+		$location = explode( ':', $location );
+
+		$test_load = pods_api()->load_pod( array( 'name' => $location[1] ), false );
+		$pods = array( $location[1] => 'current' );
 		// check for xxx_formate_type
 
 		foreach ( $pods as $name => $label ) {
@@ -180,8 +189,9 @@ final class PodsPageData {
 
 	static public function pods_get_image_fields() {
 		$field_options['type']                        = 'file';
-		$field_options['options']['file_type']        = 'images';
-		$field_options['options']['file_format_type'] = 'single';
+		// $field_options['options']['file_type']        = 'images';
+		// $field_options['options']['file_format_type'] = 'single';
+		// $field_options['options']['file_uploader'] = 'attachment';
 		$fields                                       = self::pods_get_fields( $field_options );
 
 
