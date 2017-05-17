@@ -36,8 +36,7 @@ The Template Field Connection for Archive Pages is planned, meahnwhile you cna j
 
 ## Planned:
 - add settings/code for output_type ( e.g IMAGES as url, image-link, ...)
-- add settings/code for image_size (depending on BB )
-- Add Support to Select Templates http://pods.io/tutorials/how-tos-sceencasts-series/using-pods-templates-part-1/  use `[pods template='your_template']` or similar shortcode
+
 
 
 

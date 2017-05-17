@@ -17,8 +17,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_fields',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one!', 'fl-theme-builder' ),
+		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
+		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
 		'toggle' => array(),
 	),
@@ -47,8 +47,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_url_fields',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
+		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
 	)
 );
@@ -73,8 +73,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_multiple_images_fields',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
+		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
 	)
 );
 
@@ -98,8 +98,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_image_fields',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
+		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
 	),
 	'image_size' => array(
@@ -134,8 +134,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_templates',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
-		'description' => __( 'Select one', 'fl-theme-builder' ),
+		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
+		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
 	)
 );
@@ -150,7 +150,7 @@ FLPageData::add_post_property_settings_fields( 'pods_template', $form );
  * Pods All using Magic Tag Syntax
  */
 $data = array(
-	'label'       => __( 'Advanced (Text Field)', 'fl-theme-builder' ),
+	'label'       => __( 'Advanced Magic Tag (improvements in a future release)', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'string', 'html', 'custom_field', 'photo', 'multiple-photos' ),
 	'getter'      => 'PodsPageData::get_field_display',
@@ -162,7 +162,7 @@ $form = array(
 		'type'        => 'text',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_fields',
-		'help'        => __( 'If two CPT have a field with the same name - the field is only listed once - this way you could use the same Template for diffrent CPT if they use the same field names.)', 'fl-theme-builder' ),
+		'help'        => __( 'Fields based on current "preview" settings', 'fl-theme-builder' ),
 		'description' => __( 'Field Name', 'fl-theme-builder' ),
 		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
 
