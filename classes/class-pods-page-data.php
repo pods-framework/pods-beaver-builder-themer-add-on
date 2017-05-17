@@ -132,6 +132,12 @@ final class PodsPageData {
 		$location = explode( ':', $location );
 
 		$test_load = pods_api()->load_pod( array( 'name' => $location[1] ), false );
+
+		$field_options['name'] = $location[1];
+
+
+		$all_fields = self::recurse_pod_fields( $field_options );
+
 		$pods = array( $location[1] => 'current' );
 		// check for xxx_formate_type
 
@@ -160,7 +166,7 @@ final class PodsPageData {
 
 		}
 
-		return $fields;
+		return $all_fields;
 	}
 
 
@@ -329,6 +335,85 @@ final class PodsPageData {
 		}
 
 		return $form;
+	}
+
+	private function recurse_pod_fields( $params, $prefix = '', &$pods_visited = array() ) {
+
+		$pod_name = $params['name'];
+
+		$fields = array();
+		if ( empty( $pod_name ) ) {
+			return $fields;
+		}
+		$pod            = pods( $pod_name );
+		$all_pod_fields = array();
+		$recurse_queue  = array();
+
+
+		foreach ( $pod->pod_data['object_fields'] as $name => $field ) {
+			// Add WordPress object fields
+/*			if ( isset( $params['type'] ) ) {
+				if ( $params['type'] === $field['type'] && 'attachment' === $field['options']['file_uploader'] ) {
+					$fields[ $prefix . $name ] = $prefix . $name;
+				}
+			} else {
+				$fields[ $prefix . $name ] = $prefix . $name;
+			}
+
+			$all_pod_fields[ $name ] = $field;*/
+
+
+			if ( 'taxonomy' === $field['type'] ) {
+				$linked_pod = $name;
+				if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $name, $pods_visited[ $linked_pod ] ) ) {
+					$pods_visited[ $linked_pod ][] = $name;
+					$recurse_queue[ $linked_pod ]  = "{$prefix}{$name}.";
+				}
+			}
+
+		}
+
+		$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $pod->fields() );
+		foreach ( $all_pod_fields as $name => $field ) {
+			// Add base field name
+			if ( isset( $params['type'] ) ) {
+				if ( $params['type'] === $field['type'] && 'attachment' === $field['options']['file_uploader'] ) {
+					$fields[ $prefix . $name ] = $prefix . $name;
+				}
+			} else {
+				$fields[ $prefix . $name ] = $prefix . $name;
+			}
+
+			// Field type specific handling
+			if ( 'file' === $field['type'] && 'attachment' === $field['options']['file_uploader'] ) {
+				/*				$fields[] = $prefix . $name . '._src';
+								$fields[] = $prefix . $name . '._img';
+
+								$sizes = get_intermediate_image_sizes();
+								foreach ( $sizes as $size ) {
+									$fields[] = "{$prefix}{$name}._src.{$size}";
+									if ( 'multi' != $field['options']['file_format_type'] ) {
+										$fields[] = "{$prefix}{$name}._src_relative.{$size}";
+										$fields[] = "{$prefix}{$name}._src_schemeless.{$size}";
+									}
+									$fields[] = "{$prefix}{$name}._img.{$size}";
+								}*/
+
+			} elseif ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
+				$linked_pod = $field['table_info']['pod']['name'];
+				if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $name, $pods_visited[ $linked_pod ] ) ) {
+					$pods_visited[ $linked_pod ][] = $name;
+					$recurse_queue[ $linked_pod ]  = "{$prefix}{$name}.";
+				}
+
+			}
+		}
+		foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
+			$params['name'] = $recurse_name;
+			$fields         = array_merge( $fields, self::recurse_pod_fields( $params, $recurse_prefix, $pods_visited ) );
+		}
+
+		return $fields;
 	}
 
 }
