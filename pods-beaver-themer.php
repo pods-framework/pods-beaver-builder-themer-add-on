@@ -2,14 +2,13 @@
 /**
  * Plugin Name: Pods Beaver Builder Themer Add-On
  * Plugin URI: http://pods.io/
- * Description: Integration with Beaver Builder Themer  (https://www.wpbeaverbuilder.com); Provides a UI for mapping Field Connections with Pods
- * Version: 0.1-alpha
- * Author: Pods Framework Team / Quasel
+ * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
+ * Version: 1.0
+ * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-themer
- * Domain Path: /languages/
  *
- * Copyright 2013-2016  Pods Foundation, Inc  (email : contact@podsfoundation.org)
+ * Copyright 2017  Pods Foundation, Inc  (email : contact@podsfoundation.org)
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,15 +29,15 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '0.1-alpha' );
+define( 'PODS_BEAVER_VERSION', '1.0' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
 
-
 /**
- * Include main functions and initiate
+ * Include main functions and class.
  *
+ * @since 1.0
  */
 function pods_beaver_init() {
 
@@ -47,41 +46,62 @@ function pods_beaver_init() {
 	}
 
 	// Include main functions
-	// require_once( PODS_BEAVER_DIR . 'includes/functions.php' );
 	require_once( PODS_BEAVER_DIR . 'classes/class-pods-page-data.php' );
 	require_once( PODS_BEAVER_DIR . 'includes/pods-page-data.php' );
+
+	PodsPageData::init();
 
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
 
-// Workaround for the in_the_loop()
-// add_action( 'fl_theme_builder_before_render_content', 'fake_loop_true');
-// add_action( 'fl_theme_builder_after_render_content', 'fake_loop_false');
-
-
-function fake_loop_true() {
-	global $wp_query;
-	$wp_query->in_the_loop = true; // Fake being in the loop.
-}
-
-function fake_loop_false() {
-	global $wp_query;
-	$wp_query->in_the_loop = false; // Fake being in the loop.
-}
-
-
-
 /**
- * Admin nag if Pods or BEAVER isn't activated.
+ * Admin nag if Pods or Beaver Builder are not activated.
+ *
+ * @since 1.0
  */
-add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
-
 function pods_beaver_admin_nag() {
+
 	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
-		echo sprintf( '<div id="message" class="error"><p>%s</p></div>',
-			__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-themer' )
+		printf(
+			'<div id="message" class="error"><p>%s</p></div>',
+			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-themer' )
 		);
 	}
+
+}
+add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
+
+/**
+ * Set $wp_query->in_the_loop to true before rendering content.
+ *
+ * Example:
+ * add_action( 'fl_theme_builder_before_render_content', 'pods_beaver_fake_loop_true' );
+ *
+ * @since 1.0
+ */
+function pods_beaver_fake_loop_true() {
+
+	global $wp_query;
+
+	// Fake being in the loop.
+	$wp_query->in_the_loop = true;
+
+}
+
+/**
+ * Set $wp_query->in_the_loop to false after rendering content.
+ *
+ * Example:
+ * add_action( 'fl_theme_builder_after_render_content', 'pods_beaver_fake_loop_false' );
+ *
+ * @since 1.0
+ */
+function pods_beaver_fake_loop_false() {
+
+	global $wp_query;
+
+	// Stop faking being in the loop.
+	$wp_query->in_the_loop = false;
 
 }
