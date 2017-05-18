@@ -349,7 +349,7 @@ final class PodsPageData {
 					if ( isset ( $field_options['options'] ) ) {
 						foreach ( $field_options['options'] as $_option => $option_value ) {
 							if ( $option_value !== pods_v( $_option, $field['options'] ) ) {
-								continue 2;  // don't check further if one option it not matched
+								continue 2;  // don't check further if one option is not matched
 							}
 						}
 					}
