@@ -323,7 +323,11 @@ final class PodsPageData {
 		$pod            = pods( $pod_name );
 		$recurse_queue  = array();
 
-		$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $pod->fields() );
+		if ( isset( $pod->pod_data['object_fields'] ) ) {
+			$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $pod->fields() );
+		} else {
+			$all_pod_fields = $pod->fields();
+		}
 
 
 		foreach ( $all_pod_fields as $field_name => $field ) {
