@@ -15,28 +15,25 @@ Please report bugs or request featured on [GitHub](https://github.com/quasel/pod
 
 Generally you can use the shortcode `[pods field='your_field']` anywhere ( every text/url/html field ) it's basically the same as with `[wpbb ...]`
 Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.io/docs/build/using-magic-tags/ for more options!
-
-Currently The Field Connections are intended to be used on "single templates" or in "post modules"  
-The Template Field Connection for Archive Pages is planned, meahnwhile you cna just use a pods shortcode `[pods name="your_pod" template="your_template"]`
+Or to pull in a Template: `[pods name="your_pod" template="your_template"]`
 
 ## Beta - use in production at your own risk!
 
 #### Field connectors for photo and multiple-photo working:
-- select dropdown only list's matching Fields 
-- don't set Restrict File Types to custom in Pods Admin (known issue, working on better filter)
-- currently no option to choose image size i hope BB will use the same picker as for Media Gallery Fields (ID is in the array)
+- Select dropdown only list's matching Fields (it lists all "Media" fields)
+- Choose Size
+- Set default image
 
 
 #### Field connectors for url, html, string:
-- select dropdown populated with all existing fields for PODS - field_name ( Custom Post Type ) if two pods use the same field-name both are shown in the same line as an Template can be used for multiple "locations"
+- select dropdown populated with all existing fields for PODS - field_name ( Custom Post Type )
 - currently uses just plain pods()->display();
-- images fields are only output as url 
+- images fields are only output as url for magic tag style use advanced ...
 - fields with multiple relations (pick_field) still need some ideas / use cases best to go and use Templates for it!
 
 
 ## Planned:
 - add settings/code for output_type ( e.g IMAGES as url, image-link, ...)
-
 
 
 
