@@ -86,6 +86,13 @@ final class PodsPageData {
 			'url' => pods( get_post_type(), get_the_ID() )->display( $field_url )
 		);
 
+		if ( ! isset( $content->url ) && isset( $settings->default_img_src ) ) {
+			$content = array(
+				'id'  => $settings['default_img'],
+				'url' => $settings['default_img_src'],
+			);
+		}
+
 		return $content;
 	}
 
