@@ -323,7 +323,11 @@ final class PodsPageData {
 		$pod            = pods( $pod_name );
 		$recurse_queue  = array();
 
-		$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $pod->fields() );
+		if ( isset( $pod->pod_data['object_fields'] ) ) {
+			$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $pod->fields() );
+		} else {
+			$all_pod_fields = $pod->fields();
+		}
 
 
 		foreach ( $all_pod_fields as $field_name => $field ) {
@@ -346,9 +350,11 @@ final class PodsPageData {
 
 			if ( $field_options ) {
 				if ( isset($field_options['type']) && $field_options['type'] === $field['type'] ) {
-					foreach ( $field_options['options'] as $_option => $option_value ) {
-						if ( $option_value !== pods_v( $_option, $field['options'] ) ) {
-							continue 2;  // don't check further if one option it not matched
+					if ( isset ( $field_options['options'] ) ) {
+						foreach ( $field_options['options'] as $_option => $option_value ) {
+							if ( $option_value !== pods_v( $_option, $field['options'] ) ) {
+								continue 2;  // don't check further if one option is not matched
+							}
 						}
 					}
 
