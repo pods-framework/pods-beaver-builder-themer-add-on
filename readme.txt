@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 4.0
 Tested up to: 4.6
-Stable tag: 0.2-beta
+Stable tag: 0.3.1-beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,6 +27,12 @@ Please report bugs or request featured on [GitHub](https://github.com/quasel/pod
 To be done ;)
 
 == Changelog ==
+
+= 0.3.1-beta - May 17, 2017 =
+
+* Bug fix for illegal string offset
+* Improve Description
+
 
 = 0.3-beta - May 17, 2017 =
 

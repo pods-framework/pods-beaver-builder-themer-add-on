@@ -12,17 +12,14 @@ $data = array(
 );
 
 $form = array(
-	'title' => 'TEST',
 	'field' => array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
 		'options'     => 'PodsPageData::pods_get_fields',
 		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
 		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
-		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' ),
-		'toggle' => array(),
-	),
-	'test' => array(),
+		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
+	)
 );
 
 // $form = PodsPageData::pods_settings_form();

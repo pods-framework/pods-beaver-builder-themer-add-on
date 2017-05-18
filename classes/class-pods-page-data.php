@@ -320,7 +320,7 @@ final class PodsPageData {
 
 
 		foreach ( $all_pod_fields as $field_name => $field ) {
-			if ( 'taxonomy' === $field['type'] ) {
+			if ( isset( $field['type'] ) && 'taxonomy' === $field['type'] ) {
 				$linked_pod = $field_name;
 				if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ] ) ) {
 					$pods_visited[ $linked_pod ][] = $field_name;
@@ -338,7 +338,7 @@ final class PodsPageData {
 			}
 
 			if ( $field_options ) {
-				if ( $field_options['type'] === $field['type'] ) {
+				if ( isset($field_options['type']) && $field_options['type'] === $field['type'] ) {
 					foreach ( $field_options['options'] as $_option => $option_value ) {
 						if ( $option_value !== pods_v( $_option, $field['options'] ) ) {
 							continue 2;  // don't check further if one option it not matched
