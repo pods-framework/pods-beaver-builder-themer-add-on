@@ -368,10 +368,16 @@ final class PodsPageData {
 			foreach ( $all_pod_fields as $field_name => $field ) {
 				$linked_pod = null;
 
-				if ( isset( $field['type'] ) && 'taxonomy' === $field['type'] ) {
-					$linked_pod = $field_name;
-				} elseif ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
-					$linked_pod = $field['table_info']['pod']['name'];
+				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types() ) ) {
+
+					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
+						$linked_pod = $field['table_info']['pod']['name'];
+					} elseif ( 'taxonomy' === $field['type']) {
+						$linked_pod = $field_name;
+					} elseif ( 'attachment' === $field['options']['file_uploader']) {
+						$linked_pod = 'media';
+					}
+					// maybe add check for comments and ???
 				}
 
 				if ( $linked_pod ) {
