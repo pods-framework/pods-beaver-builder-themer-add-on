@@ -187,8 +187,8 @@ final class PodsPageData {
 		$content['url'] = $pod->display( $field_url );
 
 		if ( ! isset( $content->url ) && isset( $settings->default_img_src ) ) {
-			$content['id']  = $settings['default_img'];
-			$content['url'] = $settings['default_img_src'];
+			$content['id']  = $settings->default_img;
+			$content['url'] = $settings->default_img_src;
 		}
 
 		return $content;
