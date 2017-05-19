@@ -1,8 +1,7 @@
 # pods-beaver-themer
-Integration of Beaver Themer and Pods 
+**Integration of Beaver Themer and Pods**
 
-Details:
-https://github.com/pods-framework/pods/issues/4004
+Details: https://github.com/pods-framework/pods/issues/4004
 
 ## Requirements
 
@@ -16,6 +15,14 @@ Please report bugs or request featured on [GitHub](https://github.com/quasel/pod
 Generally you can use the shortcode `[pods field='your_field']` anywhere ( every text/url/html field ) it's basically the same as with `[wpbb ...]`
 Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.io/docs/build/using-magic-tags/ for more options!
 Or to pull in a Template: `[pods name="your_pod" template="your_template"]`
+
+## Slack
+
+[Join the Pods Slack](https://pods.io/chat) and look for the channel _#beaver-themer_
+You will be automatically added to some channels. Please take a look at other channels too.
+
+
+
 
 ## Beta - use in production at your own risk!
 
@@ -38,5 +45,4 @@ Or to pull in a Template: `[pods name="your_pod" template="your_template"]`
 
 
 Help / Feedback Welcome - Thank You!!!
-
-Bernhard aka Quasel
+ernhard aka Quasel

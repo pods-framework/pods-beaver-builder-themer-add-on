@@ -1,7 +1,7 @@
-=== Pods Beaver Themer Add-On ===
-Contributors: quasel, sc0ttkclark
+=== Pods Beaver Themer ===
+Contributors: quasel, sc0ttkclark, jimtrue
 Donate link: https://pods.io/friends-of-pods/
-Tags: pods, beaver builder, beaver themer
+Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.7.5
 Stable tag: 1.0
@@ -11,6 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods.
 
 == Description ==
+Easily select Pods fields for Beaver-Themer field connections
 
 Requires:
 
@@ -31,6 +32,10 @@ To be done ;)
 = 1.0 - May 18th, 2017 =
 
 * Official release on WordPress.org
+* Added support for https://github.com/afragen/github-updater
+* Code Review by sc0ttkclark
+* Fixed Default Images
+* Added Internal Caching by sc0ttkclark
 
 = 0.3.2-beta - May 18th, 2017 =
 
