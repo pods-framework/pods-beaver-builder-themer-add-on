@@ -7,6 +7,8 @@
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-themer
+ * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-themer
+ * GitHub Branch: master
  *
  * Copyright 2017  Pods Foundation, Inc  (email : contact@podsfoundation.org)
  *
