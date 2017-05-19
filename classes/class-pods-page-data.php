@@ -385,50 +385,58 @@ final class PodsPageData {
 
 		$pod = self::get_pod( $pod_name );
 
-		$recurse_queue = array();
+		if ( $pod ) {
+			$recurse_queue = array();
 
-		$all_pod_fields = $pod->fields();
+			$all_pod_fields = $pod->fields();
 
-		if ( isset( $pod->pod_data['object_fields'] ) ) {
-			$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $all_pod_fields );
-		}
-
-		foreach ( $all_pod_fields as $field_name => $field ) {
-			$linked_pod = null;
-
-			if ( isset( $field['type'] ) && 'taxonomy' === $field['type'] ) {
-				$linked_pod = $field_name;
-			} elseif ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
-				$linked_pod = $field['table_info']['pod']['name'];
+			if ( isset( $pod->pod_data['object_fields'] ) ) {
+				$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $all_pod_fields );
 			}
 
-			if ( $linked_pod ) {
-				if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ], true ) ) {
-					$pods_visited[ $linked_pod ][] = $field_name;
+			foreach ( $all_pod_fields as $field_name => $field ) {
+				$linked_pod = null;
 
-					$recurse_queue[ $linked_pod ] = "{$prefix}{$field_name}.";
+				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types() ) ) {
+
+					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
+						$linked_pod = $field['table_info']['pod']['name'];
+					} elseif ( 'taxonomy' === $field['type']) {
+						$linked_pod = $field_name;
+					} elseif ( 'attachment' === $field['options']['file_uploader']) {
+						$linked_pod = 'media';
+					}
+					// maybe add check for comments and ???
 				}
-			}
 
-			if ( $field_options ) {
-				if ( isset( $field_options['type'] ) && $field_options['type'] === $field['type'] ) {
-					if ( ! empty( $field_options['options'] ) ) {
-						foreach ( $field_options['options'] as $_option => $option_value ) {
-							if ( pods_v( $_option, $field['options'] ) !== $option_value ) {
-								continue 2;  // don't check further if one option is not matched
+				if ( $linked_pod ) {
+					if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ], true ) ) {
+						$pods_visited[ $linked_pod ][] = $field_name;
+
+						$recurse_queue[ $linked_pod ] = "{$prefix}{$field_name}.";
+					}
+				}
+
+				if ( $field_options ) {
+					if ( isset( $field_options['type'] ) && $field_options['type'] === $field['type'] ) {
+						if ( ! empty( $field_options['options'] ) ) {
+							foreach ( $field_options['options'] as $_option => $option_value ) {
+								if ( pods_v( $_option, $field['options'] ) !== $option_value ) {
+									continue 2;  // don't check further if one option is not matched
+								}
 							}
 						}
+					} else {
+						continue 1; // don't add to $fields if type doesn't match
 					}
-				} else {
-					continue 1; // don't add to $fields if type doesn't match
 				}
+
+				$fields[ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $pod_name );
 			}
 
-			$fields[ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $pod_name );
-		}
-
-		foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
-			$fields = array_merge( $fields, self::recurse_pod_fields( $recurse_name, $field_options, $recurse_prefix, $pods_visited ) );
+			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
+				$fields = array_merge( $fields, self::recurse_pod_fields( $recurse_name, $field_options, $recurse_prefix, $pods_visited ) );
+			}
 		}
 
 		return $fields;
