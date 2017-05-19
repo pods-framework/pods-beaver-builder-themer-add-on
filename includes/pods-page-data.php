@@ -190,20 +190,14 @@ FLPageData::add_post_property_settings_fields( 'pods', $form );
 $data = array(
 	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
 	'group'       => 'pods',
-	'type'        => array( 'string', 'html', 'custom_field', 'photo', 'multiple-photo', 'url' ),
-	'getter'      => 'PodsPageData::get_field_display',
+	'type'        => array( 'string', 'html', 'custom_field', 'url' ),
+	'getter'      => 'PodsPageData::get_settings_field_display',
 	'placeholder' => __( 'Lorem Ipsum ...', 'fl-theme-builder' )
 );
 
 $form = array(
-	'field' => array(
-		'type'        => 'select',
-		'label'       => __( 'Field Name (CPT):', 'fl-theme-builder' ),
-		'options'     => 'PodsPageData::pods_get_settings_fields',
-		'help'        => __( 'Fields filterd based on current "preview" settings', 'fl-theme-builder' ),
-		'description' => __( 'Fields based on Preview', 'fl-theme-builder' ),
-		'placeholder' => __( 'Field Name (CPT)', 'fl-theme-builder' )
-	)
+	'title' =>  __( 'Awesome', 'fl-builder' ),
+	'fields'=> PodsPageData::pods_get_settings_fields(),
 );
 
 // $form = PodsPageData::pods_settings_form();

@@ -89,7 +89,15 @@ final class PodsPageData {
 	 */
 	static public function get_field_display( $settings, $property ) {
 
-		$pod = self::get_pod( get_post_type(), get_the_ID() );
+		if ( $settings->pod ) {
+			$pod_name = $settings->pod;
+			$pod_ID   = null;
+		} else {
+			$pod_name = get_post_type();
+			$pod_ID   = get_the_ID();
+		}
+
+		$pod = self::get_pod( $pod_name, $pod_ID );
 
 		$content = '';
 
@@ -98,6 +106,36 @@ final class PodsPageData {
 		}
 
 		$content = $pod->display( $settings->field );
+
+		return $content;
+
+	}
+
+	/**
+	 * Settings Field Display.
+	 *
+	 *
+	 * @param object $settings
+	 * @param string $property
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	static public function get_settings_field_display( $settings, $property ) {
+
+
+		$pod_name = $settings->pod;
+
+		$pod = self::get_pod( $pod_name );
+
+		$content = '';
+
+		if ( ! $pod->valid() || ! $pod->exists() ) {
+			return $content;
+		}
+
+		$content = $pod->display( $settings->$pod_name );
 
 		return $content;
 
@@ -345,17 +383,38 @@ final class PodsPageData {
 	 */
 	static public function pods_get_settings_fields() {
 
-		$settings_pods = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+		$fields             = array( 'pod' => array(), 'field' => array() );
 
-		$fields        = array();
+		if ( $settings_pod_names ) {
+			$fields = array(
+				'pod' => array(
+					'type'    => 'select',
+					'label'   => __( 'Settings Pod:', 'pods-beaver-themer' ),
+					'default' => 'grid',
+					'options' => array(),
+				)
+
+			);
+
+			foreach ( $settings_pod_names as $pod_name => $label ) {
+				$fields['pod']['toggle'][ $pod_name ]['fields'][] = $pod_name;
+				$fields['pod']['options'][ $pod_name ]            = $label;
+				$fields[ $pod_name ]                              = array(
+					'options'     => self::recurse_pod_fields( $pod_name ),
+					'type'        => 'select',
+					'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+					'description' => __( 'Select a Field', 'pods-beaver-themer' ),
+					'placeholder' => __( 'Field Name:', 'pods-beaver-themer' ),
+				);
+			}
+		}
+
 
 		/*		$fields = array(
-					'' => '- ' . __( 'Select Template', 'fl-theme-builder' ) . ' -'
+					'' => '- ' . __( 'Select Template', 'pods-beaver-themer' ) . ' -'
 				);*/
 
-		foreach ( $settings_pods as $pod_name ) {
-			$fields = array_merge( $fields, self::recurse_pod_fields( $pod_name )) ;
-		}
 
 		return $fields;
 	}
