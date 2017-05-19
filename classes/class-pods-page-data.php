@@ -226,7 +226,7 @@ final class PodsPageData {
 	 *
 	 * @param array $field_options
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -250,7 +250,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to url fields ( -> file_format = 'url' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -267,7 +267,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to image fields ( -> file_format = 'images' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -290,7 +290,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to image fields ( -> file_format = 'images', file_format_type = 'multi' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -333,6 +333,35 @@ final class PodsPageData {
 		return $fields;
 
 	}
+
+
+	/**
+	 *
+	 * Get Settings Pod Fields
+	 *
+	 * @return string[]
+	 *
+	 * @since 1.0
+	 */
+	static public function pods_get_settings_fields() {
+
+		$settings_pods = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+
+		$fields        = array();
+
+		/*		$fields = array(
+					'' => '- ' . __( 'Select Template', 'fl-theme-builder' ) . ' -'
+				);*/
+
+		foreach ( $settings_pods as $pod_name ) {
+			$fields = array_merge( $fields, self::recurse_pod_fields( $pod_name )) ;
+		}
+
+		return $fields;
+	}
+
+
+
 
 	/**
 	 * Recurse pod fields to build a list of available fields.
