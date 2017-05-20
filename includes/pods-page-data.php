@@ -227,3 +227,26 @@ $form = array(
 
 FLPageData::add_post_property( 'pods_url', $data );
 FLPageData::add_post_property_settings_fields( 'pods_url', $form );
+
+/**
+ * SITE WIDE PROPERTY'S
+ */
+
+/**
+ * Pods Settings
+ */
+$data = array(
+	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
+	'group'       => 'pods',
+	'type'        => array( 'url' ),
+	'getter'      => 'PodsPageData::get_settings_field_display',
+);
+
+$form = array(
+	'title'  => __( 'Awesome', 'fl-builder' ),
+	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'website' ) ),
+);
+
+
+FLPageData::add_site_property( 'pods_settings', $data );
+FLPageData::add_site_property_settings_fields( 'pods_settings', $form );

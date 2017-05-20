@@ -101,7 +101,7 @@ final class PodsPageData {
 
 		$content = '';
 
-		if ( ! $pod->valid() || ! $pod->exists() ) {
+		if (  ! $pod || ! $pod->valid() || ! $pod->exists() ) {
 			return $content;
 		}
 
@@ -128,7 +128,7 @@ final class PodsPageData {
 		$pod_name = $settings->pod;
 		$settings->field = $settings->$pod_name;
 
-		return  self::get_field_display(( $settings, $property );
+		return  self::get_field_display( $settings, $property );
 
 	}
 
@@ -215,7 +215,7 @@ final class PodsPageData {
 		$content['id']  = $pod->display( $field_name );
 		$content['url'] = $pod->display( $field_url );
 
-		if ( ! isset( $content->url ) && isset( $settings->default_img_src ) ) {
+		if ( ! isset( $content['url'] ) && isset( $settings['default_img_src'] ) ) {
 			$content['id']  = $settings->default_img;
 			$content['url'] = $settings->default_img_src;
 		}
@@ -368,11 +368,13 @@ final class PodsPageData {
 	 *
 	 * Get Settings Pod Fields
 	 *
+	 * @param array $field_options
+	 *
 	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
-	static public function pods_get_settings_fields() {
+	static public function pods_get_settings_fields( $field_options = array() ) {
 
 		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
 		$fields             = array( 'pod' => array(), 'field' => array() );
@@ -392,7 +394,7 @@ final class PodsPageData {
 				$fields['pod']['toggle'][ $pod_name ]['fields'][] = $pod_name;
 				$fields['pod']['options'][ $pod_name ]            = $label;
 				$fields[ $pod_name ]                              = array(
-					'options'     => self::recurse_pod_fields( $pod_name ),
+					'options'     => self::recurse_pod_fields( $pod_name, $field_options ),
 					'type'        => 'select',
 					'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
 					'description' => __( 'Select a Field', 'pods-beaver-themer' ),
