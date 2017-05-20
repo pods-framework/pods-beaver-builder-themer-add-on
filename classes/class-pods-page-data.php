@@ -126,18 +126,9 @@ final class PodsPageData {
 
 
 		$pod_name = $settings->pod;
+		$settings->field = $settings->$pod_name;
 
-		$pod = self::get_pod( $pod_name );
-
-		$content = '';
-
-		if ( ! $pod->valid() || ! $pod->exists() ) {
-			return $content;
-		}
-
-		$content = $pod->display( $settings->$pod_name );
-
-		return $content;
+		return  self::get_field_display(( $settings, $property );
 
 	}
 
