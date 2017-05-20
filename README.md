@@ -3,6 +3,10 @@
 
 Details: https://github.com/pods-framework/pods/issues/4004
 
+Short Introduction Video for Pods & Beaver Themer
+
+[![Watch the video](https://slack-imgs.com/?c=1&o1=wi400.he300&url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FbpkbZTBAz0o%2Fhqdefault.jpg)](https://www.youtube.com/watch?v=bpkbZTBAz0o)
+
 ## Requirements
 
 * [Pods](http://pods.io/) 2.4+
