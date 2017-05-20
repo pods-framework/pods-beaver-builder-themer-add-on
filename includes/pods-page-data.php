@@ -248,5 +248,5 @@ $form = array(
 );
 
 
-FLPageData::add_site_property( 'pods_settings', $data );
-FLPageData::add_site_property_settings_fields( 'pods_settings', $form );
+FLPageData::add_site_property( 'pods_settings_url', $data );
+FLPageData::add_site_property_settings_fields( 'pods_settings_url', $form );
