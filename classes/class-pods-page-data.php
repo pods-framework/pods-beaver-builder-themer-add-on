@@ -89,17 +89,46 @@ final class PodsPageData {
 	 */
 	static public function get_field_display( $settings, $property ) {
 
-		$pod = self::get_pod( get_post_type(), get_the_ID() );
+		if ( $settings->pod ) {
+			$pod_name = $settings->pod;
+			$pod_ID   = null;
+		} else {
+			$pod_name = get_post_type();
+			$pod_ID   = get_the_ID();
+		}
+
+		$pod = self::get_pod( $pod_name, $pod_ID );
 
 		$content = '';
 
-		if ( ! $pod->valid() || ! $pod->exists() ) {
+		if (  ! $pod || ! $pod->valid() || ! $pod->exists() ) {
 			return $content;
 		}
 
 		$content = $pod->display( $settings->field );
 
 		return $content;
+
+	}
+
+	/**
+	 * Settings Field Display.
+	 *
+	 *
+	 * @param object $settings
+	 * @param string $property
+	 *
+	 * @return string
+	 *
+	 * @since 1.0
+	 */
+	static public function get_settings_field_display( $settings, $property ) {
+
+
+		$pod_name = $settings->pod;
+		$settings->field = $settings->$pod_name;
+
+		return  self::get_field_display( $settings, $property );
 
 	}
 
@@ -186,7 +215,7 @@ final class PodsPageData {
 		$content['id']  = $pod->display( $field_name );
 		$content['url'] = $pod->display( $field_url );
 
-		if ( ! isset( $content->url ) && isset( $settings->default_img_src ) ) {
+		if ( ! isset( $content['url'] ) && isset( $settings['default_img_src'] ) ) {
 			$content['id']  = $settings->default_img;
 			$content['url'] = $settings->default_img_src;
 		}
@@ -226,7 +255,7 @@ final class PodsPageData {
 	 *
 	 * @param array $field_options
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -250,7 +279,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to url fields ( -> file_format = 'url' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -267,7 +296,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to image fields ( -> file_format = 'images' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -290,7 +319,7 @@ final class PodsPageData {
 	/**
 	 * Limit fields from pods to image fields ( -> file_format = 'images', file_format_type = 'multi' )
 	 *
-	 * @return array
+	 * @return string[]
 	 *
 	 * @since 1.0
 	 */
@@ -333,6 +362,58 @@ final class PodsPageData {
 		return $fields;
 
 	}
+
+
+	/**
+	 *
+	 * Get Settings Pod Fields
+	 *
+	 * @param array $field_options
+	 *
+	 * @return string[]
+	 *
+	 * @since 1.0
+	 */
+	static public function pods_get_settings_fields( $field_options = array() ) {
+
+		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+		$fields             = array( 'pod' => array(), 'field' => array() );
+
+		if ( $settings_pod_names ) {
+			$fields = array(
+				'pod' => array(
+					'type'    => 'select',
+					'label'   => __( 'Settings Pod:', 'pods-beaver-themer' ),
+					'default' => 'grid',
+					'options' => array(),
+				)
+
+			);
+
+			foreach ( $settings_pod_names as $pod_name => $label ) {
+				$fields['pod']['toggle'][ $pod_name ]['fields'][] = $pod_name;
+				$fields['pod']['options'][ $pod_name ]            = $label;
+				$fields[ $pod_name ]                              = array(
+					'options'     => self::recurse_pod_fields( $pod_name, $field_options ),
+					'type'        => 'select',
+					'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+					'description' => __( 'Select a Field', 'pods-beaver-themer' ),
+					'placeholder' => __( 'Field Name:', 'pods-beaver-themer' ),
+				);
+			}
+		}
+
+
+		/*		$fields = array(
+					'' => '- ' . __( 'Select Template', 'pods-beaver-themer' ) . ' -'
+				);*/
+
+
+		return $fields;
+	}
+
+
+
 
 	/**
 	 * Recurse pod fields to build a list of available fields.
