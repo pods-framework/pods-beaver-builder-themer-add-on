@@ -107,8 +107,6 @@ final class PodsPageData {
 
 		$content = $pod->display( $settings->field );
 
-		$content = $pod->do_magic_tags( $settings->field );
-
 		return $content;
 
 	}
@@ -461,7 +459,8 @@ final class PodsPageData {
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
 						$linked_pod = $field['table_info']['pod']['name'];
 					} elseif ( 'taxonomy' === $field['type']) {
-						$linked_pod = $field_name;
+						// $linked_pod = $field_name;
+						// removed Media Traversal -> use default BB field connections or Templates
 					} elseif ( 'attachment' === $field['options']['file_uploader']) {
 						$linked_pod = 'media';
 					}

@@ -37,39 +37,12 @@ $form = array(
 FLPageData::add_post_property( 'pods_display', $data );
 FLPageData::add_post_property_settings_fields( 'pods_display', $form );
 
-/**
- * Pods All using Magic Tag Syntax
- */
-$data = array(
-	'label'  => __( 'Advanced: Magic Tag / Traversal', 'pods-beaver-themer' ),
-	'group'  => 'pods',
-	'type'   => array(
-		'string',
-		'html',
-		'custom_field',
-	),
-	'getter' => 'PodsPageData::get_field_display',
-);
-
-$form = array(
-	'field' => array(
-		'type'        => 'text',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
-		'options'     => 'PodsPageData::pods_get_fields',
-		'help'        => __( 'Fields based on current "preview" settings', 'pods-beaver-themer' ),
-		'description' => __( 'Field Name', 'pods-beaver-themer' ),
-		'placeholder' => __( 'Advanced Connection', 'pods-beaver-themer' ),
-	),
-);
-
-FLPageData::add_post_property( 'pods', $data );
-FLPageData::add_post_property_settings_fields( 'pods', $form );
 
 /**
- * Pods Templates
+ * Pods Templates / Magic Tag
  */
 $data = array(
-	'label'  => __( 'Post Template', 'pods-beaver-themer' ),
+	'label'  => __( 'Template / Magic Tag', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
