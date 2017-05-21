@@ -86,7 +86,7 @@ FLPageData::add_post_property_settings_fields( 'pods_template', $form );
  * Pods Settings
  */
 $data = array(
-	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
+	'label'       => __( 'User and SettingsPod Fields', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'string', 'html', 'custom_field' ),
 	'getter'      => 'PodsPageData::get_field_display',
@@ -183,7 +183,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
  * Pods Settings Photo (Image)
  */
 $data = array(
-	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
+	'label'       => __( 'User and SettingsPod Fields', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'photo' ),
 	'getter'      => 'PodsPageData::get_field_photo',
@@ -207,7 +207,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
  * Pods Settings Multiple Photos (Images)
  */
 $data = array(
-	'label'  => __( 'Settings Pod', 'fl-theme-builder' ),
+	'label'  => __( 'User and SettingsPod Fields', 'fl-theme-builder' ),
 	'group'  => 'pods',
 	'type'   => array( 'multiple-photos' ),
 	'getter' => 'PodsPageData::get_field_photo',
@@ -268,7 +268,7 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  * Pods Settings / User
  */
 $data = array(
-	'label'       => __( 'User and Pods Settings Fields', 'fl-theme-builder' ),
+	'label'       => __( 'User and SettingsPod Fields', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'url' ),
 	'getter'      => 'PodsPageData::get_field_display_url',

@@ -89,9 +89,16 @@ final class PodsPageData {
 	 */
 	static public function get_field_display( $settings, $property ) {
 
+		$pod_ID   = null;
+		$pod_name = null;
+		$content = 'Seems Something went wrong';
+
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
-			$pod_ID          = null;
+			if ( 'user' === $settings->pod ) {
+				$pod_ID = get_current_user_id();
+				$content = 'field only visible if logged in';
+			}
 			$settings->field = $settings->$pod_name;
 		} else {
 			$pod_name = get_post_type();
@@ -100,7 +107,7 @@ final class PodsPageData {
 
 		$pod = self::get_pod( $pod_name, $pod_ID );
 
-		$content = 'Seems Something went wrong';
+
 
 		if (  ! $pod || ! $pod->valid() || ! $pod->exists() ) {
 			return $content;
@@ -141,9 +148,14 @@ final class PodsPageData {
 	 */
 	static public function get_field_multiple_photos( $settings, $property ) {
 
+		$pod_ID   = null;
+		$pod_name = null;
+
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
-			$pod_ID          = null;
+			if ( 'user' === $settings->pod ) {
+				$pod_ID = get_current_user_id();
+			}
 			$settings->field = $settings->$pod_name;
 		} else {
 			$pod_name = get_post_type();
@@ -188,9 +200,14 @@ final class PodsPageData {
 	 */
 	static public function get_field_photo( $settings, $property ) {
 
+		$pod_ID   = null;
+		$pod_name = null;
+
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
-			$pod_ID          = null;
+			if ( 'user' === $settings->pod ) {
+				$pod_ID = get_current_user_id();
+			}
 			$settings->field = $settings->$pod_name;
 		} else {
 			$pod_name = get_post_type();
