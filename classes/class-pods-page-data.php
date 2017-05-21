@@ -327,7 +327,6 @@ final class PodsPageData {
 	static public function pods_get_image_fields() {
 
 		$field_options['type'] = 'file';
-
 		$field_options['options']['file_format_type'] = 'single';
 
 		// $field_options['options']['file_type']     = 'images';
@@ -349,8 +348,8 @@ final class PodsPageData {
 	static public function pods_get_multiple_images_fields() {
 
 		$field_options['type'] = 'file';
+		$field_options['options']['file_format_type'] = 'multi';
 
-		// $field_options['options']['file_format_type'] = 'multi';
 		// $field_options['options']['file_type']        = 'images';
 
 		$fields = self::pods_get_fields( $field_options );

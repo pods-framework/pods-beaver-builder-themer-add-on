@@ -215,7 +215,11 @@ $data = array(
 
 $form = array(
 	'title'  => __( 'Awesome', 'fl-builder' ),
-	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'file' ) ),
+	'fields' => PodsPageData::pods_get_settings_fields( array(
+			'type'    => 'file',
+			'options' => array( 'file_format_type' => 'single' )
+		)
+	),
 );
 
 
