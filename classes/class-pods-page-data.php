@@ -353,13 +353,7 @@ final class PodsPageData {
 
 		$all_templates = (array) pods_api()->load_templates( array() );
 
-		$fields = array( 'custom' => __( 'Custom Template', 'pods-beaver-themer' ) );
-
-		/*
-		$fields = array(
-			'' => '- ' . __( 'Select Template', 'pods-beaver-themer' ) . ' -',
-		);
-		*/
+		$fields = array( 'custom' => __( 'Magic Tag', 'pods-beaver-themer' ) );
 
 		foreach ( $all_templates as $template ) {
 			$fields[ $template['slug'] ] = $template['name'];

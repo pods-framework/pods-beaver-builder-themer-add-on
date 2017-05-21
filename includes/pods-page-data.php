@@ -42,7 +42,7 @@ FLPageData::add_post_property_settings_fields( 'pods_display', $form );
  * Pods Templates / Magic Tag
  */
 $data = array(
-	'label'  => __( 'Template / Magic Tag / Advanced', 'pods-beaver-themer' ),
+	'label'  => __( 'Template or Magic Tag', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -59,18 +59,18 @@ $form = array(
 		'options'     => 'PodsPageData::pods_get_templates',
 		'toggle'      => array(
 			'custom' => array(
-				'fields' => 'custom_template'
+				'fields' => array( 'custom_template' )
 			)
 		),
-		'help'        => __( 'Fields filtered based on current "preview" settings', 'pods-beaver-themer' ),
-		'description' => __( 'Fields based on Preview', 'pods-beaver-themer' ),
+		'help'        => __( 'Select Template', 'pods-beaver-themer' ),
+		'description' => __( 'Select Template', 'pods-beaver-themer' ),
 		'placeholder' => __( 'Template Connection', 'pods-beaver-themer' ),
 	),
 	'custom_template' => array(
-		'type'        => 'textarea',
-		'label'       => __( 'Field Name (CPT):', 'pods-beaver-themer' ),
+		'type'        => 'text',
+		'label'       => __( 'Magic Tag:', 'pods-beaver-themer' ),
 		'default'     => '',
-		'placeholder' => __( 'Placeholder Text', 'fl-builder' ),
+		'placeholder' => __( 'Magic Tag only - no [each, if,...]', 'fl-builder' ),
 		'rows'        => '6'
 	)
 );
