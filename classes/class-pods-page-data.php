@@ -107,6 +107,8 @@ final class PodsPageData {
 
 		$content = $pod->display( $settings->field );
 
+		$content = $pod->do_magic_tags( $settings->field );
+
 		return $content;
 
 	}
@@ -245,6 +247,9 @@ final class PodsPageData {
 			return $content;
 		}
 
+		if ( 'custom' === $settings->template ) {
+			$pod->do_magic_tags( $settings->custom_template );
+		}
 		$content = $pod->template( $settings->template );
 
 		return $content;
@@ -348,7 +353,7 @@ final class PodsPageData {
 
 		$all_templates = (array) pods_api()->load_templates( array() );
 
-		$fields = array();
+		$fields = array( 'custom' => __( 'Custom Template', 'pods-beaver-themer' ) );
 
 		/*
 		$fields = array(
@@ -359,6 +364,7 @@ final class PodsPageData {
 		foreach ( $all_templates as $template ) {
 			$fields[ $template['slug'] ] = $template['name'];
 		}
+
 
 		return $fields;
 

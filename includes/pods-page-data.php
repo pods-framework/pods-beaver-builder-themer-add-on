@@ -80,18 +80,30 @@ $data = array(
 );
 
 $form = array(
-	'template' => array(
+	'template'       => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name (CPT):', 'pods-beaver-themer' ),
+		'label'       => __( 'Template:', 'pods-beaver-themer' ),
 		'options'     => 'PodsPageData::pods_get_templates',
+		'toggle'      => array(
+			'custom' => array(
+				'fields' => 'custom_template'
+			)
+		),
 		'help'        => __( 'Fields filtered based on current "preview" settings', 'pods-beaver-themer' ),
 		'description' => __( 'Fields based on Preview', 'pods-beaver-themer' ),
 		'placeholder' => __( 'Template Connection', 'pods-beaver-themer' ),
 	),
+	'custom_template' => array(
+		'type'        => 'textarea',
+		'label'       => __( 'Field Name (CPT):', 'pods-beaver-themer' ),
+		'default'     => '',
+		'placeholder' => __( 'Placeholder Text', 'fl-builder' ),
+		'rows'        => '6'
+	)
 );
 
-FLPageData::add_site_property( 'pods_template', $data );
-FLPageData::add_site_property_settings_fields( 'pods_template', $form );
+FLPageData::add_post_property( 'pods_template', $data );
+FLPageData::add_post_property_settings_fields( 'pods_template', $form );
 
 /**
  * SITE WIDE PROPERTY'S
