@@ -90,8 +90,8 @@ final class PodsPageData {
 	static public function get_field_display( $settings, $property ) {
 
 		if ( $settings->pod ) {
-			$pod_name = $settings->pod;
-			$pod_ID   = null;
+			$pod_name        = $settings->pod;
+			$settings->field = $settings->$pod_name;
 		} else {
 			$pod_name = get_post_type();
 			$pod_ID   = get_the_ID();
@@ -111,26 +111,6 @@ final class PodsPageData {
 
 	}
 
-	/**
-	 * Settings Field Display.
-	 *
-	 *
-	 * @param object $settings
-	 * @param string $property
-	 *
-	 * @return string
-	 *
-	 * @since 1.0
-	 */
-	static public function get_settings_field_display( $settings, $property ) {
-
-
-		$pod_name = $settings->pod;
-		$settings->field = $settings->$pod_name;
-
-		return  self::get_field_display( $settings, $property );
-
-	}
 
 	/**
 	 * Basic URL.
@@ -246,11 +226,13 @@ final class PodsPageData {
 		}
 
 		if ( 'custom' === $settings->template ) {
-			$pod->do_magic_tags( $settings->custom_template );
+			$content = $pod->do_magic_tags( $settings->custom_template );
+		} else {
+			$content = $pod->template( $settings->template );
 		}
-		$content = $pod->template( $settings->template );
 
 		return $content;
+
 
 	}
 

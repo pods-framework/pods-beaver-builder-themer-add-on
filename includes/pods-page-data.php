@@ -14,7 +14,7 @@
  * Pods CPT / TAX / ...
  */
 $data = array(
-	'label'  => __( 'Any Field', 'pods-beaver-themer' ),
+	'label'  => __( 'Field / Related Field', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -42,7 +42,7 @@ FLPageData::add_post_property_settings_fields( 'pods_display', $form );
  * Pods Templates / Magic Tag
  */
 $data = array(
-	'label'  => __( 'Template / Magic Tag', 'pods-beaver-themer' ),
+	'label'  => __( 'Template / Magic Tag / Advanced', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -89,7 +89,7 @@ $data = array(
 	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'string', 'html', 'custom_field' ),
-	'getter'      => 'PodsPageData::get_settings_field_display',
+	'getter'      => 'PodsPageData::get_field_display',
 );
 
 $form = array(
@@ -174,6 +174,41 @@ $form = array(
 
 FLPageData::add_post_property( 'pods_multiple_photos', $data );
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
+
+/**
+ * SITE WIDE PROPERTY'S
+ */
+
+/**
+ * Pods Settings
+ */
+$data = array(
+	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
+	'group'       => 'pods',
+	'type'        => array( 'photo' ),
+	'getter'      => 'PodsPageData::get_field_photo',
+);
+
+$form = array(
+	'title'  => __( 'Awesome', 'fl-builder' ),
+	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'website' ) ),
+);
+
+
+FLPageData::add_site_property( 'pods_settings_photo', $data );
+FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /**
