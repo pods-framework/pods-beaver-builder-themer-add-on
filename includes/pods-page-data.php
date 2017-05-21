@@ -180,7 +180,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
  */
 
 /**
- * Pods Settings
+ * Pods Settings Photo (Image)
  */
 $data = array(
 	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
@@ -191,7 +191,11 @@ $data = array(
 
 $form = array(
 	'title'  => __( 'Awesome', 'fl-builder' ),
-	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'website' ) ),
+	'fields' => PodsPageData::pods_get_settings_fields( array(
+			'type'    => 'file',
+			'options' => array( 'file_format_type' => 'single' )
+		)
+	),
 );
 
 
@@ -199,7 +203,24 @@ FLPageData::add_site_property( 'pods_settings_photo', $data );
 FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
 
 
+/**
+ * Pods Settings Multiple Photos (Images)
+ */
+$data = array(
+	'label'  => __( 'Settings Pod', 'fl-theme-builder' ),
+	'group'  => 'pods',
+	'type'   => array( 'multiple-photos' ),
+	'getter' => 'PodsPageData::get_field_photo',
+);
 
+$form = array(
+	'title'  => __( 'Awesome', 'fl-builder' ),
+	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'file' ) ),
+);
+
+
+FLPageData::add_site_property( 'pods_settings_multiple_photos', $data );
+FLPageData::add_site_property_settings_fields( 'pods_settings_multiple_photos', $form );
 
 
 
@@ -259,7 +280,7 @@ $data = array(
 	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'url' ),
-	'getter'      => 'PodsPageData::get_settings_field_display',
+	'getter'      => 'PodsPageData::get_field_display_url',
 );
 
 $form = array(

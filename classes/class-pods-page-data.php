@@ -91,6 +91,7 @@ final class PodsPageData {
 
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
+			$pod_ID          = null;
 			$settings->field = $settings->$pod_name;
 		} else {
 			$pod_name = get_post_type();
@@ -140,7 +141,16 @@ final class PodsPageData {
 	 */
 	static public function get_field_multiple_photos( $settings, $property ) {
 
-		$pod = self::get_pod( get_post_type(), get_the_ID() );
+		if ( $settings->pod ) {
+			$pod_name        = $settings->pod;
+			$pod_ID          = null;
+			$settings->field = $settings->$pod_name;
+		} else {
+			$pod_name = get_post_type();
+			$pod_ID   = get_the_ID();
+		}
+
+		$pod = self::get_pod( $pod_name, $pod_ID );
 
 		$content = array();
 
@@ -178,7 +188,17 @@ final class PodsPageData {
 	 */
 	static public function get_field_photo( $settings, $property ) {
 
-		$pod = self::get_pod( get_post_type(), get_the_ID() );
+		if ( $settings->pod ) {
+			$pod_name        = $settings->pod;
+			$pod_ID          = null;
+			$settings->field = $settings->$pod_name;
+		} else {
+			$pod_name = get_post_type();
+			$pod_ID   = get_the_ID();
+		}
+
+
+		$pod = self::get_pod( $pod_name, $pod_ID );
 
 		$content = array(
 			'id'  => '',
@@ -385,16 +405,9 @@ final class PodsPageData {
 					'type'        => 'select',
 					'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
 					'description' => __( 'Select a Field', 'pods-beaver-themer' ),
-					'placeholder' => __( 'Field Name:', 'pods-beaver-themer' ),
 				);
 			}
 		}
-
-
-		/*		$fields = array(
-					'' => '- ' . __( 'Select Template', 'pods-beaver-themer' ) . ' -'
-				);*/
-
 
 		return $fields;
 	}
