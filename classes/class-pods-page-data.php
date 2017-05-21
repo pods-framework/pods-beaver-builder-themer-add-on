@@ -236,7 +236,8 @@ final class PodsPageData {
 	 */
 	static public function get_template( $settings, $property ) {
 
-		$pod = self::get_pod( get_post_type(), get_the_ID() );
+		// $pod = self::get_pod( get_post_type(), get_the_ID() );  // doesn't work with ->template
+		$pod = pods( get_post_type(), get_the_ID() );
 
 		$content = '';
 
