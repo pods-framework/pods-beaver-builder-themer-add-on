@@ -100,7 +100,7 @@ final class PodsPageData {
 
 		$pod = self::get_pod( $pod_name, $pod_ID );
 
-		$content = '';
+		$content = 'Seems Something went wrong';
 
 		if (  ! $pod || ! $pod->valid() || ! $pod->exists() ) {
 			return $content;
@@ -239,7 +239,7 @@ final class PodsPageData {
 		// $pod = self::get_pod( get_post_type(), get_the_ID() );  // doesn't work with ->template
 		$pod = pods( get_post_type(), get_the_ID() );
 
-		$content = '';
+		$content = 'Seems Something went wrong';
 
 		if ( ! $pod || empty( $settings->template ) ) {
 			return $content;
@@ -377,7 +377,7 @@ final class PodsPageData {
 	 */
 	static public function pods_get_settings_fields( $field_options = array() ) {
 
-		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => 'settings', 'names' => true ) );
+		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => array('settings','user'), 'names' => true ) );
 		$fields             = array( 'pod' => array(), 'field' => array() );
 
 		if ( $settings_pod_names ) {

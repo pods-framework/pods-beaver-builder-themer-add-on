@@ -223,15 +223,6 @@ FLPageData::add_site_property( 'pods_settings_multiple_photos', $data );
 FLPageData::add_site_property_settings_fields( 'pods_settings_multiple_photos', $form );
 
 
-
-
-
-
-
-
-
-
-
 /**
  * *******************************************************************
  *
@@ -274,10 +265,10 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  */
 
 /**
- * Pods Settings
+ * Pods Settings / User
  */
 $data = array(
-	'label'       => __( 'Settings Pod', 'fl-theme-builder' ),
+	'label'       => __( 'User and Pods Settings Fields', 'fl-theme-builder' ),
 	'group'       => 'pods',
 	'type'        => array( 'url' ),
 	'getter'      => 'PodsPageData::get_field_display_url',
