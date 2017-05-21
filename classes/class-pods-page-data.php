@@ -91,7 +91,7 @@ final class PodsPageData {
 
 		$pod_ID   = null;
 		$pod_name = null;
-		$content = 'Seems Something went wrong';
+		$content = 'Here might be Content';
 
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
@@ -256,7 +256,7 @@ final class PodsPageData {
 		// $pod = self::get_pod( get_post_type(), get_the_ID() );  // doesn't work with ->template
 		$pod = pods( get_post_type(), get_the_ID() );
 
-		$content = 'Seems Something went wrong';
+		$content = 'Here might be Content';
 
 		if ( ! $pod || empty( $settings->template ) ) {
 			return $content;
