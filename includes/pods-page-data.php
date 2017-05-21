@@ -210,7 +210,7 @@ $data = array(
 	'label'  => __( 'User and SettingsPod Fields', 'fl-theme-builder' ),
 	'group'  => 'pods',
 	'type'   => array( 'multiple-photos' ),
-	'getter' => 'PodsPageData::get_field_photo',
+	'getter' => 'PodsPageData::get_field_multiple_photos',
 );
 
 $form = array(
