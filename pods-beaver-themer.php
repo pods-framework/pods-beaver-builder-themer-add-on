@@ -53,6 +53,10 @@ function pods_beaver_init() {
 
 	PodsPageData::init();
 
+	// Fake beeing in the Loop #15
+	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
+	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
@@ -92,7 +96,7 @@ function pods_beaver_fake_loop_true() {
 	}
 
 }
-add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
+
 
 /**
  * Set $wp_query->in_the_loop to false after rendering content.
@@ -112,4 +116,4 @@ function pods_beaver_fake_loop_false() {
 	}
 
 }
-add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+
