@@ -452,22 +452,27 @@ final class PodsPageData {
 
 			$all_pod_fields = $pod->fields();
 
-			if ( isset( $pod->pod_data['object_fields'] ) ) {
-				$all_pod_fields = array_merge( $pod->pod_data['object_fields'], $all_pod_fields );
-			}
+/*			if ( isset( $pod->pod_data['object_fields'] ) ) {
+				$all_pod_fields = array_merge( $all_pod_fields, $pod->pod_data['object_fields'] );
+			}*/
 
 			foreach ( $all_pod_fields as $field_name => $field ) {
 				$linked_pod = null;
 
 				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types() ) ) {
 
-					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) {
-						$linked_pod = $field['table_info']['pod']['name'];
+
+					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
+						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion not wanted Issue #16
+							$linked_pod = $field['table_info']['pod']['name'];
+						}
 					} elseif ( 'taxonomy' === $field['type']) {
 						// $linked_pod = $field_name;
 						// removed Media Traversal -> use default BB field connections or Templates
 					} elseif ( 'attachment' === $field['options']['file_uploader']) {
-						$linked_pod = 'media';
+						if ( 'single' === $field['options']['file_format_type'] ) {// recursion not wanted Issue #16
+							$linked_pod = 'media';
+						}
 					}
 					// maybe add check for comments and ???
 				}
@@ -475,7 +480,6 @@ final class PodsPageData {
 				if ( $linked_pod ) {
 					if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ], true ) ) {
 						$pods_visited[ $linked_pod ][] = $field_name;
-
 						$recurse_queue[ $linked_pod ] = "{$prefix}{$field_name}.";
 					}
 				}
@@ -494,7 +498,8 @@ final class PodsPageData {
 					}
 				}
 
-				$fields[ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $pod_name );
+
+				$fields[ $prefix . $field_name ] = sprintf( '(%s) %s%s', $pod_name, $prefix, $field_name );
 			}
 
 			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
@@ -507,3 +512,5 @@ final class PodsPageData {
 	}
 
 }
+
+
