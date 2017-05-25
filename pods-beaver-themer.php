@@ -117,3 +117,93 @@ function pods_beaver_fake_loop_false() {
 
 }
 
+// TEST
+/**
+ * Adds the custom code settings for custom post
+ * module layouts.
+ *
+ * @since 1.0
+ *
+ * @param array $form
+ * @param string $slug
+ *
+ * @return array
+ */
+function pods_loop_settings( $form, $slug ) {
+	if ( ! in_array( $slug, array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid' ) ) ) {
+		return $form;
+	}
+
+
+	$new['layout']['sections']['pods'] = array(
+		'title'  => __( 'Pods', 'fl-builder' ),
+		'fields' => array(
+			'use_pods'         => array(
+				'type'        => 'select',
+				'label'       => __( 'Relationship as Content Source', 'pods-beaver-themer' ),
+				'default'     => 'no',
+				'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
+				'description' => __( 'Pleasw Select Custom Query in the content Tab ', 'pods-beaver-themer' ),
+				'options'     => array(
+					'yes' => __( 'Yes', 'pods-beaver-themer' ),
+					'no'  => __( 'No', 'pods-beaver-themer' ),
+				),
+				'toggle'      => array(
+					'no'  => array(
+						'fields'   => array( 'post_type', 'data_source' ),
+						'sections' => array( 'filter' ),
+					),
+					'yes' => array(
+						'fields' => array( 'pods_query_field' ),
+					),
+				),
+				/*				'trigger'     => array(
+									'yes' => array(
+										'fields' => array( 'data_source' ),
+									),
+								),*/
+			),
+			'pods_query_field' => array(
+				'type'        => 'text',
+				'label'       => 'Field (Relationship) ',
+				'connections' => array( 'custom_field' )
+			)
+
+
+		),
+	);
+
+	$form['layout']['sections'] = $new['layout']['sections'] + $form['layout']['sections'];
+
+	return $form;
+}
+
+add_filter( 'fl_builder_register_settings_form', 'pods_loop_settings', 99, 2 );
+
+
+add_filter( 'fl_builder_loop_query', function ( $query, $settings ) {
+
+	if ( empty( $settings->use_pods ) || 'no' == $settings->use_pods ) {
+		return $query;
+	}
+
+
+	$pod = pods();
+	$related_pod = $pod->fields( 'book_author');
+
+	$api = pods_api( get_post_type());
+	$field = $api->load_field('book_author.book');
+
+
+	$settings->post_type = 'book_author';
+
+
+
+
+	$settings->{'posts_' . $settings->post_type} = pods()->display( $settings->pods_query_field . '.ID' );
+
+	$query = FLBuilderLoop::custom_query( $settings );
+
+
+	return $query;
+}, 90, 2 );
