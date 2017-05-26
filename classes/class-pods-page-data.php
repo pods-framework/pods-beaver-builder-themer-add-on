@@ -91,7 +91,7 @@ final class PodsPageData {
 
 		$pod_ID   = null;
 		$pod_name = null;
-		$content = 'Here might be Content';
+		$content = 'Field/Pod not found (Check Preview/Location)';
 
 		if ( $settings->pod ) {
 			$pod_name        = $settings->pod;
@@ -293,6 +293,10 @@ final class PodsPageData {
 			$pod_name = $location[1];
 
 			$all_fields = self::recurse_pod_fields( $pod_name, $field_options );
+		}
+
+		if ( empty( $all_fields ) ) {
+			$all_fields = array( "" => __('No fields found (Check Preview/Location)', 'pods-beaver-themer'));
 		}
 
 		return $all_fields;
