@@ -498,8 +498,8 @@ final class PodsPageData {
 					}
 				}
 
-
-				$fields[ $prefix . $field_name ] = sprintf( '(%s) %s%s', $pod_name, $prefix, $field_name );
+				$fields[$pod_name]['label'] = sprintf( '%s', $pod_name );
+				$fields[$pod_name]['options'][ $prefix . $field_name ] = sprintf( '%s%s', $prefix, $field_name );
 			}
 
 			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
