@@ -166,7 +166,7 @@ function pods_loop_settings( $form, $slug ) {
 			'pods_query_field' => array(
 				'type'        => 'text',
 				'label'       => 'Field (Relationship) ',
-				'connections' => array( 'custom_field' )
+				'connections' => array( 'custom_field' ) // PodsPageData::pods_get_fields( array('type' => 'pick')),  ???
 			)
 
 
@@ -177,33 +177,25 @@ function pods_loop_settings( $form, $slug ) {
 
 	return $form;
 }
-
 add_filter( 'fl_builder_register_settings_form', 'pods_loop_settings', 99, 2 );
 
 
-add_filter( 'fl_builder_loop_query', function ( $query, $settings ) {
+function pods_loop_query( $query, $settings ) {
 
 	if ( empty( $settings->use_pods ) || 'no' == $settings->use_pods ) {
 		return $query;
 	}
 
 
-	$pod = pods();
-	$related_pod = $pod->fields( 'book_author');
 
-	$api = pods_api( get_post_type());
-	$field = $api->load_field('book_author.book');
+	$settings->post_type = 'any'; // we have id's no need to specify the type
 
-
-	$settings->post_type = 'book_author';
-
+	// get comma separatd list to power post__in for the BB Custom Query
+	$params = array( 'output' => 'id', 'name' => $settings->pods_query_field);
+	$ids = pods()->field( $params );
+	$settings->{'posts_' . $settings->post_type} = implode( ', ', $ids );
 
 
-
-	$settings->{'posts_' . $settings->post_type} = pods()->display( $settings->pods_query_field . '.ID' );
-
-	$query = FLBuilderLoop::custom_query( $settings );
-
-
-	return $query;
-}, 90, 2 );
+	return FLBuilderLoop::custom_query( $settings );
+}
+add_filter( 'fl_builder_loop_query', 'pods_loop_query', 99, 2 );

@@ -467,7 +467,7 @@ final class PodsPageData {
 
 
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
-						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion not wanted Issue #16
+						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
 						}
 					} elseif ( 'taxonomy' === $field['type']) {
@@ -514,7 +514,6 @@ final class PodsPageData {
 		return $fields;
 
 	}
-
 }
 
 
