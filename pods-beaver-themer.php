@@ -199,6 +199,11 @@ function pods_loop_query( $query, $settings ) {
 	// get comma separatd list to power post__in for the BB Custom Query
 	$params = array( 'output' => 'id', 'name' => $settings->pods_query_field);
 	$ids = pods()->field( $params );
+
+	if ( empty( $ids ) ) {
+		return new WP_Query();
+	}
+
 	$settings->{'posts_' . $settings->post_type} = implode( ', ', $ids );
 
 	return FLBuilderLoop::custom_query( $settings );
