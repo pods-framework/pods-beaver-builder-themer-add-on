@@ -53,6 +53,10 @@ function pods_beaver_init() {
 
 	PodsPageData::init();
 
+	// Fake beeing in the Loop #15
+	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
+	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
@@ -78,7 +82,7 @@ add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
  * Set $wp_query->in_the_loop to true before rendering content.
  *
  * Example:
- * add_action( 'fl_theme_builder_before_render_content', 'pods_beaver_fake_loop_true' );
+ * add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
  *
  * @since 1.0
  */
@@ -86,16 +90,19 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-	// Fake being in the loop.
-	$wp_query->in_the_loop = true;
+	if ( is_pod() ) {
+		// Fake being in the loop.
+		$wp_query->in_the_loop = true;
+	}
 
 }
+
 
 /**
  * Set $wp_query->in_the_loop to false after rendering content.
  *
  * Example:
- * add_action( 'fl_theme_builder_after_render_content', 'pods_beaver_fake_loop_false' );
+ * add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
  *
  * @since 1.0
  */
@@ -103,7 +110,10 @@ function pods_beaver_fake_loop_false() {
 
 	global $wp_query;
 
-	// Stop faking being in the loop.
-	$wp_query->in_the_loop = false;
+	if ( is_pod() ) {
+		// Stop faking being in the loop.
+		$wp_query->in_the_loop = false;
+	}
 
 }
+
