@@ -93,7 +93,7 @@ final class PodsPageData {
 		$pod_name = null;
 		$content = 'Field/Pod not found (Check Preview/Location)';
 
-		if ( $settings->pod ) {
+		if ( isset( $settings->pod ) ) {
 			$pod_name        = $settings->pod;
 			if ( 'user' === $settings->pod ) {
 				$pod_ID = get_current_user_id();
@@ -151,7 +151,7 @@ final class PodsPageData {
 		$pod_ID   = null;
 		$pod_name = null;
 
-		if ( $settings->pod ) {
+		if ( isset( $settings->pod ) ) {
 			$pod_name        = $settings->pod;
 			if ( 'user' === $settings->pod ) {
 				$pod_ID = get_current_user_id();
@@ -441,7 +441,7 @@ final class PodsPageData {
 	 *
 	 * @since 1.0
 	 */
-	private function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', &$pods_visited = array() ) {
+	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', &$pods_visited = array() ) {
 
 		$fields = array();
 
@@ -467,7 +467,7 @@ final class PodsPageData {
 
 
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
-						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion not wanted Issue #16
+						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
 						}
 					} elseif ( 'taxonomy' === $field['type']) {
@@ -514,7 +514,6 @@ final class PodsPageData {
 		return $fields;
 
 	}
-
 }
 
 
