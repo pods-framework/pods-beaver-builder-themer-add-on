@@ -75,17 +75,6 @@ crashlytics-build.properties
 fabric.properties
 
 
-.idea/modules.xml
-
-.idea/pods-beaver-themer.iml
-
-.idea/vcs.xml
-
-ideas.php
-
+.idea/
 WPDBBGlobalStylesManager.php
-/.idea/runConfigurations/Local_by_Flywheel.xml
-/.idea/codeStyleSettings.xml
-/.idea/php.xml
-
-.idea/runConfigurations/Local_by_Flywheel.xml
+ideas.php
