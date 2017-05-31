@@ -118,7 +118,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings', $form );
  * Pods Photo (Image)
  */
 $data = array(
-	'label'  => __( 'Image', 'pods-beaver-themer' ),
+	'label'  => __( 'Post Field', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo',
@@ -146,8 +146,43 @@ $form = array(
 	),
 );
 
-FLPageData::add_post_property( 'pods_photos', $data );
-FLPageData::add_post_property_settings_fields( 'pods_photos', $form );
+FLPageData::add_post_property( 'pods_photo', $data );
+FLPageData::add_post_property_settings_fields( 'pods_photo', $form );
+
+/**
+ * Manual Photo Field
+ */
+$data = array(
+	'label'  => __( 'Manual (for Taxonomy)', 'pods-beaver-themer' ),
+	'group'  => 'pods',
+	'type'   => array(
+		'photo'
+	),
+	'getter' => 'PodsPageData::get_field_photo',
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'text',
+		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'help'        => __( 'Enter the field name, Relatsionshp works', 'pods-beaver-themer' ),
+		'description' => __( '', 'pods-beaver-themer' ),
+		'placeholder' => __( 'e.g category.image', 'pods-beaver-themer' ),
+	),
+	'image_size'  => array(
+		'type'    => 'photo-sizes',
+		'label'   => __( 'Image Size', 'pods-beaver-themer' ),
+		'default' => 'full-size',
+	),
+	'default_img' => array(
+		'type'  => 'photo',
+		'label' => __( 'Default Image', 'pods-beaver-themer' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_photo_manual', $data );
+FLPageData::add_post_property_settings_fields( 'pods_photo_manual', $form );
+
 
 /**
  * Pods Multiple Photos (Images)
