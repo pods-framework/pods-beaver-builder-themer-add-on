@@ -53,6 +53,10 @@ function pods_beaver_init() {
 
 	PodsPageData::init();
 
+	// Fake beeing in the Loop #15
+	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
+	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
@@ -72,13 +76,14 @@ function pods_beaver_admin_nag() {
 	}
 
 }
+
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
  * Set $wp_query->in_the_loop to true before rendering content.
  *
  * Example:
- * add_action( 'fl_theme_builder_before_render_content', 'pods_beaver_fake_loop_true' );
+ * add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
  *
  * @since 1.0
  */
@@ -86,16 +91,19 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-	// Fake being in the loop.
-	$wp_query->in_the_loop = true;
+	if ( is_pod() ) {
+		// Fake being in the loop.
+		$wp_query->in_the_loop = true;
+	}
 
 }
+
 
 /**
  * Set $wp_query->in_the_loop to false after rendering content.
  *
  * Example:
- * add_action( 'fl_theme_builder_after_render_content', 'pods_beaver_fake_loop_false' );
+ * add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
  *
  * @since 1.0
  */
@@ -103,7 +111,102 @@ function pods_beaver_fake_loop_false() {
 
 	global $wp_query;
 
-	// Stop faking being in the loop.
-	$wp_query->in_the_loop = false;
+	if ( is_pod() ) {
+		// Stop faking being in the loop.
+		$wp_query->in_the_loop = false;
+	}
 
 }
+
+// TEST
+/**
+ * Adds the custom code settings for custom post
+ * module layouts.
+ *
+ * @since 1.0
+ *
+ * @param array $form
+ * @param string $slug
+ *
+ * @return array
+ */
+function pods_loop_settings( $form, $slug ) {
+	if ( ! in_array( $slug, array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid' ) ) ) {
+		return $form;
+	}
+
+	$form_first_tab = array(
+		'pods' => array(
+			'title'    => __( 'Pods', 'fl-builder' ),
+			'sections' => array(
+				'general' => array(
+					'title'  => __( 'Data Source', 'fl-builder' ),
+					'fields' => array(
+						'use_pods'         => array(
+							'type'        => 'select',
+							'label'       => __( 'Relationship as Content Source', 'pods-beaver-themer' ),
+							'default'     => 'no',
+							'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
+							'description' => __( 'Set Source to Custom Query in content Tab first! ', 'pods-beaver-themer' ),
+							'options'     => array(
+								'yes' => __( 'Yes', 'pods-beaver-themer' ),
+								'no'  => __( 'No', 'pods-beaver-themer' ),
+							),
+							'toggle'      => array(
+								'no'  => array(
+									'fields'   => array( 'post_type', 'data_source' ),
+									'sections' => array( 'filter' ),
+								),
+								'yes' => array(
+									'fields' => array( 'pods_query_field' ),
+								),
+							),
+							/*				'trigger'     => array(
+												'yes' => array(
+													'fields' => array( 'data_source' ),
+												),
+											),*/
+						),
+						'pods_query_field' => array(
+							'type'  => 'text',
+							'label' => __( 'CPT Relationship field', 'pods-beaver-themer' ),
+							'help'  => __( 'Only Relationship fields that connect to a custom post type (CPT) work ', 'pods-beaver-themer' ),
+							// 'connections' => array( 'custom_field' )
+							// PodsPageData::pods_get_fields( array('type' => 'pick')),
+							// find a way to present a drop down list -
+						)
+					),
+				)
+			)
+		)
+
+	);
+
+	return $form_first_tab + $form;
+}
+
+add_filter( 'fl_builder_register_settings_form', 'pods_loop_settings', 99, 2 );
+
+
+function pods_loop_query( $query, $settings ) {
+
+	if ( empty( $settings->use_pods ) || 'no' == $settings->use_pods ) {
+		return $query;
+	}
+
+	$settings->post_type = 'any'; // we have id's no need to specify the type
+
+	// get comma separatd list to power post__in for the BB Custom Query
+	$params = array( 'output' => 'id', 'name' => $settings->pods_query_field);
+	$ids = pods()->field( $params );
+
+	if ( empty( $ids ) ) {
+		return new WP_Query();
+	}
+
+	$settings->{'posts_' . $settings->post_type} = implode( ', ', $ids );
+
+	return FLBuilderLoop::custom_query( $settings );
+}
+
+add_filter( 'fl_builder_loop_query', 'pods_loop_query', 99, 2 );
