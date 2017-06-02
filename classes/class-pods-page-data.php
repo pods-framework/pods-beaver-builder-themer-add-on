@@ -376,7 +376,7 @@ final class PodsPageData {
 		$fields = array( 'custom' => __( 'Magic Tag', 'pods-beaver-themer' ) );
 
 		foreach ( $all_templates as $template ) {
-			$fields[ $template['slug'] ] = $template['name'];
+			$fields[ $template['name'] ] = $template['name'];
 		}
 
 
