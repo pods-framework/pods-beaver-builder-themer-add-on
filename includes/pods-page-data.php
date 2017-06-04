@@ -15,6 +15,7 @@
  */
 $data = array(
 	'label'  => __( 'Field / Related Field', 'pods-beaver-themer' ),
+	'preview_text'  => 'label',
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -68,9 +69,9 @@ $form = array(
 	),
 	'custom_template' => array(
 		'type'        => 'text',
-		'label'       => __( 'Magic Tag:', 'pods-beaver-themer' ),
+		'label'       => __( 'Magic Tags:', 'pods-beaver-themer' ),
 		'default'     => '',
-		'placeholder' => __( 'Magic Tag only - no [each, if,...]', 'fl-builder' ),
+		'placeholder' => __( 'HTML & Magic Tags only - no [each, if,...]', 'pods-beaver-themer' ),
 		'rows'        => '6'
 	)
 );
