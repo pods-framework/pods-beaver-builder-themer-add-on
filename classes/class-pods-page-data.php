@@ -253,8 +253,7 @@ final class PodsPageData {
 	 */
 	static public function get_template( $settings, $property ) {
 
-		// $pod = self::get_pod( get_post_type(), get_the_ID() );  // doesn't work with ->template
-		$pod = pods( get_post_type(), get_the_ID() );
+		$pod = self::get_pod( get_post_type(), get_the_ID() );
 
 		$content = 'Here might be Content';
 
@@ -263,7 +262,7 @@ final class PodsPageData {
 		}
 
 		if ( 'custom' === $settings->template ) {
-			$content = $pod->do_magic_tags( $settings->custom_template );
+			$content = $pod->template( null, $settings->custom_template, $pod );
 		} else {
 			$content = $pod->template( $settings->template );
 		}
@@ -404,7 +403,7 @@ final class PodsPageData {
 			$fields = array(
 				'pod' => array(
 					'type'    => 'select',
-					'label'   => __( 'Settings Pod:', 'pods-beaver-themer' ),
+					'label'   => __( 'Pod Name:', 'pods-beaver-themer' ),
 					'default' => 'grid',
 					'options' => array(),
 				)
@@ -503,7 +502,7 @@ final class PodsPageData {
 				}
 
 				$fields[$pod_name]['label'] = sprintf( '%s', $pod_name );
-				$fields[$pod_name]['options'][ $prefix . $field_name ] = sprintf( '%s%s', $prefix, $field_name );
+				$fields[$pod_name]['options'][ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
 			}
 
 			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
