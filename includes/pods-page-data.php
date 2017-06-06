@@ -23,6 +23,7 @@ $data = array(
 		'custom_field',
 	),
 	'getter' => 'PodsPageData::get_field_display',
+	'js'   => '',
 );
 
 $form = array(
@@ -322,3 +323,64 @@ $form = array(
 
 FLPageData::add_site_property( 'pods_settings_url', $data );
 FLPageData::add_site_property_settings_fields( 'pods_settings_url', $form );
+
+
+
+/**
+ * *******************************************************************
+ *
+ * color
+ *********************************************************************/
+
+
+/**
+ * POST PROPERTY'S ( based on "current location" )
+ */
+
+/**
+ * Pods CPT / TAX / ...
+ */
+$data = array(
+	'label'  => __( 'Color: Field / Related Field', 'pods-beaver-themer' ),
+	'preview_text'  => 'label',
+	'group'  => 'pods',
+	'type'   => array(
+		'color',
+	),
+	'getter' => 'PodsPageData::get_field_color',
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'select',
+		'label'       => __( 'Field Name (CPT):', 'pods-beaver-themer' ),
+		'options'     => 'PodsPageData::pods_get_color_fields',
+		'help'        => __( 'Fields filtered based on current "preview" settings', 'pods-beaver-themer' ),
+		'description' => __( 'Selection based on Preview', 'pods-beaver-themer' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_color', $data );
+FLPageData::add_post_property_settings_fields( 'pods_color', $form );
+
+/**
+ * SITE WIDE PROPERTY'S
+ */
+
+/**
+ * Pods Settings
+ */
+$data = array(
+	'label'       => __( 'Color: User and SettingsPod Fields', 'fl-theme-builder' ),
+	'group'       => 'pods',
+	'type'        => array( 'color' ),
+	'getter'      => 'PodsPageData::get_field_color',
+);
+
+$form = array(
+	'fields' => PodsPageData::pods_get_settings_fields( array( 'type' => 'color') ),
+);
+
+
+FLPageData::add_site_property( 'pods_settings_color', $data );
+FLPageData::add_site_property_settings_fields( 'pods_settings_color', $form );

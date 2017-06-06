@@ -118,95 +118,133 @@ function pods_beaver_fake_loop_false() {
 
 }
 
-// TEST
+
 /**
- * Adds the custom code settings for custom post
- * module layouts.
+ * Adds the custom code settings for custom post  module layouts.
  *
  * @since 1.0
  *
- * @param array $form
- * @param string $slug
+ * @param $settings
  *
  * @return array
+ * @internal param array $form
+ * @internal param string $slug
+ *
  */
-function pods_loop_settings( $form, $slug ) {
-	if ( ! in_array( $slug, array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid' ) ) ) {
-		return $form;
-	}
+function pods_loop_settings( $settings ) {
 
-	$form_first_tab = array(
-		'pods' => array(
-			'title'    => __( 'Pods', 'fl-builder' ),
-			'sections' => array(
-				'general' => array(
-					'title'  => __( 'Data Source', 'fl-builder' ),
-					'fields' => array(
-						'use_pods'         => array(
-							'type'        => 'select',
-							'label'       => __( 'Relationship as Content Source', 'pods-beaver-themer' ),
-							'default'     => 'no',
-							'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
-							'description' => __( 'Set Source to Custom Query in content Tab first! ', 'pods-beaver-themer' ),
-							'options'     => array(
-								'yes' => __( 'Yes', 'pods-beaver-themer' ),
-								'no'  => __( 'No', 'pods-beaver-themer' ),
-							),
-							'toggle'      => array(
-								'no'  => array(
-									'fields'   => array( 'post_type', 'data_source' ),
-									'sections' => array( 'filter' ),
-								),
-								'yes' => array(
-									'fields' => array( 'pods_query_field' ),
-								),
-							),
-							/*				'trigger'     => array(
-												'yes' => array(
-													'fields' => array( 'data_source' ),
-												),
-											),*/
-						),
-						'pods_query_field' => array(
-							'type'  => 'text',
-							'label' => __( 'CPT Relationship field', 'pods-beaver-themer' ),
-							'help'  => __( 'Only Relationship fields that connect to a custom post type (CPT) work ', 'pods-beaver-themer' ),
-							// 'connections' => array( 'custom_field' )
-							// PodsPageData::pods_get_fields( array('type' => 'pick')),
-							// find a way to present a drop down list -
-						)
+
+	?>
+    <div id="fl-builder-settings-section-pods" class="fl-builder-settings-section">
+        <table class="fl-form-table">
+			<?php
+
+			// use_pods
+			FLBuilder::render_settings_field( 'use_pods', array(
+				'type'        => 'select',
+				'label'       => __( 'Pods Content Source', 'pods-beaver-themer' ),
+				'default'     => 'no',
+				'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
+				'description' => __( 'Set Source to Custom Query in content Tab first! ', 'pods-beaver-themer' ),
+				'options'     => array(
+					'no'                     => __( 'No', 'pods-beaver-themer' ),
+					'pods_relation'          => __( 'Relation from current item', 'pods-beaver-themer' ),
+					'pods_settings_relation' => __( 'Relation from settings / current user', 'pods-beaver-themer' ),
+					'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-themer' ),
+				),
+				'toggle'      => array(
+					'no'                     => array(
+						'fields'   => array( 'post_type', 'data_source', ),
+						'sections' => array( 'filter' ),
+					),
+					'pods_relation'          => array(
+						'fields' => array( 'pods_source_relation' ),
+					),
+					'pods_settings_relation' => array(
+						'fields' => array( 'pods_source_settings_relation' ),
+					),
+					'pods_advanced'          => array(
+						'fields' => array( 'pods_where' ),
 					),
 				)
-			)
-		)
+			), $settings );
 
-	);
+			FLBuilder::render_settings_field( 'pods_source_relation', array(
+				'type'    => 'select',
+				'label'   => __( 'Field from current post type', 'pods-beaver-themer' ),
+				'help'    => __( 'Only Relationship fields that connect to a custom post type (CPT) work ', 'pods-beaver-themer' ),
+				'options' => PodsPageData::pods_get_fields( array( 'type' => 'pick' ) ),
+			), $settings );
 
-	return $form_first_tab + $form;
+			$field = PodsPageData::pods_get_settings_fields( array( 'type' => 'pick' ) );
+			FLBuilder::render_settings_field( 'pods_source_settings_relation', $field['settings_field'], $settings );
+
+			FLBuilder::render_settings_field( 'pods_where', array(
+				'type'        => 'text',
+				'label'       => __( 'custom where', 'pods-beaver-themer' ),
+				'help'        => __( 'SQL WHERE to use, ie "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth', 'pods-beaver-themer' ),
+				'description' => __( 'see: <a href="http://pods.io/docs/code/pods/find/" target="_blank">Documentation</a> ', 'pods-beaver-themer' ),
+				// @todo: error handling for incorrect where!
+			), $settings );
+
+			?>
+        </table>
+    </div>
+
+	<?php
+
 }
 
-add_filter( 'fl_builder_register_settings_form', 'pods_loop_settings', 99, 2 );
+add_action( 'fl_builder_loop_settings_before_form', 'pods_loop_settings', 99, 1 );
+add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings', 99, 1 );
 
 
 function pods_loop_query( $query, $settings ) {
 
-	if ( empty( $settings->use_pods ) || 'no' == $settings->use_pods ) {
+	if ( empty( $settings->use_pods ) || isset( $settings->use_pods ) && 'no' == $settings->use_pods ) {
 		return $query;
 	}
 
-	$settings->post_type = 'any'; // we have id's no need to specify the type
+	$ids = array();
 
-	// get comma separatd list to power post__in for the BB Custom Query
-	$params = array( 'output' => 'id', 'name' => $settings->pods_query_field);
-	$ids = pods()->field( $params );
+	if ( 'pods_relation' == $settings->use_pods ) {
+		$params = array( 'output' => 'id', 'name' => $settings->pods_source_relation );
+		$ids    = pods()->field( $params );
+
+	} elseif ( 'pods_settings_relation' == $settings->use_pods ) {
+		$location   = explode( ':', $settings->pods_source_settings_relation );
+		$pod_name   = $location[0];
+		$field_name = $location[1];
+		$params     = array( 'output' => 'id', 'name' => $field_name );
+		$ids        = pods( $pod_name )->field( $params );
+
+	} elseif ( 'pods_advanced' == $settings->use_pods && isset( $settings->pods_where ) ) {
+		$params = array(
+			'where' => $settings->pods_where,
+			'limit' => - 1,
+		);
+
+		$pods = pods()->find( $params );   // @todo: catch error for wrong "where"
+		if ( 0 < $pods->total() ) {
+			while ( $pods->fetch() ) {
+				$ids[] = $pods->id();
+			}
+		}
+	}
 
 	if ( empty( $ids ) ) {
 		return new WP_Query();
 	}
 
+	// we have id's no need to specify the type
+	$settings->post_type = 'any';
+	// get comma separated list to power post__in for the BB Custom Query
 	$settings->{'posts_' . $settings->post_type} = implode( ', ', $ids );
+
 
 	return FLBuilderLoop::custom_query( $settings );
 }
 
 add_filter( 'fl_builder_loop_query', 'pods_loop_query', 99, 2 );
+
+

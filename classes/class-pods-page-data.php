@@ -43,19 +43,22 @@ final class PodsPageData {
 		$item_id  = 0;
 		$pod_name = null;
 
+
+		if ( isset( $settings->settings_field ) ) {
+			$location        = explode( ':', $settings->settings_field );
+			$settings->name  = $location[0];
+			$settings->field = $location[1];
+		}
+
 		if ( isset( $settings->name ) ) {
 			$pod_name = $settings->name;
 			if ( 'user' === $settings->name ) {
 				$item_id = get_current_user_id();
 			}
-			if ( isset( $settings->$pod_name ) ) {
-				$settings->field = $settings->$pod_name;
-			}
 		} else {
 			$pod_name = get_post_type();
 			$item_id  = get_the_ID();
 		}
-
 
 
 		if ( $item_id < 1 ) {
@@ -211,6 +214,33 @@ final class PodsPageData {
 	}
 
 	/**
+	 * Single Image / Photo - Returns Image Gallery ID && URL
+	 *
+	 * @param object $settings
+	 * @param string $property
+	 *
+	 * @return int $content  color without hash
+	 *
+	 * @since 1.0
+	 */
+	static public function get_field_color( $settings, $property ) {
+
+		$pod = self::get_pod( $settings );
+
+		$content = '';
+
+		if ( ! $pod ) {
+			return $content;
+		}
+		$content = $pod->display( $settings->field );
+
+		$content = ltrim( $content, '#' ); // remove # as BB only expects nbumbers!
+
+		return $content;
+
+	}
+
+	/**
 	 * Returns Pods Template Output
 	 *
 	 * @param $settings
@@ -331,6 +361,25 @@ final class PodsPageData {
 	}
 
 	/**
+	 * Limit fields from pods to image fields ( -> file_format = 'images', file_format_type = 'multi' )
+	 *
+	 * @return string[]
+	 *
+	 * @since 1.0
+	 */
+	static public function pods_get_color_fields() {
+
+		$field_options['type'] = 'color';
+
+		// $field_options['options']['file_type']        = 'images';
+
+		$fields = self::pods_get_fields( $field_options );
+
+		return $fields;
+
+	}
+
+	/**
 	 * Get list of Pods Templates.
 	 *
 	 * @return string[]
@@ -368,34 +417,33 @@ final class PodsPageData {
 	 */
 	static public function pods_get_settings_fields( $field_options = array() ) {
 
-		$settings_pod_names = (array) pods_api()->load_pods( array( 'type' => array('settings','user'), 'names' => true ) );
-		$fields             = array( 'name' => array(), 'field' => array() );
+		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings', 'user' ), 'names' => true ) );
+		$fields    = array( 'name' => array(), 'field' => array() );
 
-		if ( $settings_pod_names ) {
+		$field_options['add_pod_name'] = 'true';
+
+
+		if ( $pod_names ) {
+			$options = array();
+			foreach ( $pod_names as $pod_name => $label ) {
+				$field_options['base_pod_name'] = $pod_name;
+				$options                        = array_replace_recursive( $options, self::recurse_pod_fields( $pod_name, $field_options ) );
+			}
+
 			$fields = array(
-				'name' => array(
+				'settings_field' => array(
 					'type'    => 'select',
-					'label'   => __( 'Pod Name:', 'pods-beaver-themer' ),
-					'default' => 'grid',
-					'options' => array(),
+					'label'   => __( '\'Field from settings/current user:', 'pods-beaver-themer' ),
+					'options' => $options,
 				)
 
 			);
 
-			foreach ( $settings_pod_names as $pod_name => $label ) {
-				$fields['name']['toggle'][ $pod_name ]['fields'][] = $pod_name;
-				$fields['name']['options'][ $pod_name ]            = $label;
-				$fields[ $pod_name ]                              = array(
-					'options'     => self::recurse_pod_fields( $pod_name, $field_options ),
-					'type'        => 'select',
-					'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
-					'description' => __( 'Select a Field', 'pods-beaver-themer' ),
-				);
-			}
+
 		}
 
 		if ( empty( $fields ) ) {
-			$fields = array( "" => __('No fields found (Check Preview/Location)', 'pods-beaver-themer'));
+			$fields['options'] = array( "" => __( 'No fields found (Check Preview/Location)', 'pods-beaver-themer' ) );
 		}
 
 		return $fields;
@@ -448,10 +496,10 @@ final class PodsPageData {
 						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
 						}
-					} elseif ( 'taxonomy' === $field['type']) {
+					} elseif ( 'taxonomy' === $field['type'] ) {
 						// $linked_pod = $field_name;
 						// removed Media Traversal -> use default BB field connections or Templates
-					} elseif ( 'attachment' === $field['options']['file_uploader']) {
+					} elseif ( 'attachment' === $field['options']['file_uploader'] ) {
 						if ( 'single' === $field['options']['file_format_type'] ) {// recursion not wanted Issue #16
 							$linked_pod = 'media';
 						}
@@ -462,12 +510,12 @@ final class PodsPageData {
 				if ( $linked_pod ) {
 					if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ], true ) ) {
 						$pods_visited[ $linked_pod ][] = $field_name;
-						$recurse_queue[ $linked_pod ] = "{$prefix}{$field_name}.";
+						$recurse_queue[ $linked_pod ]  = "{$prefix}{$field_name}.";
 					}
 				}
 
-				if ( $field_options ) {
-					if ( isset( $field_options['type'] ) && $field_options['type'] === $field['type'] ) {
+				if ( isset( $field_options['type'] ) ) {
+					if ( $field_options['type'] === $field['type'] ) {
 						if ( ! empty( $field_options['options'] ) ) {
 							foreach ( $field_options['options'] as $_option => $option_value ) {
 								if ( pods_v( $_option, $field['options'] ) !== $option_value ) {
@@ -478,12 +526,19 @@ final class PodsPageData {
 					} else {
 						continue 1; // don't add to $fields if type doesn't match
 					}
+
 				}
 
-				$fields[$pod_name]['label'] = sprintf( '%s (%s)', $pod_name,  $pod->pod_data[ 'type' ] );
-				$fields[$pod_name]['options'][ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
-			}
+				if ( isset( $field_options['add_pod_name'] ) && isset( $field_options['base_pod_name'] ) ) {
+					$base_pod_name                                                                  = $field_options['base_pod_name'];
+					$fields[ $pod_name ]['label']                                                   = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
+					$fields[ $pod_name ]['options'][ $base_pod_name . ':' . $prefix . $field_name ] = sprintf( '%s: %s%s (%s)', $base_pod_name, $prefix, $field_name, $field['type'] );
+				} else {
+					$fields[ $pod_name ]['label']                            = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
+					$fields[ $pod_name ]['options'][ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
+				}
 
+			}
 			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
 				$fields = array_merge( $fields, self::recurse_pod_fields( $recurse_name, $field_options, $recurse_prefix, $pods_visited ) );
 			}
