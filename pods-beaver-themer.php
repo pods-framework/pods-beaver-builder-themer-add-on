@@ -195,7 +195,7 @@ function pods_loop_settings_before_form( $settings ) {
 }
 
 add_action( 'fl_builder_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
-add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
+// add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
 
 
 function pods_loop_before_query_settings( $settings ) {
