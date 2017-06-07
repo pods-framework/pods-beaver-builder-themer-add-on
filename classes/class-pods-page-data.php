@@ -482,7 +482,7 @@ final class PodsPageData {
 
 			$all_pod_fields = $pod->fields();
 
-			/*			if ( isset( $pod->name_data['object_fields'] ) ) {
+			/*			if ( isset( $pod->pod_data['object_fields'] ) ) {
 							$all_pod_fields = array_merge( $all_pod_fields, $pod->pod_data['object_fields'] );
 						}*/
 
