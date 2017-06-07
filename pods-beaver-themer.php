@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Pods Beaver Builder Themer Add-On
+ * Plugin Name: Pods Beaver Themer
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
  * Version: 1.0
