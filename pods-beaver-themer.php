@@ -131,8 +131,7 @@ function pods_beaver_fake_loop_false() {
  * @internal param string $slug
  *
  */
-function pods_loop_settings( $settings ) {
-
+function pods_loop_settings_before_form( $settings ) {
 
 	?>
     <div id="fl-builder-settings-section-pods" class="fl-builder-settings-section">
@@ -195,8 +194,8 @@ function pods_loop_settings( $settings ) {
 
 }
 
-add_action( 'fl_builder_loop_settings_before_form', 'pods_loop_settings', 99, 1 );
-add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings', 99, 1 );
+add_action( 'fl_builder_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
+add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
 
 
 function pods_loop_query( $query, $settings ) {
