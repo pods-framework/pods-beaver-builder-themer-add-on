@@ -232,7 +232,7 @@ function pods_loop_before_query_settings( $settings ) {
 	}
 
 	if ( empty( $ids ) ) {
-		return new WP_Query();
+		add_filter( 'fl_builder_loop_query', function () { return new WP_Query(); } );
 	}
 
 	// we have id's no need to specify the type
