@@ -198,10 +198,10 @@ add_action( 'fl_builder_loop_settings_before_form', 'pods_loop_settings_before_f
 add_action( 'uabb_loop_settings_before_form', 'pods_loop_settings_before_form', 10, 1 );
 
 
-function pods_loop_query( $query, $settings ) {
+function pods_loop_before_query_settings( $settings ) {
 
 	if ( empty( $settings->use_pods ) || isset( $settings->use_pods ) && 'no' == $settings->use_pods ) {
-		return $query;
+		return $settings;
 	}
 
 	$ids = array();
@@ -241,9 +241,9 @@ function pods_loop_query( $query, $settings ) {
 	$settings->{'posts_' . $settings->post_type} = implode( ', ', $ids );
 
 
-	return FLBuilderLoop::custom_query( $settings );
+	return $settings;
 }
 
-add_filter( 'fl_builder_loop_query', 'pods_loop_query', 99, 2 );
+add_filter( 'fl_builder_loop_before_query_settings', 'pods_loop_before_query_settings', 99, 2 );
 
 
