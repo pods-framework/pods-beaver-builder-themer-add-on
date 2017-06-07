@@ -166,7 +166,7 @@ function pods_loop_settings( $settings ) {
 					'pods_advanced'          => array(
 						'fields' => array( 'pods_where' ),
 					),
-				)
+				),
 			), $settings );
 
 			FLBuilder::render_settings_field( 'pods_source_relation', array(

@@ -490,8 +490,6 @@ final class PodsPageData {
 				$linked_pod = null;
 
 				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types() ) ) {
-
-
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
 						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
@@ -531,11 +529,11 @@ final class PodsPageData {
 
 				if ( isset( $field_options['add_pod_name'] ) && isset( $field_options['base_pod_name'] ) ) {
 					$base_pod_name                                                                  = $field_options['base_pod_name'];
-					$fields[ $pod_name ]['label']                                                   = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
-					$fields[ $pod_name ]['options'][ $base_pod_name . ':' . $prefix . $field_name ] = sprintf( '%s: %s%s (%s)', $base_pod_name, $prefix, $field_name, $field['type'] );
+					$fields[ $prefix.$pod_name  ]['label']                                                   = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
+					$fields[ $prefix.$pod_name  ]['options'][ $base_pod_name . ':' . $prefix . $field_name ] = sprintf( '%s: %s%s (%s)', $base_pod_name, $prefix, $field_name, $field['type'] );
 				} else {
-					$fields[ $pod_name ]['label']                            = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
-					$fields[ $pod_name ]['options'][ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
+					$fields[ $prefix.$pod_name ]['label']                            = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
+					$fields[ $prefix.$pod_name ]['options'][ $prefix . $field_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
 				}
 
 			}
