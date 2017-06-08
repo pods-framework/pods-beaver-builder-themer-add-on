@@ -78,32 +78,31 @@ final class PodsBeaverPageData {
 	/**
 	 * Get cached pod object.
 	 *
-	 * @param array|object $args    {
-	 *                              Options for getting the pod or BB settings object.
+	 * @param array|object $settings {
+	 *      Options for getting the pod or BB settings object.
 	 *
-	 * @type string        $pod     Pod name
-	 * @type string        $item_id Item ID
+	 *      @type string $pod     Pod name
+	 *      @type string $item_id Item ID
 	 * }
 	 *
 	 * @return Pods|bool Pods object if pod is valid, false if pod or item ID are not valid.
 	 *
 	 * @since 1.0
 	 */
-	public static function get_pod( $args = array() ) {
+	public static function get_pod( $settings = array() ) {
 
 		$item_id  = 0;
 		$pod_name = null;
-		$settings = null;
 
-		if ( is_array( $args ) && ! empty( $args['pod'] ) ) {
-			$pod_name = $args['pod'];
+		if ( is_array( $settings ) && ! empty( $settings['pod'] ) ) {
+			$pod_name = $settings['pod'];
 
-			if ( ! empty( $args['item_id'] ) ) {
-				$item_id = absint( $args['item_id'] );
+			if ( ! empty( $settings['item_id'] ) ) {
+				$item_id = absint( $settings['item_id'] );
 			}
-		} elseif ( is_object( $args ) ) {
-			$settings = $args;
 
+			$settings = null;
+		} elseif ( is_object( $settings ) ) {
 			$location = array();
 
 			if ( ! empty( $settings->use_pods ) && 'pods_settings_relation' === $settings->use_pods ) {
