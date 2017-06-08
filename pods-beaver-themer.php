@@ -48,7 +48,7 @@ function pods_beaver_init() {
 	}
 
 	// Include main functions
-	require_once( PODS_BEAVER_DIR . 'classes/class-pods-page-data.php' );
+	require_once( PODS_BEAVER_DIR . 'classes/class-pods-beaver-page-data.php' );
 	require_once( PODS_BEAVER_DIR . 'includes/pods-page-data.php' );
 
 	PodsBeaverPageData::init();
