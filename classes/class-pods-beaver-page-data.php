@@ -286,7 +286,7 @@ final class PodsBeaverPageData {
 		$field_url      = $settings->field . '._src.' . $settings->image_size;
 		$content['url'] = $pod->display( $field_url );
 
-		if ( ! isset( $content['url'] ) && isset( $settings['default_img_src'] ) ) {
+		if ( ! isset( $content['url'] ) && isset( $settings->default_img_src ) ) {
 			$content['id']  = $settings->default_img;
 			$content['url'] = $settings->default_img_src;
 		}
