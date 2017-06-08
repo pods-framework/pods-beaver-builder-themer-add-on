@@ -51,9 +51,9 @@ To be done ;)
 
 * Added Support to Select Templates http://pods.io/tutorials/how-tos-sceencasts-series/using-pods-templates-part-1/ you can use `[pods template='your_template']` or similar shortcode too
 * Major Cleanup
-* Introduced recurse_pod_fields() for filtering and creating the dropwdon
+* Introduced recurse_pod_fields() for filtering and creating the dropdown
 * Fixed Multiple Images if single field is selected
-* Minor Bug fixes & Improvments
+* Minor Bug fixes & Improvements
 * Added settings for image_size
 
 = 0.2.1-beta - May 9th, 2017 =
