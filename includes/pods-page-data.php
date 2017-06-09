@@ -65,7 +65,7 @@ $form = array(
 			),
 		),
 		'help'        => __( 'Create Templates in Pods Admin under Templates.', 'pods-beaver-themer' ),
-		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-themer' ),
+		'description' => '<br />' . __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-themer' ),
 	),
 	'custom_template' => array(
 		'type'        => 'text',
