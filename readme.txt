@@ -16,8 +16,8 @@ Easily select Pods fields for Beaver-Themer field connections
 Requires:
 
 * [Pods](https://wordpress.org/plugins/pods/) 2.4+
-* [Beaver Builder](https://pods.io/beaverbuilder/) 1.10+
-* [Beaver Themer](https://pods.io/beaverthemer/) 1.0+
+* [Beaver Builder](https://pods.io/beaver-builder/) 1.10+
+* [Beaver Themer](https://pods.io/beaver-themer/) 1.0+
 
 Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods. For fastest support for the Pods Beaver Themer Add-On, join our [Pods Slack Chat](https://pods.io/chat/) and ask your questions on the #beaver-themer channel.
 
