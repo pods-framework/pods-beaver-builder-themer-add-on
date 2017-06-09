@@ -1,13 +1,13 @@
 <?php
 /**
- * Plugin Name: Pods Beaver Themer
+ * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
  * Version: 1.0
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
- * Text Domain: pods-beaver-themer
- * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-themer
+ * Text Domain: pods-beaver-builder-themer-add-on
+ * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-builder-themer-add-on
  * GitHub Branch: 1.x
  *
  * Copyright 2017  Pods Foundation, Inc  (email : contact@podsfoundation.org)
@@ -71,7 +71,7 @@ function pods_beaver_admin_nag() {
 	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
 		printf(
 			'<div id="message" class="error"><p>%s</p></div>',
-			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-themer' )
+			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
 		);
 	}
 
@@ -139,15 +139,15 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	$setting_fields = array(
 		'use_pods'                      => array(
 			'type'        => 'select',
-			'label'       => __( 'Pods Content Source', 'pods-beaver-themer' ),
+			'label'       => __( 'Pods Content Source', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
-			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
-			'description' => '<br />' . __( 'Set "Source" to "Custom Query" in content tab first.', 'pods-beaver-themer' ),
+			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
+			'description' => '<br />' . __( 'Set "Source" to "Custom Query" in content tab first.', 'pods-beaver-builder-themer-add-on' ),
 			'options'     => array(
-				'no'                     => __( 'None', 'pods-beaver-themer' ),
-				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-themer' ),
-				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-themer' ),
-				'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-themer' ),
+				'no'                     => __( 'None', 'pods-beaver-builder-themer-add-on' ),
+				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-builder-themer-add-on' ),
+				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
+				'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
 			),
 			'toggle'      => array(
 				'no'                     => array(
@@ -178,16 +178,16 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 		),
 		'pods_source_relation'          => array(
 			'type'    => 'select',
-			'label'   => __( 'Field from Current Post Type', 'pods-beaver-themer' ),
-			'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-themer' ),
+			'label'   => __( 'Field from Current Post Type', 'pods-beaver-builder-themer-add-on' ),
+			'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-builder-themer-add-on' ),
 			'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
 		),
 		'pods_source_settings_relation' => $source_settings_relation,
 		'pods_where'                    => array(
 			'type'        => 'text',
-			'label'       => __( 'Customized WHERE Query', 'pods-beaver-themer' ),
-			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-themer' ),
-			'description' => __( '<a href="http://pods.io/docs/code/pods/find/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-themer' ),
+			'label'       => __( 'Customized WHERE Query', 'pods-beaver-builder-themer-add-on' ),
+			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-builder-themer-add-on' ),
+			'description' => __( '<a href="http://pods.io/docs/code/pods/find/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
 			// @todo: error handling for incorrect where!
 		),
 	);
