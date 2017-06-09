@@ -364,10 +364,15 @@ final class PodsBeaverPageData {
 	 */
 	public static function pods_get_fields( $field_options = array() ) {
 
+		$info = self::get_current_pod_info();
 
-		$pod_name = get_post_type();
+		$pod_name = 'fl-theme-layout';
 
-		if ( 'fl-theme-layout' == $pod_name ) {
+		if ( ! empty( $info['pod'] ) ) {
+			$pod_name = $info['pod'];
+		}
+
+		if ( 'fl-theme-layout' === $pod_name ) {
 			$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
 			$location = explode( ':', $location );
 
@@ -376,12 +381,18 @@ final class PodsBeaverPageData {
 			}
 		}
 
-		$fields = self::recurse_pod_fields( $pod_name, $field_options );
-
-		if ( empty( $fields ) ) {
+		if ( 'fl-theme-layout' === $pod_name ) {
 			$fields = array(
 				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' ),
 			);
+		} else {
+			$fields = self::recurse_pod_fields( $pod_name, $field_options );
+
+			if ( empty( $fields ) ) {
+				$fields = array(
+					'' => __( 'No fields found', 'pods-beaver-themer' ),
+				);
+			}
 		}
 
 		return $fields;
