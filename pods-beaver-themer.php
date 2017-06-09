@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Pods Beaver Builder Themer Add-On
+ * Plugin Name: Pods Beaver Themer
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
  * Version: 1.0
@@ -8,7 +8,7 @@
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-themer
  * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-themer
- * GitHub Branch: master
+ * GitHub Branch: 1.x
  *
  * Copyright 2017  Pods Foundation, Inc  (email : contact@podsfoundation.org)
  *
@@ -44,16 +44,16 @@ define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
 function pods_beaver_init() {
 
 	if ( ! function_exists( 'pods' ) || ! class_exists( 'FLBuilder' ) ) {
-		return false;
+		return;
 	}
 
 	// Include main functions
-	require_once( PODS_BEAVER_DIR . 'classes/class-pods-page-data.php' );
+	require_once( PODS_BEAVER_DIR . 'classes/class-pods-beaver-page-data.php' );
 	require_once( PODS_BEAVER_DIR . 'includes/pods-page-data.php' );
 
-	PodsPageData::init();
+	PodsBeaverPageData::init();
 
-	// Fake beeing in the Loop #15
+	// Fake being in the Loop #15
 	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
 	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
 
@@ -76,6 +76,7 @@ function pods_beaver_admin_nag() {
 	}
 
 }
+
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
@@ -117,3 +118,186 @@ function pods_beaver_fake_loop_false() {
 
 }
 
+
+/**
+ * Adds the custom code settings for custom post  module layouts.
+ *
+ * @param null|object $settings
+ *
+ * @since 1.0
+ */
+function pods_beaver_loop_settings_before_form( $settings ) {
+
+	$source_settings_relation = array();
+
+	$fields = PodsBeaverPageData::pods_get_settings_fields( array( 'type' => 'pick' ) );
+
+	if ( $fields && ! empty( $fields['settings_field'] ) ) {
+		$source_settings_relation = $fields['settings_field'];
+	}
+
+	$setting_fields = array(
+		'use_pods'                      => array(
+			'type'        => 'select',
+			'label'       => __( 'Pods Content Source', 'pods-beaver-themer' ),
+			'default'     => 'no',
+			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-themer' ),
+			'description' => '<br />' . __( 'Set "Source" to "Custom Query" in content tab first.', 'pods-beaver-themer' ),
+			'options'     => array(
+				'no'                     => __( 'None', 'pods-beaver-themer' ),
+				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-themer' ),
+				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-themer' ),
+				'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-themer' ),
+			),
+			'toggle'      => array(
+				'no'                     => array(
+					'fields'   => array(
+						'post_type',
+						'data_source',
+					),
+					'sections' => array(
+						'filter',
+					),
+				),
+				'pods_relation'          => array(
+					'fields' => array(
+						'pods_source_relation',
+					),
+				),
+				'pods_settings_relation' => array(
+					'fields' => array(
+						'pods_source_settings_relation',
+					),
+				),
+				'pods_advanced'          => array(
+					'fields' => array(
+						'pods_where',
+					),
+				),
+			),
+		),
+		'pods_source_relation'          => array(
+			'type'    => 'select',
+			'label'   => __( 'Field from Current Post Type', 'pods-beaver-themer' ),
+			'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-themer' ),
+			'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
+		),
+		'pods_source_settings_relation' => $source_settings_relation,
+		'pods_where'                    => array(
+			'type'        => 'text',
+			'label'       => __( 'Customized WHERE Query', 'pods-beaver-themer' ),
+			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-themer' ),
+			'description' => __( '<a href="http://pods.io/docs/code/pods/find/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-themer' ),
+			// @todo: error handling for incorrect where!
+		),
+	);
+?>
+	<div id="fl-builder-settings-section-pods" class="fl-builder-settings-section">
+		<table class="fl-form-table">
+			<?php
+			foreach ( $setting_fields as $setting_name => $setting_data ) {
+				if ( $setting_data ) {
+					FLBuilder::render_settings_field( $setting_name, $setting_data, $settings );
+				}
+			}
+			?>
+		</table>
+	</div>
+<?php
+
+}
+
+// don't use yet - issues with pagination!
+// add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+// Possibly need to hook into uabb_loop_settings_before_form?
+
+/**
+ * Handle query integration.
+ *
+ * @param object $settings
+ *
+ * @return object
+ *
+ * @since 1.0
+ */
+function pods_beaver_loop_before_query_settings( $settings ) {
+
+	if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
+		return $settings;
+	}
+
+	$ids = array();
+
+	$find_params  = array();
+	$field_params = array();
+
+	$pod = null;
+
+	if ( 'pods_relation' === $settings->use_pods && ! empty( $settings->pods_source_relation ) ) {
+		$field_params = array(
+			'output' => 'id',
+			'name'   => trim( $settings->pods_source_relation ),
+		);
+
+		$pod = PodsBeaverPageData::get_pod();
+	} elseif ( 'pods_settings_relation' === $settings->use_pods ) {
+		$pod = PodsBeaverPageData::get_pod( $settings );
+	} elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
+		$find_params = array(
+			'where' => trim( $settings->pods_where ),
+			'limit' => - 1,
+		);
+
+		$pod = PodsBeaverPageData::get_pod();
+	}
+
+	if ( $pod ) {
+		if ( $find_params ) {
+			// Optimized select only gets the ID
+			$find_params['select']     = 't.' . $pod->pod_data['field_id'];
+			$find_params['pagination'] = false;
+			$find_params['search']     = false;
+
+			// @todo: catch error for wrong "where"
+			$pod->find( $find_params );
+
+			if ( 0 < $pod->total() ) {
+				while ( $pod->fetch() ) {
+					$ids[] = $pod->id();
+				}
+			}
+		} elseif ( $field_params && $pod->exists() ) {
+			$ids = $pod->field( $field_params );
+		}
+	}
+
+	if ( empty( $ids ) ) {
+		add_filter( 'fl_builder_loop_query', 'pods_beaver_empty_query' );
+	}
+
+	// we have id's no need to specify the type
+	$settings->post_type = 'any';
+
+	$setting_id_field = 'posts_' . $settings->post_type;
+
+	// get comma separated list to power post__in for the BB Custom Query
+	$settings->{$setting_id_field} = implode( ', ', $ids );
+
+	return $settings;
+}
+
+// don't use yet - issues with pagination!
+// add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
+
+/**
+ * Return empty WP_Query.
+ *
+ * @return WP_Query
+ *
+ * @since 1.0
+ */
+function pods_beaver_empty_query() {
+
+	return new WP_Query;
+
+}

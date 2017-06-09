@@ -7,17 +7,16 @@ Short Introduction Video for Pods & Beaver Themer from a User to give you an Ide
 
 [![Watch the video](https://slack-imgs.com/?c=1&o1=wi400.he300&url=https%3A%2F%2Fi.ytimg.com%2Fvi%2FbpkbZTBAz0o%2Fhqdefault.jpg)](https://www.youtube.com/watch?v=bpkbZTBAz0o)
 
-Big Thank you @Jonathan !
-
+Big Thank you to @Jonathan!
 
 ## Requirements
 
 * [Pods](http://pods.io/) 2.4+
-* [Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
-* [Beaver Themer](https://www.wpbeaverbuilder.com) 1.0+
+* [Beaver Builder](http://pods.io/beaver-builder/) 1.10+
+* [Beaver Themer](http://pods.io/beaver-themer/) 1.0+
 
 Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
-Please report bugs or request featured on [GitHub](https://github.com/quasel/pods-beaver-themer/issues)
+Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-beaver-themer/issues)
 
 Generally you can use the shortcode `[pods field='your_field']` anywhere ( every text/url/html field ) it's basically the same as with `[wpbb ...]`
 Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.io/docs/build/using-magic-tags/ for more options!
@@ -28,9 +27,6 @@ Or to pull in a Template: `[pods name="your_pod" template="your_template"]`
 [Join the Pods Slack](https://pods.io/chat) and look for the channel _#beaver-themer_
 You will be automatically added to some channels. Please take a look at other channels too.
 
-
-
-
 ## Beta - use in production at your own risk!
 
 #### Field connectors for photo and multiple-photo working:
@@ -38,18 +34,15 @@ You will be automatically added to some channels. Please take a look at other ch
 - Choose Size
 - Set default image
 
-
 #### Field connectors for url, html, string:
 - select dropdown populated with all existing fields for PODS - field_name ( Custom Post Type )
 - currently uses just plain pods()->display();
 - images fields are only output as url for magic tag style use advanced ...
 - fields with multiple relations (pick_field) still need some ideas / use cases best to go and use Templates for it!
 
-
 ## Planned:
 - add settings/code for output_type ( e.g IMAGES as url, image-link, ...)
 
 
-
 Help / Feedback Welcome - Thank You!!!
-ernhard aka Quasel
+- Bernhard aka Quasel
