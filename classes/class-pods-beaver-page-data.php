@@ -390,7 +390,7 @@ final class PodsBeaverPageData {
 
 			if ( empty( $fields ) ) {
 				$fields = array(
-					'' => __( 'No fields found', 'pods-beaver-themer' ),
+					'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-themer' ), $pod_name ),
 				);
 			}
 		}
@@ -491,7 +491,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $templates ) ) {
 			$templates = array(
-				'' => __( 'No templates found (Check Preview / Location)', 'pods-beaver-themer' ),
+				'' => __( 'No templates found', 'pods-beaver-themer' ),
 			);
 		}
 
@@ -529,7 +529,7 @@ final class PodsBeaverPageData {
 			}
 
 			if ( empty( $options ) ) {
-				$options[''] = __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' );
+				$options[''] = __( 'No fields found', 'pods-beaver-themer' );
 			}
 
 			$fields = array(
@@ -543,7 +543,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $fields ) ) {
 			$fields['options'] = array(
-				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' ),
+				'' => __( 'No fields found', 'pods-beaver-themer' ),
 			);
 		}
 
