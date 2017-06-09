@@ -8,64 +8,64 @@ Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods.
+Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com/beaver-themer/). Provides a UI for mapping Field Connections with Pods.
 
 == Description ==
-Easily select Pods fields for Beaver-Themer field connections
+
+Easily select Pods fields in Beaver-Themer field connections from a dropdown based on the currently dispalyed item (CPT).
 
 Requires:
 
 * [Pods](https://wordpress.org/plugins/pods/) 2.4+
-* [Beaver Builder](https://pods.io/beaver-builder/) 1.10+
-* [Beaver Themer](https://pods.io/beaver-themer/) 1.0+
+* [Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
+* [Beaver Themer](https://www.wpbeaverbuilder.com/beaver-themer/) 1.0+
 
-Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods. For fastest support for the Pods Beaver Themer Add-On, join our [Pods Slack Chat](https://pods.io/chat/) and ask your questions on the #beaver-themer channel.
+= Features =
 
-Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-beaver-themer/issues)
+* Support for Field Connections including Images, Text, Relationships, and Website fields.
+
+Please keep in mind this is the first released version. Your feedback and ideas will help improve future releases.
+
+= Bug Reports =
+
+Bug Reports and ideas for Pods Beaver Themer integration are [welcomed on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues). Please note GitHub is _not_ a support forum.
+
+= Planned Features =
+
+* Posts Module: Select Pods as source for the query to display posts based on related fields, or a customized pods query
+* Select fields from any User not only based on the current logged in user
+* Add more default options
+
+= Further Reading =
+
+For more info, check out the following articles:
+
+* [Video conversation about the Integration](https://youtu.be/zBXQuFWBoRA?list=PLciFKq2WdpdBMdSJ073InW1dS4JHkI-bF)
+* [Building a Custom Settings Page using Pods and Beaver Themer](https://www.youtube.com/watch?v=qy1NqBiShpI).
+* [Join the #beaver-themer channel on Pods Slack](https://pods.io/chat/) from the Pods Framework Team.
+
+== Frequently Asked Questions ==
+
+= Where do we go for Support on your plugin? =
+
+For the fastest support, you can contact us on our Slack Chat at [https://pods.io/chat/](https://pods.io/chat/) in the #beaver-themer channel. We do not staff our Slack channel 24 hours, but we do check any questions that come through daily and reply to any unanswered questions.
+
+We are growing a community of Beaver Themer users who are starting to hang out on our Pods Slack Chat. Please be respectful and realize that most everyone who is helping you is a volunteer sharing their time to make this product better.
+
+= I've found a Bug or I have a Feature Request =
+
+If you've uncovered a Bug or have a Feature Request, we kindly request you to [Create an issue on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues/new). Please be very specific about what steps you did to create the issue you're having and include any screenshots or other configuration parameters to help us recreate or isolate the issue.
 
 == Screenshots ==
 
-To be done ;)
+1. Select type of Field Connection.
+2. Example dropwdown for different field types.
+3. Support for all types of Field Connections like Color.
+4. Example dropwdown for color.
+5. Example for Templates or Magic Tags.
 
 == Changelog ==
 
-= 1.0 - May 18th, 2017 =
+= 1.0 - June 9th, 2017 =
 
 * Official release on WordPress.org
-* Added support for https://github.com/afragen/github-updater
-* Code Review by sc0ttkclark
-* Fixed Default Images
-* Added Internal Caching by sc0ttkclark
-
-= 0.3.2-beta - May 18th, 2017 =
-
-* Thanks to @alex testing, added some edge case checks
-* Fixed default image
-
-= 0.3.1-beta - May 17th, 2017 =
-
-* Bug fix for illegal string offset
-* Improve Description
-
-= 0.3-beta - May 17th, 2017 =
-
-* Added Support to Select Templates http://pods.io/tutorials/how-tos-sceencasts-series/using-pods-templates-part-1/ you can use `[pods template='your_template']` or similar shortcode too
-* Major Cleanup
-* Introduced recurse_pod_fields() for filtering and creating the dropwdon
-* Fixed Multiple Images if single field is selected
-* Minor Bug fixes & Improvments
-* Added settings for image_size
-
-= 0.2.1-beta - May 9th, 2017 =
-
-* fixed single image field filtering ( wrong logic )
-
-= 0.2-beta - May 9th, 2017 =
-
-* added Pods Template Support
-* Cleanup
-* Improved Naming
-
-= 0.1-alpha - February 25th, 2017 =
-
-* Initial release
