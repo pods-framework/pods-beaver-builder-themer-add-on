@@ -11,7 +11,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com/beaver-themer/). Provides a UI for mapping Field Connections with Pods.
 
 == Description ==
-Easily select Pods fields in Beaver-Themer field connections from a dropdown based on the currently dispalyed item (CPT). Please keep in mind this is the first released version! Your feedback and ideas will help improve future releases. Support for all types of Field Connections like Images, Text, Url and others are planned and will be coming in future updates.
+
+Easily select Pods fields in Beaver-Themer field connections from a dropdown based on the currently dispalyed item (CPT).
 
 Requires:
 
@@ -19,34 +20,29 @@ Requires:
 * [Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
 * [Beaver Themer](https://www.wpbeaverbuilder.com/beaver-themer/) 1.0+
 
+= Features =
 
-> <strong>Bug Reports</strong><br>
-> Bug Reports & Ideas for Pods-Beaver-Themer Integration are [welcomed on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues). Please note GitHub is _not_ a support forum.
+* Support for Field Connections including Images, Text, Relationships, and Website fields.
+
+Please keep in mind this is the first released version. Your feedback and ideas will help improve future releases.
+
+= Bug Reports =
+
+Bug Reports and ideas for Pods Beaver Themer integration are [welcomed on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues). Please note GitHub is _not_ a support forum.
 
 = Planned Features =
-* Posts Module: Select pods as source for the query to display posts based on related fields, or a customized pods query
+
+* Posts Module: Select Pods as source for the query to display posts based on related fields, or a customized pods query
 * Select fields from any User not only based on the current logged in user
-* Add more default Options
+* Add more default options
 
 = Further Reading =
+
 For more info, check out the following articles:
 
 * [Video conversation about the Integration](https://youtu.be/zBXQuFWBoRA?list=PLciFKq2WdpdBMdSJ073InW1dS4JHkI-bF)
-* [Building a Custom Settings Page using Pods Plugin and Beaver Themer](https://www.youtube.com/watch?v=qy1NqBiShpI).
-* [Join the #beaver-themer Slack Channel ](https://pods.io/chat/) from the Pods Framework Team.
-
-== Installation ==
-
-=== From within WordPress ===
-
-1. Visit 'Plugins > Add New'
-1. Search for 'Pods Beaver Themer'
-1. Activate Pods Beaver Themer from your Plugins page.
-
-=== Manually ===
-
-1. Upload the `pods-beaver-themer` folder to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+* [Building a Custom Settings Page using Pods and Beaver Themer](https://www.youtube.com/watch?v=qy1NqBiShpI).
+* [Join the #beaver-themer channel on Pods Slack](https://pods.io/chat/) from the Pods Framework Team.
 
 == Frequently Asked Questions ==
 
@@ -54,11 +50,11 @@ For more info, check out the following articles:
 
 For the fastest support, you can contact us on our Slack Chat at [https://pods.io/chat/](https://pods.io/chat/) in the #beaver-themer channel. We do not staff our Slack channel 24 hours, but we do check any questions that come through daily and reply to any unanswered questions.
 
-We are growing a community of Beaver Themer users who are starting to hang out on our Pods Slack Chat. Please be respectful and realize that most everyone who is helping you is a volunteer sharing their time to make this product better. 
+We are growing a community of Beaver Themer users who are starting to hang out on our Pods Slack Chat. Please be respectful and realize that most everyone who is helping you is a volunteer sharing their time to make this product better.
 
 = I've found a Bug or I have a Feature Request =
 
-If you’ve uncovered a Bug or have a Feature Request, we kindly request you to create an Issue on our [GitHub Repository](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues/new). Please be very specific about what steps you did to create the issue you’re having and include any screenshots or other configuration parameters to help us recreate or isolate the issue.
+If you've uncovered a Bug or have a Feature Request, we kindly request you to [Create an issue on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues/new). Please be very specific about what steps you did to create the issue you're having and include any screenshots or other configuration parameters to help us recreate or isolate the issue.
 
 == Screenshots ==
 
@@ -70,12 +66,6 @@ If you’ve uncovered a Bug or have a Feature Request, we kindly request you to 
 
 == Changelog ==
 
-= 1.0 =
-
-Release Date: June 9th, 2017
+= 1.0 - June 9th, 2017 =
 
 * Official release on WordPress.org
-* Added support for https://github.com/afragen/github-updater
-* Code Review by sc0ttkclark
-
-
