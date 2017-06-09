@@ -12,7 +12,7 @@ Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com/beaver-t
 
 == Description ==
 
-Easily select Pods fields in Beaver-Themer field connections from a dropdown based on the currently dispalyed item (CPT).
+Easily select Pods fields in Beaver-Themer field connections from a dropdown based on the currently displayed item (CPT).
 
 Requires:
 
@@ -59,9 +59,9 @@ If you've uncovered a Bug or have a Feature Request, we kindly request you to [C
 == Screenshots ==
 
 1. Select type of Field Connection.
-2. Example dropwdown for different field types.
+2. Example dropdown for different field types.
 3. Support for all types of Field Connections like Color.
-4. Example dropwdown for color.
+4. Example dropdown for color.
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
