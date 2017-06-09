@@ -24,7 +24,7 @@ final class PodsBeaverPageData {
 	public static function init() {
 
 		FLPageData::add_group( 'pods', array(
-			'label' => __( 'Pods', 'pods-beaver-themer' ),
+			'label' => __( 'Pods', 'pods-beaver-builder-themer-add-on' ),
 		) );
 
 	}
@@ -383,14 +383,14 @@ final class PodsBeaverPageData {
 
 		if ( 'fl-theme-layout' === $pod_name ) {
 			$fields = array(
-				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' ),
+				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-builder-themer-add-on' ),
 			);
 		} else {
 			$fields = self::recurse_pod_fields( $pod_name, $field_options );
 
 			if ( empty( $fields ) ) {
 				$fields = array(
-					'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-themer' ), $pod_name ),
+					'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-builder-themer-add-on' ), $pod_name ),
 				);
 			}
 		}
@@ -482,7 +482,7 @@ final class PodsBeaverPageData {
 		$all_templates = (array) pods_api()->load_templates( array() );
 
 		$templates = array(
-			'custom' => __( 'Magic Tag', 'pods-beaver-themer' ),
+			'custom' => __( 'Magic Tag', 'pods-beaver-builder-themer-add-on' ),
 		);
 
 		foreach ( $all_templates as $template ) {
@@ -491,7 +491,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $templates ) ) {
 			$templates = array(
-				'' => __( 'No templates found', 'pods-beaver-themer' ),
+				'' => __( 'No templates found', 'pods-beaver-builder-themer-add-on' ),
 			);
 		}
 
@@ -529,13 +529,13 @@ final class PodsBeaverPageData {
 			}
 
 			if ( empty( $options ) ) {
-				$options[''] = __( 'No fields found', 'pods-beaver-themer' );
+				$options[''] = __( 'No fields found', 'pods-beaver-builder-themer-add-on' );
 			}
 
 			$fields = array(
 				'settings_field' => array(
 					'type'    => 'select',
-					'label'   => __( 'Field from Settings / Current User', 'pods-beaver-themer' ),
+					'label'   => __( 'Field from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
 					'options' => $options,
 				),
 			);
@@ -543,7 +543,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $fields ) ) {
 			$fields['options'] = array(
-				'' => __( 'No fields found', 'pods-beaver-themer' ),
+				'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
 			);
 		}
 

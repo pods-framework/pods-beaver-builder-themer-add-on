@@ -1,4 +1,4 @@
-=== Pods Beaver Themer ===
+=== Pods Beaver Themer Add-On ===
 Contributors: quasel, sc0ttkclark, jimtrue
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,

@@ -1,4 +1,4 @@
-# pods-beaver-themer
+# pods-beaver-builder-themer-add-on
 **Integration of Beaver Themer and Pods**
 
 Details: https://github.com/pods-framework/pods/issues/4004
@@ -16,7 +16,7 @@ Big Thank you to @Jonathan!
 * [Beaver Themer](http://pods.io/beaver-themer/) 1.0+
 
 Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
-Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-beaver-themer/issues)
+Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues)
 
 Generally you can use the shortcode `[pods field='your_field']` anywhere ( every text/url/html field ) it's basically the same as with `[wpbb ...]`
 Things like`[pods field='your_field._img.thumbnail']` work fine see http://pods.io/docs/build/using-magic-tags/ for more options!
