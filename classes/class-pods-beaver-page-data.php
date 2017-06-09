@@ -377,7 +377,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $fields ) ) {
 			$fields = array(
-				'' => __( 'No fields found (Check Preview/Location)', 'pods-beaver-themer' ),
+				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' ),
 			);
 		}
 
@@ -467,21 +467,21 @@ final class PodsBeaverPageData {
 
 		$all_templates = (array) pods_api()->load_templates( array() );
 
-		$fields = array(
+		$templates = array(
 			'custom' => __( 'Magic Tag', 'pods-beaver-themer' ),
 		);
 
 		foreach ( $all_templates as $template ) {
-			$fields[ $template['name'] ] = $template['name'];
+			$templates[ $template['name'] ] = $template['name'];
 		}
 
-		if ( empty( $fields ) ) {
-			$fields = array(
-				'' => __( 'No fields found (Check Preview/Location)', 'pods-beaver-themer' ),
+		if ( empty( $templates ) ) {
+			$templates = array(
+				'' => __( 'No templates found (Check Preview / Location)', 'pods-beaver-themer' ),
 			);
 		}
 
-		return $fields;
+		return $templates;
 
 	}
 
@@ -514,10 +514,14 @@ final class PodsBeaverPageData {
 				$options = array_replace_recursive( $options, self::recurse_pod_fields( $pod_name, $field_options ) );
 			}
 
+			if ( empty( $options ) ) {
+				$options[''] = __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' );
+			}
+
 			$fields = array(
 				'settings_field' => array(
 					'type'    => 'select',
-					'label'   => __( 'Field from settings/current user:', 'pods-beaver-themer' ),
+					'label'   => __( 'Field from Settings / Current User', 'pods-beaver-themer' ),
 					'options' => $options,
 				),
 			);
@@ -525,7 +529,7 @@ final class PodsBeaverPageData {
 
 		if ( empty( $fields ) ) {
 			$fields['options'] = array(
-				'' => __( 'No fields found (Check Preview/Location)', 'pods-beaver-themer' ),
+				'' => __( 'No fields found (Check Preview / Location)', 'pods-beaver-themer' ),
 			);
 		}
 

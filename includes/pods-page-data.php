@@ -14,7 +14,7 @@
  * Pods CPT / TAX / ...
  */
 $data = array(
-	'label'        => __( 'Field or related field', 'pods-beaver-themer' ),
+	'label'        => __( 'Field or Related Field', 'pods-beaver-themer' ),
 	'group'        => 'pods',
 	'type'         => array(
 		'string',
@@ -28,10 +28,10 @@ $data = array(
 $form = array(
 	'field' => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left', 'pods-beaver-themer' ),
-		'description' => __( 'based on preview location', 'pods-beaver-themer' ),
+		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-themer' ),
+		'description' => __( 'Based on preview location', 'pods-beaver-themer' ),
 	),
 );
 
@@ -55,7 +55,7 @@ $data = array(
 $form = array(
 	'template'        => array(
 		'type'        => 'select',
-		'label'       => __( 'Template:', 'pods-beaver-themer' ),
+		'label'       => __( 'Template', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_templates',
 		'toggle'      => array(
 			'custom' => array(
@@ -64,14 +64,14 @@ $form = array(
 				),
 			),
 		),
-		'help'        => __( 'Create a Templates in pods admin -> Template', 'pods-beaver-themer'),
-		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/">Pods-Documentaion</a>', 'pods-beaver-themer' ),
+		'help'        => __( 'Create Templates in Pods Admin under Templates.', 'pods-beaver-themer' ),
+		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-themer' ),
 	),
 	'custom_template' => array(
 		'type'        => 'text',
 		'label'       => __( 'Magic Tags:', 'pods-beaver-themer' ),
-		'help'        => __( 'Full suppoort for Magic Tags & HTML but no further shortcodes!', 'pods-beaver-themer'),
-		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/">Pods-Documentaion</a>', 'pods-beaver-themer' ),
+		'help'        => __( 'Full suppoort for Magic Tags & HTML but no further shortcodes!', 'pods-beaver-themer' ),
+		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-themer' ),
 		'default'     => '{@your_field}',
 		'placeholder' => __( 'HTML & Magic Tags only', 'pods-beaver-themer' ),
 	),
@@ -88,7 +88,7 @@ FLPageData::add_post_property_settings_fields( 'pods_template', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'User or Settings fields', 'pods-beaver-themer' ),
+	'label'  => __( 'User or Settings Fields', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -129,10 +129,10 @@ $data = array(
 $form = array(
 	'field'       => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_image_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left', 'pods-beaver-themer' ),
-		'description' => __( 'based on preview location', 'pods-beaver-themer' ),
+		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-themer' ),
+		'description' => __( 'Based on preview location', 'pods-beaver-themer' ),
 	),
 	'image_size'  => array(
 		'type'    => 'photo-sizes',
@@ -163,10 +163,10 @@ $data = array(
 $form = array(
 	'field'       => array(
 		'type'        => 'text',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
-		'description' => __( 'Must return an ID!', 'pods-beaver-themer' ),
-		'help'        => __( 'Enter field name, traversal is supported ', 'pods-beaver-themer' ),
-		'placeholder' => __( 'e.g category.image', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
+		'description' => __( 'Must return an ID', 'pods-beaver-themer' ),
+		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-themer' ),
+		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-themer' ),
 	),
 	'image_size'  => array(
 		'type'    => 'photo-sizes',
@@ -197,10 +197,10 @@ $data = array(
 $form = array(
 	'field' => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_multiple_images_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left', 'pods-beaver-themer' ),
-		'description' => __( 'based on preview location', 'pods-beaver-themer' ),
+		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-themer' ),
+		'description' => __( 'Based on preview location', 'pods-beaver-themer' ),
 	),
 );
 
@@ -215,7 +215,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
  * Pods Settings Photo (Image)
  */
 $data = array(
-	'label'  => __( 'User or Settings fields', 'pods-beaver-themer' ),
+	'label'  => __( 'User or Settings Fields', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo',
@@ -241,7 +241,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
  * Pods Settings Multiple Photos (Images)
  */
 $data = array(
-	'label'  => __( 'User or Settings fields', 'pods-beaver-themer' ),
+	'label'  => __( 'User or Settings Fields', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'multiple-photos',
@@ -276,7 +276,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_multiple_photos', 
  * Pods CPT
  */
 $data = array(
-	'label'  => __( 'Url field', 'pods-beaver-themer' ),
+	'label'  => __( 'URL Field', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'url',
@@ -288,10 +288,10 @@ $data = array(
 $form = array(
 	'field' => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_url_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left', 'pods-beaver-themer' ),
-		'description' => __( 'based on preview location', 'pods-beaver-themer' ),
+		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-themer' ),
+		'description' => __( 'Based on preview location', 'pods-beaver-themer' ),
 	),
 );
 
@@ -306,7 +306,7 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  * Pods Settings / User
  */
 $data = array(
-	'label'  => __( 'User or Settings fields', 'pods-beaver-themer' ),
+	'label'  => __( 'User or Settings Fields', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'url',
@@ -338,7 +338,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_url', $form );
  * Pods CPT / TAX / ...
  */
 $data = array(
-	'label'        => __( 'Field or related field', 'pods-beaver-themer' ),
+	'label'        => __( 'Field or Related Field', 'pods-beaver-themer' ),
 	'preview_text' => 'label',
 	'group'        => 'pods',
 	'type'         => array(
@@ -350,10 +350,10 @@ $data = array(
 $form = array(
 	'field' => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name:', 'pods-beaver-themer' ),
+		'label'       => __( 'Field Name', 'pods-beaver-themer' ),
 		'options'     => 'PodsBeaverPageData::pods_get_color_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left', 'pods-beaver-themer' ),
-		'description' => __( 'based on preview location', 'pods-beaver-themer' ),
+		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-themer' ),
+		'description' => __( 'Based on preview location', 'pods-beaver-themer' ),
 	),
 );
 
@@ -368,7 +368,7 @@ FLPageData::add_post_property_settings_fields( 'pods_color', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'User or Settings fields', 'pods-beaver-themer' ),
+	'label'  => __( 'User or Settings Fields', 'pods-beaver-themer' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'color',
