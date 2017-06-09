@@ -3,7 +3,7 @@ Contributors: quasel, sc0ttkclark, jimtrue
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
-Tested up to: 4.7.5
+Tested up to: 4.8
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,10 +16,10 @@ Easily select Pods fields for Beaver-Themer field connections
 Requires:
 
 * [Pods](https://wordpress.org/plugins/pods/) 2.4+
-* [Beaver Builder](https://www.wpbeaverbuilder.com) 1.10+
-* [Beaver Themer](https://www.wpbeaverbuilder.com) 1.0+
+* [Beaver Builder](https://pods.io/beaverbuilder/) 1.10+
+* [Beaver Themer](https://pods.io/beaverthemer/) 1.0+
 
-Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
+Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods. For fastest support for the Pods Beaver Themer Add-On, join our [Pods Slack Chat](https://pods.io/chat/) and ask your questions on the #beaver-themer channel.
 
 Please report bugs or request featured on [GitHub](https://github.com/pods-framework/pods-beaver-themer/issues)
 
