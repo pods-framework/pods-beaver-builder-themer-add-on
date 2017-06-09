@@ -364,16 +364,19 @@ final class PodsBeaverPageData {
 	 */
 	public static function pods_get_fields( $field_options = array() ) {
 
-		$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
-		$location = explode( ':', $location );
 
-		$fields = array();
+		$pod_name = get_post_type();
 
-		if ( ! empty( $location[1] ) ) {
-			$pod_name = $location[1];
+		if ( 'fl-theme-layout' == $pod_name ) {
+			$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
+			$location = explode( ':', $location );
 
-			$fields = self::recurse_pod_fields( $pod_name, $field_options );
+			if ( ! empty( $location[1] ) ) {
+				$pod_name = $location[1];
+			}
 		}
+
+		$fields = self::recurse_pod_fields( $pod_name, $field_options );
 
 		if ( empty( $fields ) ) {
 			$fields = array(
