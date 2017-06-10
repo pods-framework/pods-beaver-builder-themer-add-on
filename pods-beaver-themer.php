@@ -208,7 +208,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 }
 
 // don't use yet - issues with pagination!
-// add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 // Possibly need to hook into uabb_loop_settings_before_form?
 
 /**
@@ -231,25 +231,24 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$find_params  = array();
 	$field_params = array();
 
-	$pod = null;
+	$pod = $pod = PodsBeaverPageData::get_pod( $settings );
 
 	if ( 'pods_relation' === $settings->use_pods && ! empty( $settings->pods_source_relation ) ) {
 		$field_params = array(
-			'output' => 'id',
 			'name'   => trim( $settings->pods_source_relation ),
 		);
-
-		$pod = PodsBeaverPageData::get_pod();
 	} elseif ( 'pods_settings_relation' === $settings->use_pods ) {
-		$pod = PodsBeaverPageData::get_pod( $settings );
+		$field_params = array(
+			'name'   => trim( $settings->field ),
+		);
 	} elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
 		$find_params = array(
 			'where' => trim( $settings->pods_where ),
 			'limit' => - 1,
 		);
-
-		$pod = PodsBeaverPageData::get_pod();
 	}
+
+
 
 	if ( $pod ) {
 		if ( $find_params ) {
@@ -267,6 +266,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 				}
 			}
 		} elseif ( $field_params && $pod->exists() ) {
+		    $field_params['output'] = 'id';
 			$ids = $pod->field( $field_params );
 		}
 	}
@@ -287,7 +287,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 }
 
 // don't use yet - issues with pagination!
-// add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
+add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 /**
  * Return empty WP_Query.
