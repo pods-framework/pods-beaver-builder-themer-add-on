@@ -227,7 +227,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		return $settings;
 	}
 
-	global $wp_query, $wp_the_query, $paged;
+/*	global $wp_query, $wp_the_query, $paged;
 
 	$flpaged = $wp_the_query->get( 'flpaged'. FLBuilderLoop::$loop_counter );
 	$page_qv = $wp_the_query->get( 'page' );
@@ -235,8 +235,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$loop_counter = FLBuilderLoop::$loop_counter;
 	$paged_beaver = FLBuilderLoop::get_paged();
 	$max_page = $wp_query->max_num_pages;
-
-
+*/
 
 
 	$ids = array();
