@@ -147,13 +147,14 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 				'no'                     => __( 'None', 'pods-beaver-builder-themer-add-on' ),
 				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-builder-themer-add-on' ),
 				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
-				'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
+				/*'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),*/
 			),
 			'toggle'      => array(
 				'no'                     => array(
 					'fields'   => array(
 						'post_type',
 						'data_source',
+						'pagination',
 					),
 					'sections' => array(
 						'filter',
@@ -169,11 +170,11 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 						'pods_source_settings_relation',
 					),
 				),
-				'pods_advanced'          => array(
+/*				'pods_advanced'          => array(
 					'fields' => array(
 						'pods_where',
 					),
-				),
+				),*/
 			),
 		),
 		'pods_source_relation'          => array(
@@ -183,13 +184,13 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
 		),
 		'pods_source_settings_relation' => $source_settings_relation,
-		'pods_where'                    => array(
+/*		'pods_where'                    => array(
 			'type'        => 'text',
 			'label'       => __( 'Customized WHERE Query', 'pods-beaver-builder-themer-add-on' ),
 			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-builder-themer-add-on' ),
 			'description' => __( '<a href="http://pods.io/docs/code/pods/find/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
 			// @todo: error handling for incorrect where!
-		),
+		),*/
 	);
 ?>
 	<div id="fl-builder-settings-section-pods" class="fl-builder-settings-section">
@@ -226,6 +227,18 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		return $settings;
 	}
 
+	global $wp_query, $wp_the_query, $paged;
+
+	$flpaged = $wp_the_query->get( 'flpaged'. FLBuilderLoop::$loop_counter );
+	$page_qv = $wp_the_query->get( 'page' );
+	$paged_qv = $wp_the_query->get( 'paged' );
+	$loop_counter = FLBuilderLoop::$loop_counter;
+	$paged_beaver = FLBuilderLoop::get_paged();
+	$max_page = $wp_query->max_num_pages;
+
+
+
+
 	$ids = array();
 
 	$find_params  = array();
@@ -241,13 +254,12 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		$field_params = array(
 			'name'   => trim( $settings->field ),
 		);
-	} elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
+	} /*elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
 		$find_params = array(
 			'where' => trim( $settings->pods_where ),
 			'limit' => - 1,
 		);
-	}
-
+	}*/
 
 
 	if ( $pod ) {
