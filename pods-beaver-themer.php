@@ -173,6 +173,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 /*				'pods_advanced'          => array(
 					'fields' => array(
 						'pods_where',
+                        'post_type',
 					),
 				),*/
 			),
@@ -261,8 +262,8 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		);
 	}*/
 
-	$find_params = apply_filters('pods_beaver_loop_settings_find', $find_params, $settings, $pod);
-	$field_params = apply_filters('pods_beaver_loop_settings_field', $field_params, $settings, $pod);
+	$find_params = apply_filters('pods_beaver_loop_settings_find_params', $find_params, $settings, $pod);
+	$field_params = apply_filters('pods_beaver_loop_settings_field_params', $field_params, $settings, $pod);
 
 
 	if ( $pod ) {
@@ -293,6 +294,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 	// we have id's no need to specify the type
 	$settings->post_type = 'any';
+	add_filter('uabb_blog_posts_query_args', 'pods_beaver_uabb_blog_posts', 10, 2);
 
 	$setting_id_field = 'posts_' . $settings->post_type;
 
@@ -334,3 +336,24 @@ function pods_beaver_render_settings_field_order_by($field, $name, $settings) {
 	return $field;
 }
 
+
+/**
+ * work around UABB overly aggressiv setting of post_type
+ *
+ * @param array $args
+ * @param object $settings
+ *
+ * @return array $field
+ *
+ * @since 1.1
+ */
+function pods_beaver_uabb_blog_posts( $args, $settings ) {
+
+	if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
+		return $args;
+	}
+
+    $args['post_type'] = 'any';
+
+	return $args;
+}
