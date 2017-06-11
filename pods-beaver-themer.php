@@ -206,7 +206,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	</div>
 <?php
 
-    add_filter('fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3);
+    add_filter('fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3);
 
 }
 
@@ -261,6 +261,10 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		);
 	}*/
 
+	$find_params = apply_filters('pods_beaver_loop_settings_find', $find_params, $settings, $pod);
+	$field_params = apply_filters('pods_beaver_loop_settings_field', $field_params, $settings, $pod);
+
+
 	if ( $pod ) {
 		if ( $find_params ) {
 			// Optimized select only gets the ID
@@ -283,6 +287,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	}
 
 	if ( empty( $ids ) ) {
+	    // No Fields found make sure the end result is an empty WP_Query
 		add_filter( 'fl_builder_loop_query', 'pods_beaver_empty_query' );
 	}
 
@@ -294,7 +299,6 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	// get comma separated list to power post__in for the BB Custom Query
 	$settings->{$setting_id_field} = implode( ', ', $ids );
 
-	// account for orderby relationship sort order
 
 	return $settings;
 }
@@ -321,7 +325,7 @@ function pods_beaver_empty_query() {
  *
  * @since 1.1
  */
-function pods_beaver_render_settings_field($field, $name, $settings) {
+function pods_beaver_render_settings_field_order_by($field, $name, $settings) {
 
 	if ( 'order_by' == $name ) {
 		$field['options']['post__in'] = __('Preserve Relationship (pick) Order', 'pods-beaver-builder-themer-add-on');
