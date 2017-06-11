@@ -245,7 +245,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$find_params  = array();
 	$field_params = array();
 
-	$pod = $pod = PodsBeaverPageData::get_pod( $settings );
+	$pod = PodsBeaverPageData::get_pod( $settings );
 
 	if ( 'pods_relation' === $settings->use_pods && ! empty( $settings->pods_source_relation ) ) {
 		$field_params = array(
