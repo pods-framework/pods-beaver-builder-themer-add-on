@@ -68,7 +68,8 @@ If you've uncovered a Bug or have a Feature Request, we kindly request you to [C
 
 = 1.1 - June 9th, 2017 =
 
-* Post Module support for Relations
+* Output related pods in Beaver Builde: Post Module, Post Carousel, Post Slider and UABB: Advanced Posts
+*
 
 = 1.0 - June 9th, 2017 =
 
