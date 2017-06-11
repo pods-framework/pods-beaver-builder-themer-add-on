@@ -72,7 +72,8 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 = 1.1 - June 9th, 2017 =
 
-* Output related pods in Beaver Builder: Post Module, Post Carousel, Post Slider and UABB: Advanced Posts
+* Output related pods in Beaver Builder: Post Module, Post Carousel, Post Slider / PowerPack (1.2.8+): Content Grid / UABB (1.4.5+): Advanced Posts
+* Code Cleanup & Improvements
 
 = 1.0 - June 9th, 2017 =
 
