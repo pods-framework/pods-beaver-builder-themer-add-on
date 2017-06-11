@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.0
+ * Version: 1.1-a-1
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -124,7 +124,7 @@ function pods_beaver_fake_loop_false() {
  *
  * @param null|object $settings
  *
- * @since 1.0
+ * @since 1.1
  */
 function pods_beaver_loop_settings_before_form( $settings ) {
 
@@ -206,11 +206,12 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	</div>
 <?php
 
+    add_filter('fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3);
+
 }
 
-// don't use yet - issues with pagination!
 add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-// Possibly need to hook into uabb_loop_settings_before_form?
+add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 /**
  * Handle query integration.
@@ -219,7 +220,7 @@ add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_b
  *
  * @return object
  *
- * @since 1.0
+ * @since 1.1
  */
 function pods_beaver_loop_before_query_settings( $settings ) {
 
@@ -260,7 +261,6 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		);
 	}*/
 
-
 	if ( $pod ) {
 		if ( $find_params ) {
 			// Optimized select only gets the ID
@@ -294,10 +294,11 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	// get comma separated list to power post__in for the BB Custom Query
 	$settings->{$setting_id_field} = implode( ', ', $ids );
 
+	// account for orderby relationship sort order
+
 	return $settings;
 }
 
-// don't use yet - issues with pagination!
 add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 /**
@@ -312,3 +313,20 @@ function pods_beaver_empty_query() {
 	return new WP_Query;
 
 }
+
+/**
+ * Add Option to order_by settings field
+ *
+ * @return array $field
+ *
+ * @since 1.1
+ */
+function pods_beaver_render_settings_field($field, $name, $settings) {
+
+	if ( 'order_by' == $name ) {
+		$field['options']['post__in'] = __('Preserve Relationship (pick) Order', 'pods-beaver-builder-themer-add-on');
+	}
+
+	return $field;
+}
+

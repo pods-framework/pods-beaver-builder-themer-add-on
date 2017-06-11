@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.0
+Stable tag: 1.1-a-1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Please keep in mind this is the first released version. Your feedback and ideas 
 
 = Bug Reports =
 
-Bug Reports and ideas for Pods Beaver Themer integration are [welcomed on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues). Please note GitHub is _not_ a support forum.
+Please  use [GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues) for Ideas and  Bug reports. Please note GitHub is _not_ a support forum.
 
 = Planned Features =
 
@@ -65,6 +65,10 @@ If you've uncovered a Bug or have a Feature Request, we kindly request you to [C
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.1 - June 9th, 2017 =
+
+* Post Module support for Relations
 
 = 1.0 - June 9th, 2017 =
 
