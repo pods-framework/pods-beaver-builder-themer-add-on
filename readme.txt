@@ -73,7 +73,6 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 = 1.1 - June 9th, 2017 =
 
 * Output related pods in Beaver Builder: Post Module, Post Carousel, Post Slider and UABB: Advanced Posts
-* Added post_author (user) fields to select dropdown
 
 = 1.0 - June 9th, 2017 =
 

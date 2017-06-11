@@ -601,7 +601,7 @@ final class PodsBeaverPageData {
 							$linked_pod = 'media';
 						}
 					} elseif ( 'user' === $field['pick_object'] ) {
-						$linked_pod = 'user';
+						// $linked_pod = 'user';  until post_author traversal is fixed!
 					}
 
 					// @todo maybe add check for comments and ???
