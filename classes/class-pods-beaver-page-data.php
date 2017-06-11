@@ -159,13 +159,13 @@ final class PodsBeaverPageData {
 
 			if ( ! $pod || ! $pod->valid() ) {
 				$pod = false;
-			}
-
-			self::$pods[ $pod_name ] = $pod;
-
-			if ( $item_id && $pod && ! $pod->exists() ) {
+			} elseif ( $item_id && $pod && ! $pod->exists() ) {
 				$pod = false;
-			}
+			} else {
+				self::$pods[ $pod_name ] = $pod;
+			};
+
+
 		}
 
 		return $pod;
