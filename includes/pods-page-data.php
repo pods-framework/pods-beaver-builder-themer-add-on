@@ -207,6 +207,32 @@ $form = array(
 FLPageData::add_post_property( 'pods_multiple_photos', $data );
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
 
+
+/**
+ * Manual Multiple Photo Field
+ */
+$data = array(
+	'label'  => __( 'Images: Advanced (manual)', 'pods-beaver-builder-themer-add-on' ),
+	'group'  => 'pods',
+	'type'   => array(
+		'multiple-photos'
+	),
+	'getter' => 'PodsBeaverPageData::get_field_multiple_photos',
+);
+
+$form = array(
+	'field'       => array(
+		'type'        => 'text',
+		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Must return an ID', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
+		'placeholder' => __( 'Example: category.image_field.ID', 'pods-beaver-builder-themer-add-on' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_multiple_photos_manual', $data );
+FLPageData::add_post_property_settings_fields( 'pods_multiple_photos_manual', $form );
+
 /**
  * SITE WIDE PROPERTY'S
  */
