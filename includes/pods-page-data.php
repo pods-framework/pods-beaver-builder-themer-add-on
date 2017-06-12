@@ -164,7 +164,7 @@ $form = array(
 	'field'       => array(
 		'type'        => 'text',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Must return an ID', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Only works for image fields', 'pods-beaver-builder-themer-add-on' ),
 		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
 		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-builder-themer-add-on' ),
 	),
@@ -224,9 +224,9 @@ $form = array(
 	'field'       => array(
 		'type'        => 'text',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Must return an ID', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Only works for image fields', 'pods-beaver-builder-themer-add-on' ),
 		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
-		'placeholder' => __( 'Example: category.image_field.ID', 'pods-beaver-builder-themer-add-on' ),
+		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
