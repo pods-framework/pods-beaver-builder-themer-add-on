@@ -581,9 +581,9 @@ final class PodsBeaverPageData {
 			$recurse_queue = array();
 
 			$all_pod_fields = $pod->fields();
-			if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
+/*			if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
 				$all_pod_fields['post_author'] = $pod->pod_data['object_fields']['post_author'];
-			}
+			}*/
 
 			foreach ( $all_pod_fields as $field_name => $field ) {
 				$linked_pod = null;
