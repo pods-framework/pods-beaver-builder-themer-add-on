@@ -75,6 +75,7 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 * Output related pods in Beaver Builder: Post Module, Post Carousel, Post Slider / PowerPack (1.2.8+): Content Grid / UABB (1.4.5+): Advanced Posts
 * Code Cleanup & Improvements
+* New filters pods_beaver_loop_settings_find_params and pods_beaver_loop_settings_field_params
 
 = 1.0 - June 9th, 2017 =
 
