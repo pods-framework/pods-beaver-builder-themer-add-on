@@ -65,13 +65,13 @@ $form = array(
 			),
 		),
 		'help'        => __( 'Create Templates in Pods Admin under Templates.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => '<br />' . __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
+		'description' => '<br />' . __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
 	),
 	'custom_template' => array(
 		'type'        => 'text',
 		'label'       => __( 'Magic Tags:', 'pods-beaver-builder-themer-add-on' ),
 		'help'        => __( 'Full suppoort for Magic Tags & HTML but no further shortcodes!', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentaion &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( '<a href="http://pods.io/docs/build/using-magic-tags/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
 		'default'     => '{@your_field}',
 		'placeholder' => __( 'HTML & Magic Tags only', 'pods-beaver-builder-themer-add-on' ),
 	),
@@ -164,7 +164,7 @@ $form = array(
 	'field'       => array(
 		'type'        => 'text',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Must return an ID', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Only works for image fields', 'pods-beaver-builder-themer-add-on' ),
 		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
 		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-builder-themer-add-on' ),
 	),
@@ -206,6 +206,32 @@ $form = array(
 
 FLPageData::add_post_property( 'pods_multiple_photos', $data );
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
+
+
+/**
+ * Manual Multiple Photo Field
+ */
+$data = array(
+	'label'  => __( 'Images: Advanced (manual)', 'pods-beaver-builder-themer-add-on' ),
+	'group'  => 'pods',
+	'type'   => array(
+		'multiple-photos'
+	),
+	'getter' => 'PodsBeaverPageData::get_field_multiple_photos',
+);
+
+$form = array(
+	'field'       => array(
+		'type'        => 'text',
+		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Only works for image fields', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Enter field name, traversal is supported.', 'pods-beaver-builder-themer-add-on' ),
+		'placeholder' => __( 'Example: category.image_field', 'pods-beaver-builder-themer-add-on' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_multiple_photos_manual', $data );
+FLPageData::add_post_property_settings_fields( 'pods_multiple_photos_manual', $form );
 
 /**
  * SITE WIDE PROPERTY'S

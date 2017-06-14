@@ -159,12 +159,10 @@ final class PodsBeaverPageData {
 
 			if ( ! $pod || ! $pod->valid() ) {
 				$pod = false;
-			}
-
-			self::$pods[ $pod_name ] = $pod;
-
-			if ( $item_id && $pod && ! $pod->exists() ) {
+			} elseif ( $item_id && $pod && ! $pod->exists() ) {
 				$pod = false;
+			} else {
+				self::$pods[ $pod_name ] = $pod;
 			}
 		}
 
@@ -582,6 +580,10 @@ final class PodsBeaverPageData {
 
 			$all_pod_fields = $pod->fields();
 
+			/*if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
+				$all_pod_fields['post_author'] = $pod->pod_data['object_fields']['post_author'];
+			}*/
+
 			foreach ( $all_pod_fields as $field_name => $field ) {
 				$linked_pod = null;
 
@@ -597,6 +599,8 @@ final class PodsBeaverPageData {
 						if ( 'single' === $field['options']['file_format_type'] ) {// recursion not wanted Issue #16
 							$linked_pod = 'media';
 						}
+					} elseif ( 'user' === $field['pick_object'] ) {
+						// $linked_pod = 'user';  until post_author traversal is fixed!
 					}
 
 					// @todo maybe add check for comments and ???
