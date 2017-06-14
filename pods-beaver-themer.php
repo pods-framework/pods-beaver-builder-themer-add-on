@@ -124,7 +124,7 @@ function pods_beaver_fake_loop_false() {
  *
  * @param null|object $settings
  *
- * @since 1.1
+ * @since 1.0
  */
 function pods_beaver_loop_settings_before_form( $settings ) {
 
@@ -222,7 +222,7 @@ add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before
  *
  * @return object
  *
- * @since 1.1
+ * @since 1.0
  */
 function pods_beaver_loop_before_query_settings( $settings ) {
 
@@ -330,13 +330,12 @@ function pods_beaver_empty_query() {
  */
 function pods_beaver_render_settings_field_order_by($field, $name, $settings) {
 
-	if ( 'order_by' == $name ) {
+	if ( 'order_by' === $name ) {
 		$field['options']['post__in'] = __('Preserve Relationship (pick) Order', 'pods-beaver-builder-themer-add-on');
 	}
 
 	return $field;
 }
-
 
 /**
  * work around UABB overly aggressiv setting of post_type

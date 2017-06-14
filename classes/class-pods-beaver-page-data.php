@@ -163,7 +163,7 @@ final class PodsBeaverPageData {
 				$pod = false;
 			} else {
 				self::$pods[ $pod_name ] = $pod;
-			};
+			}
 
 
 		}

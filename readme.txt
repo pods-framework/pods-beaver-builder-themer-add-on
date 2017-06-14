@@ -57,7 +57,7 @@ We are growing a community of Beaver Themer users who are starting to hang out o
 
 If you've uncovered a Bug or have a Feature Request, we kindly request you to [Create an issue on GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues/new). Please be very specific about what steps you did to create the issue you're having and include any screenshots or other configuration parameters to help us recreate or isolate the issue.
 
-= HowTo Test upcoming Versions =
+= How to Test upcoming Versions =
 
 You can use [GitHub Updater](https://github.com/afragen/github-updater). A simple plugin to enable automatic updates to your GitHub, Bitbucket, or GitLab hosted WordPress plugins, themes, and language packs. It also allows for the remote installation of plugins or themes. Select Branch 1.x for the latest Version.
 
@@ -71,7 +71,7 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.1 - June 9th, 2017 =
+= 1.1 - June 14th, 2017 =
 
 * Output related pods in Beaver Builder: Post Module, Post Carousel, Post Slider / PowerPack (1.2.8+): Content Grid / UABB (1.4.5+): Advanced Posts
 * Code Cleanup & Improvements
