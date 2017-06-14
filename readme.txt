@@ -28,7 +28,7 @@ Please keep in mind this is the first released version. Your feedback and ideas 
 
 = Bug Reports =
 
-Please  use [GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues) for Ideas and  Bug reports. Please note GitHub is _not_ a support forum.
+Please use [GitHub](https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues) for Ideas and  Bug reports. Please note GitHub is _not_ a support forum.
 
 = Planned Features =
 
