@@ -164,8 +164,6 @@ final class PodsBeaverPageData {
 			} else {
 				self::$pods[ $pod_name ] = $pod;
 			}
-
-
 		}
 
 		return $pod;
@@ -581,7 +579,8 @@ final class PodsBeaverPageData {
 			$recurse_queue = array();
 
 			$all_pod_fields = $pod->fields();
-/*			if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
+
+			/*if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
 				$all_pod_fields['post_author'] = $pod->pod_data['object_fields']['post_author'];
 			}*/
 

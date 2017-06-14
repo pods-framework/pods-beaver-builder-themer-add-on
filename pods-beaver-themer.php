@@ -147,7 +147,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 				'no'                     => __( 'None', 'pods-beaver-builder-themer-add-on' ),
 				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-builder-themer-add-on' ),
 				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
-				/*'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),*/
+				// 'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
 			),
 			'toggle'      => array(
 				'no'                     => array(
@@ -170,7 +170,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 						'pods_source_settings_relation',
 					),
 				),
-/*				'pods_advanced'          => array(
+				/*'pods_advanced'          => array(
 					'fields' => array(
 						'pods_where',
                         'post_type',
@@ -185,7 +185,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
 		),
 		'pods_source_settings_relation' => $source_settings_relation,
-/*		'pods_where'                    => array(
+		/*'pods_where'                    => array(
 			'type'        => 'text',
 			'label'       => __( 'Customized WHERE Query', 'pods-beaver-builder-themer-add-on' ),
 			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-builder-themer-add-on' ),
@@ -207,7 +207,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	</div>
 <?php
 
-    add_filter('fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3);
+	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
 
 }
 
@@ -230,16 +230,14 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		return $settings;
 	}
 
-/*	global $wp_query, $wp_the_query, $paged;
+	/*global $wp_query, $wp_the_query, $paged;
 
 	$flpaged = $wp_the_query->get( 'flpaged'. FLBuilderLoop::$loop_counter );
 	$page_qv = $wp_the_query->get( 'page' );
 	$paged_qv = $wp_the_query->get( 'paged' );
 	$loop_counter = FLBuilderLoop::$loop_counter;
 	$paged_beaver = FLBuilderLoop::get_paged();
-	$max_page = $wp_query->max_num_pages;
-*/
-
+	$max_page = $wp_query->max_num_pages;*/
 
 	$ids = array();
 
@@ -256,7 +254,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		$field_params = array(
 			'name'   => trim( $settings->field ),
 		);
-	} /*elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
+	}/*elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
 		$find_params = array(
 			'where' => trim( $settings->pods_where ),
 			'limit' => - 1,
@@ -268,23 +266,22 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	 *
 	 * @since 1.1
 	 *
-	 * @param array $find_params Array to pass to pods()->find()
-     * @param object $settings Beaver Builder Settings
-	 * @param Pods|bool Pods object if pod is valid, false if pod or item ID are not valid.
+	 * @param array     $find_params Array to pass to pods()->find()
+	 * @param object    $settings    Beaver Builder Settings
+	 * @param Pods|bool $pod         Pods object if pod is valid, false if pod or item ID are not valid.
 	 */
-	$find_params = apply_filters('pods_beaver_loop_settings_find_params', $find_params, $settings, $pod);
+	$find_params = apply_filters( 'pods_beaver_loop_settings_find_params', $find_params, $settings, $pod );
 
 	/**
 	 * Change the pods query for related items.
 	 *
 	 * @since 1.1
 	 *
-	 * @param array $field_params Array to pass to pods()->field()
-	 * @param object $settings Beaver Builder Settings.
-	 * @param Pods|bool Pods object If pod is valid, false if pod or item ID are not valid.
+	 * @param array     $field_params Array to pass to pods()->field()
+	 * @param object    $settings     Beaver Builder Settings
+	 * @param Pods|bool $pod          Pods object if pod is valid, false if pod or item ID are not valid.
 	 */
-	$field_params = apply_filters('pods_beaver_loop_settings_field_params', $field_params, $settings, $pod);
-
+	$field_params = apply_filters( 'pods_beaver_loop_settings_field_params', $field_params, $settings, $pod );
 
 	if ( $pod ) {
 		if ( $find_params ) {
@@ -314,15 +311,16 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 	// we have id's no need to specify the type
 	$settings->post_type = 'any';
-	add_filter('uabb_blog_posts_query_args', 'pods_beaver_uabb_blog_posts', 10, 2);
+
+	add_filter( 'uabb_blog_posts_query_args', 'pods_beaver_uabb_blog_posts', 10, 2 );
 
 	$setting_id_field = 'posts_' . $settings->post_type;
 
 	// get comma separated list to power post__in for the BB Custom Query
 	$settings->{$setting_id_field} = implode( ', ', $ids );
 
-
 	return $settings;
+
 }
 
 add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
@@ -343,26 +341,31 @@ function pods_beaver_empty_query() {
 /**
  * Add Option to order_by settings field
  *
- * @return array $field
+ * @param array  $field
+ * @param string $name
+ * @param object $settings
+ *
+ * @return array
  *
  * @since 1.1
  */
-function pods_beaver_render_settings_field_order_by($field, $name, $settings) {
+function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) {
 
 	if ( 'order_by' === $name ) {
-		$field['options']['post__in'] = __('Preserve Relationship (pick) Order', 'pods-beaver-builder-themer-add-on');
+		$field['options']['post__in'] = __( 'Preserve Relationship (pick) Order', 'pods-beaver-builder-themer-add-on' );
 	}
 
 	return $field;
+
 }
 
 /**
- * work around UABB overly aggressiv setting of post_type
+ * Work around UABB overly aggressive setting of post_type
  *
- * @param array $args
+ * @param array  $args
  * @param object $settings
  *
- * @return array $field
+ * @return array
  *
  * @since 1.1
  */
@@ -372,7 +375,8 @@ function pods_beaver_uabb_blog_posts( $args, $settings ) {
 		return $args;
 	}
 
-    $args['post_type'] = 'any';
+	$args['post_type'] = 'any';
 
 	return $args;
+
 }
