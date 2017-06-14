@@ -263,7 +263,26 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		);
 	}*/
 
+	/**
+	 * Change the pods query for customized where.
+	 *
+	 * @since 1.1
+	 *
+	 * @param array $find_params Array to pass to pods()->find()
+     * @param object $settings Beaver Builder Settings
+	 * @param Pods|bool Pods object if pod is valid, false if pod or item ID are not valid.
+	 */
 	$find_params = apply_filters('pods_beaver_loop_settings_find_params', $find_params, $settings, $pod);
+
+	/**
+	 * Change the pods query for related items.
+	 *
+	 * @since 1.1
+	 *
+	 * @param array $field_params Array to pass to pods()->field()
+	 * @param object $settings Beaver Builder Settings.
+	 * @param Pods|bool Pods object If pod is valid, false if pod or item ID are not valid.
+	 */
 	$field_params = apply_filters('pods_beaver_loop_settings_field_params', $field_params, $settings, $pod);
 
 
