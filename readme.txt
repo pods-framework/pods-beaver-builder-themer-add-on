@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.1-a-1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,7 @@ For more info, check out the following articles:
 * [Video conversation about the Integration](https://youtu.be/zBXQuFWBoRA?list=PLciFKq2WdpdBMdSJ073InW1dS4JHkI-bF)
 * [Building a Custom Settings Page using Pods and Beaver Themer](https://www.youtube.com/watch?v=qy1NqBiShpI).
 * [Join the #beaver-themer channel on Pods Slack](https://pods.io/chat/) from the Pods Framework Team.
+
 
 == Frequently Asked Questions ==
 
