@@ -317,7 +317,11 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$setting_id_field = 'posts_' . $settings->post_type;
 
 	// get comma separated list to power post__in for the BB Custom Query
-	$settings->{$setting_id_field} = implode( ', ', $ids );
+	if ( is_array( $ids ) ) {
+		$ids = implode( ', ', $ids );
+	}
+
+	$settings->{$setting_id_field} = $ids;
 
 	return $settings;
 
