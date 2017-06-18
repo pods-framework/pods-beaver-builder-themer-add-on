@@ -214,6 +214,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 /**
  * Handle query integration.
