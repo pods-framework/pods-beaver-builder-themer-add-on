@@ -80,6 +80,21 @@ function pods_beaver_admin_nag() {
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
+ * Enqueue assets
+ *
+ * @return void
+ *
+ * @since 1.1
+ */
+function pods_beaver_enqueue_assets() {
+    if ( FLBuilderModel::is_builder_active() ) {
+        wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', [], null, false );
+    }
+}
+
+add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' );
+
+/**
  * Set $wp_query->in_the_loop to true before rendering content.
  *
  * Example:
