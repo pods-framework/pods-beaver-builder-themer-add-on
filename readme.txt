@@ -1,10 +1,10 @@
 === Pods Beaver Themer Add-On ===
-Contributors: quasel, sc0ttkclark, jimtrue
+Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.1
+Stable tag: 1.1.1-a-1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,11 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.1.1 - June xxth, 2017 =
+* Added some JS to improve usability for all kind of posts modules (thx smarterdigitalltd)
+* Minor Bug fixes
+
 
 = 1.1 - June 14th, 2017 =
 
