@@ -84,7 +84,7 @@ add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
  *
  * @return void
  *
- * @since 1.1
+ * @since 1.1.1
  */
 function pods_beaver_enqueue_assets() {
     if ( FLBuilderModel::is_builder_active() && version_compare( FL_BUILDER_VERSION, '1.10.6', '<' ) ) {
@@ -99,10 +99,10 @@ add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' );
  *
  * @return void
  *
- * @since 1.1
+ * @since 1.1.1
  */
 function pods_beaver_add_settings_form_assets( $assets, $module ) {
-    if ( 'post-grid' === $module->slug ) {
+    if ( in_array( $module->slug, array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid', 'pp-custom-grid', 'pp-content-tiles', 'blog-posts' ) ) ) {
         $assets .= '<script class="fl-builder-settings-js-custom-query" src="' . PODS_BEAVER_URL . 'assets/js/settings-form.js"></script>';
     }
 
