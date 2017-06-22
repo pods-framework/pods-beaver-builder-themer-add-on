@@ -80,6 +80,44 @@ function pods_beaver_admin_nag() {
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
+ * Enqueue assets for BB version 1.10.5 and earlier
+ *
+ * @return void
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_enqueue_assets() {
+
+	if ( FLBuilderModel::is_builder_active() && version_compare( FL_BUILDER_VERSION, '1.10.6', '<' ) ) {
+		wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array(), null, false );
+	}
+
+}
+
+add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' );
+
+/**
+ * Add assets for BB version 1.10.6 and later
+ *
+ * @return void
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_add_settings_form_assets( $assets, $module ) {
+	
+	$supported_modules = array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid', 'pp-custom-grid', 'pp-content-tiles', 'blog-posts' );
+	
+	if ( in_array( $module->slug, $modules, true ) ) {
+		$assets .= '<script type="text/javascript" src="' . esc_url( PODS_BEAVER_URL . 'assets/js/settings-form.js' ) . '" class="fl-builder-settings-js-custom-query"></script>';
+	}
+
+	return $assets;
+	
+}
+
+add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
+
+/**
  * Set $wp_query->in_the_loop to true before rendering content.
  *
  * Example:
