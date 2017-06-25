@@ -553,9 +553,9 @@ final class PodsBeaverPageData {
 	 * Recurse pod fields to build a list of available fields.
 	 *
 	 * @param string $pod_name
-	 * @param array $field_options Field options based on pod_data array.
+	 * @param array  $field_options Field options based on pod_data array.
 	 * @param string $prefix
-	 * @param array $pods_fields_visited
+	 * @param array  $pods_fields_visited
 	 *
 	 * @return array
 	 * @internal param array $pods_visited
