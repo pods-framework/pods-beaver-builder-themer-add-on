@@ -553,15 +553,16 @@ final class PodsBeaverPageData {
 	 * Recurse pod fields to build a list of available fields.
 	 *
 	 * @param string $pod_name
-	 * @param array  $field_options Field options based on pod_data array.
+	 * @param array $field_options Field options based on pod_data array.
 	 * @param string $prefix
-	 * @param array  $pods_visited
+	 * @param array $pods_fields_visited
 	 *
 	 * @return array
+	 * @internal param array $pods_visited
 	 *
 	 * @since 1.0
 	 */
-	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', &$pods_visited = array() ) {
+	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', &$pods_fields_visited = array() ) {
 
 		$fields = array();
 
@@ -576,7 +577,6 @@ final class PodsBeaverPageData {
 		$pod = self::get_pod( $args );
 
 		if ( $pod ) {
-			$recurse_queue = array();
 
 			$all_pod_fields = $pod->fields();
 
@@ -607,10 +607,10 @@ final class PodsBeaverPageData {
 				}
 
 				if ( $linked_pod ) {
-					if ( ! isset( $pods_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_visited[ $linked_pod ], true ) ) {
-						$pods_visited[ $linked_pod ][] = $field_name;
-
-						$recurse_queue[ $linked_pod ] = $prefix . $field_name . '.';
+					if ( ! isset( $pods_fields_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_fields_visited[ $linked_pod ], true ) ) {
+						$pods_fields_visited[ $linked_pod ][] = $field_name;
+						$recurse_prefix = $prefix . $field_name . '.';
+						$fields = array_merge( $fields, self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix, $pods_fields_visited ) );
 					}
 				}
 
@@ -644,9 +644,6 @@ final class PodsBeaverPageData {
 				$fields[ $prefix . $pod_name ]['label'] = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
 
 				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = $option_value;
-			}
-			foreach ( $recurse_queue as $recurse_name => $recurse_prefix ) {
-				$fields = array_merge( $fields, self::recurse_pod_fields( $recurse_name, $field_options, $recurse_prefix, $pods_visited ) );
 			}
 		}
 
