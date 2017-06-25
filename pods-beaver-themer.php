@@ -377,6 +377,8 @@ add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_qu
  */
 function pods_beaver_empty_query() {
 
+    remove_filter('fl_builder_loop_query', 'pods_beaver_empty_query');
+
 	return new WP_Query;
 
 }
