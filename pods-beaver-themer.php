@@ -107,7 +107,7 @@ function pods_beaver_add_settings_form_assets( $assets, $module ) {
 	
 	$supported_modules = array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid', 'pp-custom-grid', 'pp-content-tiles', 'blog-posts' );
 	
-	if ( in_array( $module->slug, $modules, true ) ) {
+	if ( in_array( $module->slug, $supported_modules, true ) ) {
 		$assets .= '<script type="text/javascript" src="' . esc_url( PODS_BEAVER_URL . 'assets/js/settings-form.js' ) . '" class="fl-builder-settings-js-custom-query"></script>';
 	}
 
