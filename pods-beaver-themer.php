@@ -99,7 +99,10 @@ add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' );
 /**
  * Add assets for BB version 1.10.6 and later
  *
- * @return void
+ * @param string $assets
+ * @param object $module
+ *
+ * @return string $assets
  *
  * @since 1.1.1
  */
