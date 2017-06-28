@@ -129,6 +129,10 @@ final class PodsBeaverPageData {
 						return false;
 					}
 				}
+			} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
+				// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
+				$pod_name  = get_post_type();
+				$item_id = get_the_ID();
 			} else {
 				$info = self::get_current_pod_info();
 
