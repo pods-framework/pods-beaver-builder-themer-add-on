@@ -56,6 +56,18 @@ function pods_beaver_init() {
 	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
 	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
 
+	// fore data_source: custom_query for posts modules
+	add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' ); //remove once 1.10.6 has been widely adopted
+	add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
+
+	// add additional pods settings to any posts module
+	add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+
+
+	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 }
 
@@ -94,8 +106,6 @@ function pods_beaver_enqueue_assets() {
 
 }
 
-add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' );
-
 /**
  * Add assets for BB version 1.10.6 and later
  *
@@ -118,9 +128,6 @@ function pods_beaver_add_settings_form_assets( $assets, $module ) {
 	
 }
 
-add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
-
-
 /**
  * Register functions to fake the loop.
  *
@@ -132,7 +139,6 @@ function pods_beaver_fake_loop_add_actions() {
 	add_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
-
 
 /**
  * Set $wp_query->in_the_loop to true before rendering content.
@@ -146,13 +152,10 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-	if ( is_pod() ) {
-		// Fake being in the loop.
-		$wp_query->in_the_loop = true;
-	}
+    // Fake being in the loop.
+	$wp_query->in_the_loop = true;
 
 }
-
 
 /**
  * Set $wp_query->in_the_loop to false after rendering content.
@@ -166,16 +169,14 @@ function pods_beaver_fake_loop_false() {
 
 	global $wp_query;
 
-	if ( is_pod() ) {
-		// Stop faking being in the loop.
-		$wp_query->in_the_loop = false;
-		// cleanup - keep fake as close to beaver as possible
-		remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
-		remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
-	}
+	// Stop faking being in the loop.
+	$wp_query->in_the_loop = false;
+
+	// cleanup - keep fake as close to beaver as possible
+	remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
+	remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
-
 
 /**
  * Adds the custom code settings for custom post  module layouts.
@@ -268,11 +269,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
 
 }
-
-add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 /**
  * Handle query integration.
@@ -385,8 +381,6 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	return $settings;
 
 }
-
-add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 /**
  * Return empty WP_Query.
