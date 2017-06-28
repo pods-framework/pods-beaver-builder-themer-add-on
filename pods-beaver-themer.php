@@ -53,9 +53,9 @@ function pods_beaver_init() {
 
 	PodsBeaverPageData::init();
 
-	// Fake being in the Loop #15
-	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
-	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
+
 
 }
 
@@ -120,6 +120,20 @@ function pods_beaver_add_settings_form_assets( $assets, $module ) {
 
 add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
 
+
+/**
+ * Register functions to fake the loop.
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_fake_loop_add_actions() {
+
+	add_action( 'loop_start', 'pods_beaver_fake_loop_true');
+	add_action( 'loop_end', 'pods_beaver_fake_loop_false');
+
+}
+
+
 /**
  * Set $wp_query->in_the_loop to true before rendering content.
  *
@@ -155,6 +169,9 @@ function pods_beaver_fake_loop_false() {
 	if ( is_pod() ) {
 		// Stop faking being in the loop.
 		$wp_query->in_the_loop = false;
+		// cleanup - keep fake as close to beaver as possible
+		remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
+		remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 	}
 
 }
