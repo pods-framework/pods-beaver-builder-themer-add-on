@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.1.1-a-1
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,9 +71,13 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.1.1 - June xxth, 2017 =
-* Added some JS to improve usability for all kind of posts modules (thx smarterdigitalltd)
-* Minor Bug fixes
+= 1.1.1 - June 29th, 2017 =
+* Added js to improve usability for all kind of posts modules (thx smarterdigitalltd)
+* Added support for PowerPack custom grid
+* Moved all add action/filter to init
+* Fixed single relations for posts module
+* Fixed multiple relations to the same CPT are now listed
+* Fixed field connections for Archive Pages
 
 
 = 1.1 - June 14th, 2017 =
