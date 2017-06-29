@@ -559,14 +559,14 @@ final class PodsBeaverPageData {
 	 * @param string $pod_name
 	 * @param array  $field_options Field options based on pod_data array.
 	 * @param string $prefix
-	 * @param array  $pods_fields_visited
 	 *
 	 * @return array
-	 * @internal param array $pods_visited
 	 *
 	 * @since 1.0
 	 */
-	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', &$pods_fields_visited = array() ) {
+	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '' ) {
+		
+		static $pods_fields_visited = array();
 
 		$fields = array();
 
@@ -614,7 +614,7 @@ final class PodsBeaverPageData {
 					if ( ! isset( $pods_fields_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_fields_visited[ $linked_pod ], true ) ) {
 						$pods_fields_visited[ $linked_pod ][] = $field_name;
 						$recurse_prefix = $prefix . $field_name . '.';
-						$fields = array_merge( $fields, self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix, $pods_fields_visited ) );
+						$fields = array_merge( $fields, self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix ) );
 					}
 				}
 
