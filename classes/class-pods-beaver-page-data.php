@@ -611,10 +611,14 @@ final class PodsBeaverPageData {
 				}
 
 				if ( $linked_pod ) {
-					if ( ! isset( $pods_fields_visited[ $linked_pod ] ) || ! in_array( $field_name, $pods_fields_visited[ $linked_pod ], true ) ) {
-						$pods_fields_visited[ $linked_pod ][] = $field_name;
-						$recurse_prefix = $prefix . $field_name . '.';
-						$fields = array_merge( $fields, self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix ) );
+					$recurse_prefix = $prefix . $field_name . '.';
+					
+					if ( ! isset( $pods_fields_visited[ $recurse_prefix . $linked_pod ] ) ) {
+						$visited_fields = self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix );
+						
+						$pods_fields_visited[ $recurse_prefix . $linked_pod ] = $visited_fields;
+						
+						$fields = array_merge( $fields, $visited_fields );
 					}
 				}
 
