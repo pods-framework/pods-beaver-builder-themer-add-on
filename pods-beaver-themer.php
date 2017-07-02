@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.1
+ * Version: 1.1.1
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -31,7 +31,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.0' );
+define( 'PODS_BEAVER_VERSION', '1.1.1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -53,9 +53,21 @@ function pods_beaver_init() {
 
 	PodsBeaverPageData::init();
 
-	// Fake being in the Loop #15
-	add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
-	add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
+	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
+
+	// fore data_source: custom_query for posts modules
+	add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' ); //remove once 1.10.6 has been widely adopted
+	add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
+
+	// add additional pods settings to any posts module
+	add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+	add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
+
+
+	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 }
 
@@ -80,6 +92,55 @@ function pods_beaver_admin_nag() {
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
+ * Enqueue assets for BB version 1.10.5 and earlier
+ *
+ * @return void
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_enqueue_assets() {
+
+	if ( FLBuilderModel::is_builder_active() && version_compare( FL_BUILDER_VERSION, '1.10.6', '<' ) ) {
+		wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array(), null, false );
+	}
+
+}
+
+/**
+ * Add assets for BB version 1.10.6 and later
+ *
+ * @param string $assets
+ * @param object $module
+ *
+ * @return string $assets
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_add_settings_form_assets( $assets, $module ) {
+	
+	$supported_modules = array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid', 'pp-custom-grid', 'pp-content-tiles', 'blog-posts' );
+	
+	if ( in_array( $module->slug, $supported_modules, true ) ) {
+		$assets .= '<script type="text/javascript" src="' . esc_url( PODS_BEAVER_URL . 'assets/js/settings-form.js' ) . '" class="fl-builder-settings-js-custom-query"></script>';
+	}
+
+	return $assets;
+	
+}
+
+/**
+ * Register functions to fake the loop.
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_fake_loop_add_actions() {
+
+	add_action( 'loop_start', 'pods_beaver_fake_loop_true');
+	add_action( 'loop_end', 'pods_beaver_fake_loop_false');
+
+}
+
+/**
  * Set $wp_query->in_the_loop to true before rendering content.
  *
  * Example:
@@ -91,13 +152,10 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-	if ( is_pod() ) {
-		// Fake being in the loop.
-		$wp_query->in_the_loop = true;
-	}
+    // Fake being in the loop.
+	$wp_query->in_the_loop = true;
 
 }
-
 
 /**
  * Set $wp_query->in_the_loop to false after rendering content.
@@ -111,13 +169,14 @@ function pods_beaver_fake_loop_false() {
 
 	global $wp_query;
 
-	if ( is_pod() ) {
-		// Stop faking being in the loop.
-		$wp_query->in_the_loop = false;
-	}
+	// Stop faking being in the loop.
+	$wp_query->in_the_loop = false;
+
+	// cleanup - keep fake as close to beaver as possible
+	remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
+	remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
-
 
 /**
  * Adds the custom code settings for custom post  module layouts.
@@ -210,10 +269,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
 
 }
-
-add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-add_action( 'uabb_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
-add_action( 'pp_cg_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 /**
  * Handle query integration.
@@ -317,13 +372,15 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$setting_id_field = 'posts_' . $settings->post_type;
 
 	// get comma separated list to power post__in for the BB Custom Query
-	$settings->{$setting_id_field} = implode( ', ', $ids );
+	if ( is_array( $ids ) ) {
+		$ids = implode( ', ', $ids );
+	}
+
+	$settings->{$setting_id_field} = $ids;
 
 	return $settings;
 
 }
-
-add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
 /**
  * Return empty WP_Query.
@@ -333,6 +390,8 @@ add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_qu
  * @since 1.0
  */
 function pods_beaver_empty_query() {
+
+    remove_filter('fl_builder_loop_query', 'pods_beaver_empty_query');
 
 	return new WP_Query;
 
