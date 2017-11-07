@@ -514,10 +514,6 @@ final class PodsBeaverPageData {
 	public static function pods_get_settings_fields( $field_options = array() ) {
 
 		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings', 'user' ), 'names' => true ) );
-		$fields    = array(
-			'name'  => array(),
-			'field' => array(),
-		);
 
 		$field_options['add_pod_name'] = 'true';
 

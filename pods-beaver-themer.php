@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.1.1
+ * Version: 1.2
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -31,7 +31,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.1.1' );
+define( 'PODS_BEAVER_VERSION', '1.2' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -56,9 +56,8 @@ function pods_beaver_init() {
 	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
 	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
 
-	// fore data_source: custom_query for posts modules
-	add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets' ); //remove once 1.10.6 has been widely adopted
-	add_filter( 'fl_builder_render_module_settings_assets', 'pods_beaver_add_settings_form_assets', 10, 2 );
+    // Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
+	add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0);
 
 	// add additional pods settings to any posts module
 	add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
@@ -92,40 +91,19 @@ function pods_beaver_admin_nag() {
 add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
 
 /**
- * Enqueue assets for BB version 1.10.5 and earlier
+ * Post modules:  JS for setting data_source to custom_query if a relationship field is selected as source
+ * Enqueue JS
  *
  * @return void
  *
  * @since 1.1.1
  */
 function pods_beaver_enqueue_assets() {
+	if ( FLBuilderModel::is_builder_active() ) {
+		$deps = 'fl-builder-layout-' . FLBuilderModel::get_post_id();
 
-	if ( FLBuilderModel::is_builder_active() && version_compare( FL_BUILDER_VERSION, '1.10.6', '<' ) ) {
-		wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array(), null, false );
+		wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array( $deps ), null, true );
 	}
-
-}
-
-/**
- * Add assets for BB version 1.10.6 and later
- *
- * @param string $assets
- * @param object $module
- *
- * @return string $assets
- *
- * @since 1.1.1
- */
-function pods_beaver_add_settings_form_assets( $assets, $module ) {
-	
-	$supported_modules = array( 'post-grid', 'post-slider', 'post-carousel', 'pp-content-grid', 'pp-custom-grid', 'pp-content-tiles', 'blog-posts' );
-	
-	if ( in_array( $module->slug, $supported_modules, true ) ) {
-		$assets .= '<script type="text/javascript" src="' . esc_url( PODS_BEAVER_URL . 'assets/js/settings-form.js' ) . '" class="fl-builder-settings-js-custom-query"></script>';
-	}
-
-	return $assets;
-	
 }
 
 /**
