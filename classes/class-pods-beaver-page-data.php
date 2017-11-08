@@ -560,10 +560,8 @@ final class PodsBeaverPageData {
 	 *
 	 * @since 1.0
 	 */
-	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '' ) {
+	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', $pods_fields_visited = array() ) {
 		
-		static $pods_fields_visited = array();
-
 		$fields = array();
 
 		if ( empty( $pod_name ) ) {
@@ -608,12 +606,13 @@ final class PodsBeaverPageData {
 
 				if ( $linked_pod ) {
 					$recurse_prefix = $prefix . $field_name . '.';
-					
-					if ( ! isset( $pods_fields_visited[ $recurse_prefix . $linked_pod ] ) ) {
-						$visited_fields = self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix );
-						
-						$pods_fields_visited[ $recurse_prefix . $linked_pod ] = $visited_fields;
-						
+
+					// stopp recursion - only travers a field of a pod once - fixes #51
+					if ( ! isset( $pods_fields_visited[ $pod_name . $field_name ] ) ) {
+
+						$pods_fields_visited[ $pod_name . $field_name ] = true;
+						$visited_fields = self::recurse_pod_fields( $linked_pod, $field_options, $recurse_prefix, $pods_fields_visited );
+
 						$fields = array_merge( $fields, $visited_fields );
 					}
 				}
@@ -649,6 +648,8 @@ final class PodsBeaverPageData {
 
 				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = $option_value;
 			}
+
+
 		}
 
 		return $fields;
