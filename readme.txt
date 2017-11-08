@@ -71,10 +71,11 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.2 - November 7th, 2017 =
+= 1.2 - November 9th, 2017 =
 * Compatibility with BB 2.0+
 * Improved error handling
 * Fixed Deprecated: Non-static method messages
+* Fixed endless recursions #51
 
 = 1.1.1 - June 29th, 2017 =
 * Added js to improve usability for all kind of posts modules (thx smarterdigitalltd)
