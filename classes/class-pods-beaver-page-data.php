@@ -517,6 +517,16 @@ final class PodsBeaverPageData {
 
 		$field_options['add_pod_name'] = 'true';
 
+		$fields = array(
+			'settings_field' => array(
+				'type'    => 'select',
+				'label'   => __( 'Field from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
+				'options' => array(
+					'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
+				)
+			),
+		);
+
 		if ( $pod_names ) {
 			$options = array();
 
@@ -526,23 +536,10 @@ final class PodsBeaverPageData {
 				$options = array_replace_recursive( $options, self::recurse_pod_fields( $pod_name, $field_options ) );
 			}
 
-			if ( empty( $options ) ) {
-				$options[''] = __( 'No fields found', 'pods-beaver-builder-themer-add-on' );
+			if ( ! empty( $options ) ) {
+				$fields['settings_field']['options'] = $options;
 			}
 
-			$fields = array(
-				'settings_field' => array(
-					'type'    => 'select',
-					'label'   => __( 'Field from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
-					'options' => $options,
-				),
-			);
-		}
-
-		if ( empty( $fields ) ) {
-			$fields['options'] = array(
-				'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
-			);
 		}
 
 		return $fields;
