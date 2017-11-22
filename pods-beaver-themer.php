@@ -8,7 +8,6 @@
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
  * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-builder-themer-add-on
- * GitHub Branch: 1.x
  *
  * Copyright 2017  Pods Foundation, Inc  (email : contact@podsfoundation.org)
  *
