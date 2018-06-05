@@ -48,6 +48,7 @@ $data = array(
 		'string',
 		'html',
 		'custom_field',
+		'url',
 	),
 	'getter' => 'PodsBeaverPageData::get_template',
 );
