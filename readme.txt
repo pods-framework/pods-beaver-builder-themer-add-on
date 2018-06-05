@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.2.1
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -70,6 +70,9 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+=1.3 - June xxth, 2018
+* ToDo
 
 = 1.2.1 - November 10th, 2017
 * Fixed default settings array for setings pods
