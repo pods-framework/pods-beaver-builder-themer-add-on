@@ -48,6 +48,7 @@ $data = array(
 		'string',
 		'html',
 		'custom_field',
+		'url',
 	),
 	'getter' => 'PodsBeaverPageData::get_template',
 );
@@ -332,7 +333,7 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  * Pods Settings / User
  */
 $data = array(
-	'label'  => __( 'User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'User or Settings URL Field ', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'url',

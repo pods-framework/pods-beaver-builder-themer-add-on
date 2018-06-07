@@ -288,7 +288,7 @@ final class PodsBeaverPageData {
 		$field_url      = $settings->field . '._src.' . pods_v( 'image_size', $settings, '');
 		$content['url'] = $pod->display( $field_url );
 
-		if ( ! isset( $content['url'] ) && isset( $settings->default_img_src ) ) {
+		if ( empty( $content['url'] ) && isset( $settings->default_img_src ) ) {
 			$content['id']  = $settings->default_img;
 			$content['url'] = $settings->default_img_src;
 		}
@@ -584,14 +584,14 @@ final class PodsBeaverPageData {
 
 				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types(), true ) ) {
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
-						if ( 'single' === $field['options']['pick_format_type'] ) {// recursion only wanted if single Issue #16
+						if ( 'single' === pods_v( 'pick_format_type', $field['options'] ) ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
 						}
 					} elseif ( 'taxonomy' === $field['type'] ) {
 						// $linked_pod = $field_name; @todo Remove this?
 						// removed Media Traversal -> use default BB field connections or Templates
-					} elseif ( 'attachment' === $field['options']['file_uploader'] ) {
-						if ( 'single' === $field['options']['file_format_type'] ) {// recursion not wanted Issue #16
+					} elseif ( 'attachment' === pods_v( 'file_uploader', $field['options'] ) ) {
+						if ( 'single' === pods_v( 'file_format_type', $field['options'] ) ) {// recursion not wanted Issue #16
 							$linked_pod = 'media';
 						}
 					} elseif ( 'user' === $field['pick_object'] ) {
