@@ -71,13 +71,16 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-=1.2.2 - June 7th, 2018
+= 1.3 - TBD 2018 =
+*
+
+= 1.2.2 - June 7th, 2018 =
 * Added: Option to use MagicTags for URLs, #39
 * Fixed: Default Image Option not working, #67
 * Fixed: Minor Code quality improvments and some labels
 
 
-= 1.2.1 - November 10th, 2017
+= 1.2.1 - November 10th, 2017 =
 * Fixed default settings array for setings pods
 
 = 1.2 - November 9th, 2017 =
