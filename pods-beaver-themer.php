@@ -55,8 +55,8 @@ function pods_beaver_init() {
 	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
 	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
 
-    // Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
-	add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0);
+	// Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
+	// add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0 );
 
 	// add additional pods settings to any posts module
 	add_action( 'fl_builder_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
@@ -175,27 +175,16 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	$setting_fields = array(
 		'use_pods'                      => array(
 			'type'        => 'select',
-			'label'       => __( 'Pods Content Source', 'pods-beaver-builder-themer-add-on' ),
+			'label'       => __( 'Relation from', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
-			'description' => '<br />' . __( 'Set "Source" to "Custom Query" in content tab first.', 'pods-beaver-builder-themer-add-on' ),
+			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
 			'options'     => array(
-				'no'                     => __( 'None', 'pods-beaver-builder-themer-add-on' ),
-				'pods_relation'          => __( 'Relation from Current Item', 'pods-beaver-builder-themer-add-on' ),
-				'pods_settings_relation' => __( 'Relation from Settings / Current User', 'pods-beaver-builder-themer-add-on' ),
+				'pods_relation'          => __( 'Current pod item', 'pods-beaver-builder-themer-add-on' ),
+				'pods_settings_relation' => __( 'Settings POD or current user', 'pods-beaver-builder-themer-add-on' ),
 				// 'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
 			),
 			'toggle'      => array(
-				'no'                     => array(
-					'fields'   => array(
-						'post_type',
-						'data_source',
-						'pagination',
-					),
-					'sections' => array(
-						'filter',
-					),
-				),
 				'pods_relation'          => array(
 					'fields' => array(
 						'pods_source_relation',
@@ -229,9 +218,9 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			// @todo: error handling for incorrect where!
 		),*/
 	);
-?>
-	<div id="fl-builder-settings-section-pods" class="fl-builder-settings-section">
-		<table class="fl-form-table">
+	?>
+    <div id="fl-builder-settings-section-pods" class="fl-builder-settings-section" data-source="pods_relationship">
+        <table class="fl-form-table">
 			<?php
 			foreach ( $setting_fields as $setting_name => $setting_data ) {
 				if ( $setting_data ) {
@@ -239,9 +228,9 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 				}
 			}
 			?>
-		</table>
-	</div>
-<?php
+        </table>
+    </div>
+	<?php
 
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
 
@@ -258,8 +247,13 @@ function pods_beaver_loop_settings_before_form( $settings ) {
  */
 function pods_beaver_loop_before_query_settings( $settings ) {
 
-	if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
-		return $settings;
+	if ( ! isset( $settings->data_source ) || 'pods_relationship' != $settings->data_source ) {
+		/**
+		 * Check for old settings saved before 1.3 Release
+		 */
+		if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
+			return $settings;
+		}
 	}
 
 	/*global $wp_query, $wp_the_query, $paged;
@@ -280,11 +274,11 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 	if ( 'pods_relation' === $settings->use_pods && ! empty( $settings->pods_source_relation ) ) {
 		$field_params = array(
-			'name'   => trim( $settings->pods_source_relation ),
+			'name' => trim( $settings->pods_source_relation ),
 		);
 	} elseif ( 'pods_settings_relation' === $settings->use_pods ) {
 		$field_params = array(
-			'name'   => trim( $settings->field ),
+			'name' => trim( $settings->field ),
 		);
 	}/*elseif ( 'pods_advanced' === $settings->use_pods && ! empty( $settings->pods_where ) ) {
 		$find_params = array(
@@ -377,7 +371,7 @@ function pods_beaver_empty_query() {
 /**
  * Add Option to order_by settings field
  *
- * @param array  $field
+ * @param array $field
  * @param string $name
  * @param object $settings
  *
@@ -398,7 +392,7 @@ function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) 
 /**
  * Work around UABB overly aggressive setting of post_type
  *
- * @param array  $args
+ * @param array $args
  * @param object $settings
  *
  * @return array
@@ -416,3 +410,36 @@ function pods_beaver_uabb_blog_posts( $args, $settings ) {
 	return $args;
 
 }
+
+/**
+ *
+ * TEST
+ *
+ */
+
+/**
+ * Adds PODS relation as data source for posts module.
+ *
+ * @since 1.3
+ *
+ * @param array $field
+ * @param string $name The field name.
+ * @param object $settings
+ *
+ * @return array
+ */
+function pods_beaver_render_settings_field( $field, $name, $settings ) {
+	if ( 'data_source' != $name ) {
+		return $field;
+	}
+
+	$field['options']['pods_relationship'] = __( 'PODS Relationship', 'pods-beaver-builder-themer-add-on' );
+	$field['toggle']['pods_relationship']  = array(
+		'sections' => array( 'pods' ),
+		'fields'   => array( 'posts_per_page' )
+	);
+
+	return $field;
+}
+
+add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 12, 3 );
