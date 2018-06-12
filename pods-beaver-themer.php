@@ -180,11 +180,21 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
 			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
 			'options'     => array(
+				'no'                     => __( 'None', 'pods-beaver-builder-themer-add-on' ),
 				'pods_relation'          => __( 'Current pod item', 'pods-beaver-builder-themer-add-on' ),
 				'pods_settings_relation' => __( 'Settings POD or current user', 'pods-beaver-builder-themer-add-on' ),
 				// 'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
 			),
 			'toggle'      => array(
+				'no'                     => array(
+					'fields'   => array(
+						'post_type',
+						'pagination',
+					),
+					'sections' => array(
+						'filter',
+					),
+				),
 				'pods_relation'          => array(
 					'fields' => array(
 						'pods_source_relation',
@@ -401,6 +411,8 @@ function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) 
  */
 function pods_beaver_uabb_blog_posts( $args, $settings ) {
 
+    // @todo swicht to new version if still needed
+
 	if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
 		return $args;
 	}
@@ -411,11 +423,6 @@ function pods_beaver_uabb_blog_posts( $args, $settings ) {
 
 }
 
-/**
- *
- * TEST
- *
- */
 
 /**
  * Adds PODS relation as data source for posts module.
