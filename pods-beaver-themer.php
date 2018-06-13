@@ -67,6 +67,9 @@ function pods_beaver_init() {
 
 	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
 
+	add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
+	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3 );
+
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
@@ -396,21 +399,10 @@ function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) 
  */
 function pods_beaver_uabb_blog_posts( $args, $settings ) {
 
-	if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
-		return $args;
-	}
-
 	$args['post_type'] = 'any';
 
 	return $args;
-
 }
-
-/**
- *
- * TEST
- *
- */
 
 /**
  * Adds PODS relation as data source for posts module.
@@ -436,9 +428,6 @@ function pods_beaver_render_settings_field( $field, $name, $settings ) {
 
 	return $field;
 }
-
-add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 12, 3 );
-
 
 /**
  * Update module settings to use data_source
@@ -470,4 +459,3 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 	return $data;
 }
 
-add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
