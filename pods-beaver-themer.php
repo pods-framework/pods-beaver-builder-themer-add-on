@@ -445,3 +445,36 @@ function pods_beaver_render_settings_field( $field, $name, $settings ) {
 }
 
 add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 12, 3 );
+
+
+/**
+ * Update module settings to use data_source
+ * and remove the (deprecated) use_pods option
+ * @todo: maybe change filter to `filter_settings` method once BB 2.2 is released and make that required ;)
+ *
+ * @since 1.3
+ *
+ * @param array $data An array of layout node objects.
+ * @param string $status Either published or draft.
+ * @param int $post_id The ID of the post
+ *
+ * @return mixed
+ */
+function pods_beaver_update_module_settings_data_source( $data, $status, $post_id ) {
+
+	foreach ( $data as $node ) {
+		if ( 'module' === $node->type && property_exists( $node->settings, 'use_pods' ) ) {
+			$module_settings = $node->settings;
+			if ( ! ( 'no' === $module_settings->use_pods ) ) {
+				$module_settings->pods_source_type = $module_settings->use_pods;
+				$module_settings->data_source      = 'pods_relationship';
+			}
+			unset( $module_settings->use_pods );
+			$data[ $node->node ]->settings = $module_settings;
+		}
+	}
+
+	return $data;
+}
+
+add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
