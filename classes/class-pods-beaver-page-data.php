@@ -105,7 +105,9 @@ final class PodsBeaverPageData {
 		} elseif ( is_object( $settings ) ) {
 			$location = array();
 
-			if ( ! empty( $settings->use_pods ) && 'pods_settings_relation' === $settings->use_pods ) {
+			if ( ! empty( $settings->data_source ) && 'pods_relationship' === $settings->data_source
+			     && ! empty( $settings->pods_source_type ) && 'pods_settings_relation' === $settings->pods_source_type ) {
+
 				if ( ! empty( $settings->pods_source_settings_relation ) ) {
 					$location = explode( ':', $settings->pods_source_settings_relation );
 				}

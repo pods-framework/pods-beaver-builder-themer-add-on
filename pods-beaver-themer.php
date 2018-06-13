@@ -164,7 +164,7 @@ function pods_beaver_fake_loop_false() {
  */
 function pods_beaver_loop_settings_before_form( $settings ) {
 
-	$source_settings_relation = array();
+    $source_settings_relation = array();
 
 	$fields = PodsBeaverPageData::pods_get_settings_fields( array( 'type' => 'pick' ) );
 
@@ -173,7 +173,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	}
 
 	$setting_fields = array(
-		'use_pods'                      => array(
+		'pods_source_type'                      => array(
 			'type'        => 'select',
 			'label'       => __( 'Relation from', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
@@ -258,12 +258,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 function pods_beaver_loop_before_query_settings( $settings ) {
 
 	if ( ! isset( $settings->data_source ) || 'pods_relationship' != $settings->data_source ) {
-		/**
-		 * Check for old settings saved before 1.3 Release
-		 */
-		if ( empty( $settings->use_pods ) || 'no' === $settings->use_pods ) {
 			return $settings;
-		}
 	}
 
 	/*global $wp_query, $wp_the_query, $paged;
@@ -282,11 +277,11 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 	$pod = PodsBeaverPageData::get_pod( $settings );
 
-	if ( 'pods_relation' === $settings->use_pods && ! empty( $settings->pods_source_relation ) ) {
+	if ( 'pods_relation' === $settings->pods_source_type && ! empty( $settings->pods_source_relation ) ) {
 		$field_params = array(
 			'name' => trim( $settings->pods_source_relation ),
 		);
-	} elseif ( 'pods_settings_relation' === $settings->use_pods ) {
+	} elseif ( 'pods_settings_relation' === $settings->pods_source_type ) {
 		$field_params = array(
 			'name' => trim( $settings->field ),
 		);
