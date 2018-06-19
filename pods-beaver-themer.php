@@ -462,7 +462,7 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 	foreach ( $data as $node ) {
 		if ( 'module' === $node->type && property_exists( $node->settings, 'use_pods' ) ) {
 			$module_settings = $node->settings;
-			if ( ! ( 'no' === $module_settings->use_pods ) ) {
+			if (  'no' !== $module_settings->use_pods  ) {
 				$module_settings->pods_source_type = $module_settings->use_pods;
 				$module_settings->data_source      = 'pods_relationship';
 			}
