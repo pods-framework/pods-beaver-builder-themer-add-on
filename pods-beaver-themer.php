@@ -434,7 +434,11 @@ function pods_beaver_render_settings_field( $field, $name, $settings ) {
 	$field['options']['pods_relationship'] = __( 'PODS Relationship', 'pods-beaver-builder-themer-add-on' );
 	$field['toggle']['pods_relationship']  = array(
 		'sections' => array( 'pods' ),
-		'fields'   => array( 'posts_per_page' )
+		'fields'   => array( 'pods_source_type', 'pods_source_relation', 'posts_per_page' )
+	);
+	$field['hide']['pods_relationship']  = array(
+		'sections' => array( 'filter' ),
+		'fields'   => array( 'post_type', 'exclude_self' )
 	);
 
 	return $field;
