@@ -101,10 +101,10 @@ add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
  * @since 1.1.1
  */
 function pods_beaver_enqueue_assets() {
-	if ( FLBuilderModel::is_builder_active() ) {
-		$deps = 'fl-builder-layout-' . FLBuilderModel::get_post_id();
+	if ( class_exists( 'FLBuilderModel' ) && FLBuilderModel::is_builder_active() ) {
 
-		wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array( $deps ), null, true );
+	    $deps = 'fl-builder-layout-' . FLBuilderModel::get_post_id();
+	    wp_enqueue_script( 'pods-beaver-settings-form', PODS_BEAVER_URL . 'assets/js/settings-form.js', array( $deps ), PODS_BEAVER_VERSION, true );
 	}
 }
 
@@ -233,6 +233,17 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			?>
         </table>
     </div>
+    <script type="text/javascript">
+        ( function( $ ) {
+            $( 'body' ).on( 'change', '.fl-loop-data-source-select select[name="data_source"]', function () {
+                var val = $( this ).val();
+                if ( 'pods_relationship' === val ) {
+                    $('.fl-loop-data-source').show();
+
+                }
+            } );
+        } )( jQuery );
+    </script>
 	<?php
 
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
