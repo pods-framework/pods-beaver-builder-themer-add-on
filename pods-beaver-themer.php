@@ -239,6 +239,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
                 var val = $( this ).val();
                 if ( 'pods_relationship' === val ) {
                     $('.fl-loop-data-source').show();
+                    $('#fl-builder-settings-section-general').show();
 
                 }
             } );
