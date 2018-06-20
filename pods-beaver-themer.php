@@ -349,14 +349,17 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 	add_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts', 10, 1 );
 
-	$setting_id_field = 'posts_' . $settings->post_type;
+	$setting_post_type_ids_field_name = 'posts_' . $settings->post_type;
+	$settings_post_type_matching_field_name = 'posts_' . $settings->post_type . '_matching';
 
 	// get comma separated list to power post__in for the BB Custom Query
 	if ( is_array( $ids ) ) {
 		$ids = implode( ', ', $ids );
 	}
 
-	$settings->{$setting_id_field} = $ids;
+	$settings->{$setting_post_type_ids_field_name} = $ids;
+	$settings->{$settings_post_type_matching_field_name} = '1';
+
 
 	return $settings;
 
@@ -435,7 +438,7 @@ function pods_beaver_render_settings_field( $field, $name, $settings ) {
 	$field['options']['pods_relationship'] = __( 'PODS Relationship', 'pods-beaver-builder-themer-add-on' );
 	$field['toggle']['pods_relationship']  = array(
 		'sections' => array( 'pods' ),
-		'fields'   => array( 'pods_source_type', 'pods_source_relation', 'posts_per_page' )
+		'fields'   => array( 'pods_source_type', 'posts_per_page' )
 	);
 	$field['hide']['pods_relationship']  = array(
 		'sections' => array( 'filter' ),
