@@ -347,7 +347,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	// we have id's no need to specify the type
 	$settings->post_type = 'any';
 
-	add_filter( 'uabb_blog_posts_query_args', 'pods_beaver_uabb_blog_posts', 10, 2 );
+	add_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts', 10, 1 );
 
 	$setting_id_field = 'posts_' . $settings->post_type;
 
@@ -408,9 +408,10 @@ function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) 
  *
  * @since 1.1
  */
-function pods_beaver_uabb_blog_posts( $args, $settings ) {
+function pods_beaver_uabb_blog_posts( $args ) {
 
 	$args['post_type'] = 'any';
+	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
 
 	return $args;
 }
