@@ -167,59 +167,56 @@ function pods_beaver_fake_loop_false() {
  */
 function pods_beaver_loop_settings_before_form( $settings ) {
 
-    $source_settings_relation = array();
+	$source_settings_relation = array();
+	$pods_source_relation     = array();
+	$options                  = array();
+	$toggle                   = array();
 
-	$fields = PodsBeaverPageData::pods_get_settings_fields( array( 'type' => 'pick' ) );
+	$pod_setting_and_user_fields = PodsBeaverPageData::pods_get_settings_fields( array( 'type' => 'pick' ) );
 
-	if ( $fields && ! empty( $fields['settings_field'] ) ) {
-		$source_settings_relation = $fields['settings_field'];
+	if ( $pod_setting_and_user_fields && ! empty( $pod_setting_and_user_fields['settings_field'] ) ) {
+		$source_settings_relation = $pod_setting_and_user_fields['settings_field'];
 	}
 
+	if ( 'fl-theme-layout' === get_post_type() ) {
+		$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
+		$location = explode( ':', $location );
+
+		if ( ! empty( $location[0] ) && 'archive' !== $location[0] ) {
+			$options['pods_relation'] = __( 'Pod from Main Query', 'pods-beaver-builder-themer-add-on' );
+			$toggle['pods_relation']  = array(
+				'fields' => array(
+					'pods_source_relation',
+				),
+			);
+			$pods_source_relation     = array(
+				'type'    => 'select',
+				'label'   => __( 'Main Query Pod Field', 'pods-beaver-builder-themer-add-on' ),
+				'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-builder-themer-add-on' ),
+				'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
+			);
+		}
+	}
+
+	$options['pods_settings_relation'] = __( 'Settings / Logged In User', 'pods-beaver-builder-themer-add-on' );
+	$toggle['pods_settings_relation']  = array(
+		'fields' => array(
+			'pods_source_settings_relation',
+		),
+	);
+
 	$setting_fields = array(
-		'pods_source_type'                      => array(
+		'pods_source_type'              => array(
 			'type'        => 'select',
-			'label'       => __( 'Relation from', 'pods-beaver-builder-themer-add-on' ),
+			'label'       => __( 'Relation Type', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
 			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
-			'options'     => array(
-				'pods_relation'          => __( 'Current pod item', 'pods-beaver-builder-themer-add-on' ),
-				'pods_settings_relation' => __( 'Settings POD or current user', 'pods-beaver-builder-themer-add-on' ),
-				// 'pods_advanced'          => __( 'Advanced (pods)', 'pods-beaver-builder-themer-add-on' ),
-			),
-			'toggle'      => array(
-				'pods_relation'          => array(
-					'fields' => array(
-						'pods_source_relation',
-					),
-				),
-				'pods_settings_relation' => array(
-					'fields' => array(
-						'pods_source_settings_relation',
-					),
-				),
-				/*'pods_advanced'          => array(
-					'fields' => array(
-						'pods_where',
-                        'post_type',
-					),
-				),*/
-			),
+			'options'     => $options,
+			'toggle'      => $toggle,
 		),
-		'pods_source_relation'          => array(
-			'type'    => 'select',
-			'label'   => __( 'Field from Current Post Type', 'pods-beaver-builder-themer-add-on' ),
-			'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-builder-themer-add-on' ),
-			'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
-		),
+		'pods_source_relation'          => $pods_source_relation,
 		'pods_source_settings_relation' => $source_settings_relation,
-		/*'pods_where'                    => array(
-			'type'        => 'text',
-			'label'       => __( 'Customized WHERE Query', 'pods-beaver-builder-themer-add-on' ),
-			'help'        => __( 'SQL WHERE to use, example: "t.my_field = \'test\'" - This field also supports tableless traversal like "my_relationship_field.id = 3" with unlimited depth.', 'pods-beaver-builder-themer-add-on' ),
-			'description' => __( '<a href="http://pods.io/docs/code/pods/find/" target="_blank">See Documentation &raquo;</a>', 'pods-beaver-builder-themer-add-on' ),
-			// @todo: error handling for incorrect where!
-		),*/
 	);
 	?>
     <div id="fl-builder-settings-section-pods" class="fl-builder-settings-section" data-source="pods_relationship">
@@ -234,15 +231,15 @@ function pods_beaver_loop_settings_before_form( $settings ) {
         </table>
     </div>
     <script type="text/javascript">
-        ( function( $ ) {
-            $( 'body' ).on( 'change', '.fl-loop-data-source-select select[name="data_source"]', function () {
-                var val = $( this ).val();
-                if ( 'pods_relationship' === val ) {
+        (function ($) {
+            $('body').on('change', '.fl-loop-data-source-select select[name="data_source"]', function () {
+                var val = $(this).val();
+                if ('pods_relationship' === val) {
                     $('.fl-loop-data-source').show();
                     $('#fl-builder-settings-section-general').show();
                 }
-            } );
-        } )( jQuery );
+            });
+        })(jQuery);
     </script>
 	<?php
 
@@ -435,7 +432,7 @@ function pods_beaver_render_settings_field( $field, $name, $settings ) {
 		return $field;
 	}
 
-	$field['options']['pods_relationship'] = __( 'PODS Relationship', 'pods-beaver-builder-themer-add-on' );
+	$field['options']['pods_relationship'] = __( 'Pods Relationship', 'pods-beaver-builder-themer-add-on' );
 	$field['toggle']['pods_relationship']  = array(
 		'sections' => array( 'pods' ),
 		'fields'   => array( 'pods_source_type', 'posts_per_page' )
