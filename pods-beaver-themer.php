@@ -208,7 +208,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	$setting_fields = array(
 		'pods_source_type'              => array(
 			'type'        => 'select',
-			'label'       => __( 'Relation Type', 'pods-beaver-builder-themer-add-on' ),
+			'label'       => __( 'Relation Source', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
 			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
