@@ -554,6 +554,7 @@ final class PodsBeaverPageData {
 	 * @param string $pod_name
 	 * @param array  $field_options Field options based on pod_data array.
 	 * @param string $prefix
+	 * @param array  $pods_fields_visited Keep track of visited fields to avoid loops
 	 *
 	 * @return array
 	 *
