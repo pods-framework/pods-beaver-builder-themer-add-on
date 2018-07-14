@@ -103,44 +103,50 @@ final class PodsBeaverPageData {
 
 			$settings = null;
 		} elseif ( is_object( $settings ) ) {
-			$location = array();
 
-			if ( ! empty( $settings->data_source ) && 'pods_relationship' === $settings->data_source
-			     && ! empty( $settings->pods_source_type ) && 'pods_settings_relation' === $settings->pods_source_type ) {
-
-				if ( ! empty( $settings->pods_source_settings_relation ) ) {
-					$location = explode( ':', $settings->pods_source_settings_relation );
-				}
-			} elseif ( ! empty( $settings->settings_field ) ) {
-				$location = explode( ':', $settings->settings_field );
-			}
-
-			if ( 2 <= count( $location ) ) {
-				$settings->name  = $location[0];
-				$settings->field = $location[1];
-			}
-
-			if ( ! empty( $settings->name ) ) {
-				$pod_name = $settings->name;
-
-				if ( 'user' === $settings->name ) {
-					if ( is_user_logged_in() ) {
-						$item_id = get_current_user_id();
-					} else {
-						// User is not logged in, cannot return data
-						return false;
-					}
-				}
-			} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
-				// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
-				$pod_name  = get_post_type();
-				$item_id = get_the_ID();
+			if ( ! empty( $settings->item_id ) && ! empty( $settings->pod_name ) ) {
+				$item_id  = $settings->item_id;
+				$pod_name = $settings->pod_name;
 			} else {
-				$info = self::get_current_pod_info();
+				$location = array();
 
-				if ( ! empty( $info['pod'] ) ) {
-					$pod_name = $info['pod'];
-					$item_id  = $info['id'];
+				if ( ! empty( $settings->data_source ) && 'pods_relationship' === $settings->data_source
+				     && ! empty( $settings->pods_source_type ) && 'pods_settings_relation' === $settings->pods_source_type ) {
+
+					if ( ! empty( $settings->pods_source_settings_relation ) ) {
+						$location = explode( ':', $settings->pods_source_settings_relation );
+					}
+				} elseif ( ! empty( $settings->settings_field ) ) {
+					$location = explode( ':', $settings->settings_field );
+				}
+
+				if ( 2 <= count( $location ) ) {
+					$settings->pod_name = $location[0];
+					$settings->field    = $location[1];
+				}
+
+				if ( ! empty( $settings->pod_name ) ) {
+					$pod_name = $settings->pod_name;
+
+					if ( 'user' === $pod_name ) {
+						if ( is_user_logged_in() ) {
+							$item_id = get_current_user_id();
+						} else {
+							// User is not logged in, cannot return data
+							return false;
+						}
+					}
+				} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
+					// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
+					$pod_name = get_post_type();
+					$item_id  = get_the_ID();
+				} else {
+					$info = self::get_current_pod_info();
+
+					if ( ! empty( $info['pod'] ) ) {
+						$pod_name = $info['pod'];
+						$item_id  = $info['id'];
+					}
 				}
 			}
 		}
@@ -200,6 +206,25 @@ final class PodsBeaverPageData {
 		}
 
 		$content = $pod->display( $settings->field );
+
+		return $content;
+
+	}
+	/**
+	 * Display field from the author.
+	 *
+	 * @param object $settings
+	 * @param string $property
+	 *
+	 * @return string
+	 *
+	 * @since 1.3
+	 */
+	public static function get_field_display_author( $settings, $property ) {
+
+		$settings->item_id = get_the_author_meta( 'ID' );
+		$settings->pod_name = "user";
+		$content = self::get_field_display( $settings, $property );
 
 		return $content;
 
@@ -397,6 +422,29 @@ final class PodsBeaverPageData {
 					'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-builder-themer-add-on' ), $pod_name ),
 				);
 			}
+		}
+
+		return $fields;
+
+	}
+
+	/**
+	 *
+	 * @param array $field_options
+	 *
+	 * @return string[]
+	 *
+	 * @since    1.3
+	 */
+	public static function pods_get_author_fields( $field_options = array() ) {
+
+		$pod_name = 'user';
+		$fields   = self::recurse_pod_fields( $pod_name, $field_options );
+
+		if ( empty( $fields ) ) {
+			$fields = array(
+				'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-builder-themer-add-on' ), $pod_name ),
+			);
 		}
 
 		return $fields;

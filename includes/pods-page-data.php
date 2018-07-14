@@ -14,7 +14,7 @@
  * Pods CPT / TAX / ...
  */
 $data = array(
-	'label'        => __( 'Field or Related Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'        => __( 'Pod Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'        => 'pods',
 	'type'         => array(
 		'string',
@@ -37,6 +37,36 @@ $form = array(
 
 FLPageData::add_post_property( 'pods_display', $data );
 FLPageData::add_post_property_settings_fields( 'pods_display', $form );
+
+/**
+ * Author
+ *
+ * @since 1.3
+ */
+$data = array(
+	'label'        => __( 'Author Field', 'pods-beaver-builder-themer-add-on' ),
+	'group'        => 'pods',
+	'type'         => array(
+		'string',
+		'html',
+		'custom_field',
+	),
+	'getter'       => 'PodsBeaverPageData::get_field_display_author',
+	'js'           => '',
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'select',
+		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
+		'options'     => 'PodsBeaverPageData::pods_get_author_fields',
+		'help'        => __( 'Author (User) Field List', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'Author (User) Field List', 'pods-beaver-builder-themer-add-on' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_author', $data );
+FLPageData::add_post_property_settings_fields( 'pods_author', $form );
 
 /**
  * Pods Templates / Magic Tag
@@ -89,7 +119,7 @@ FLPageData::add_post_property_settings_fields( 'pods_template', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -119,7 +149,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings', $form );
  * Pods Photo (Image)
  */
 $data = array(
-	'label'  => __( 'Image: Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Image: Pod Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo',
@@ -153,7 +183,7 @@ FLPageData::add_post_property_settings_fields( 'pods_photo', $form );
  * Manual Photo Field
  */
 $data = array(
-	'label'  => __( 'Image: Advanced (magic tag)', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Image: Magic Tag', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo'
@@ -187,7 +217,7 @@ FLPageData::add_post_property_settings_fields( 'pods_photo_manual', $form );
  * Pods Multiple Photos (Images)
  */
 $data = array(
-	'label'  => __( 'Multiple Photos (Images)', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Images: Pod Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'multiple-photos',
@@ -213,7 +243,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
  * Manual Multiple Photo Field
  */
 $data = array(
-	'label'  => __( 'Images: Advanced (manual)', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Images: Magic Tag', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'multiple-photos'
@@ -242,7 +272,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos_manual', $f
  * Pods Settings Photo (Image)
  */
 $data = array(
-	'label'  => __( 'User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Image: User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo',
@@ -268,7 +298,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
  * Pods Settings Multiple Photos (Images)
  */
 $data = array(
-	'label'  => __( 'User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Images: User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'multiple-photos',
@@ -303,7 +333,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_multiple_photos', 
  * Pods CPT
  */
 $data = array(
-	'label'  => __( 'URL: Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'URL: Pod Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'url',
@@ -366,8 +396,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_url', $form );
  * Pods CPT / TAX / ...
  */
 $data = array(
-	'label'        => __( 'Field or Related Field', 'pods-beaver-builder-themer-add-on' ),
-	'preview_text' => 'label',
+	'label'        => __( 'Color: Pod Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'        => 'pods',
 	'type'         => array(
 		'color',
@@ -396,7 +425,7 @@ FLPageData::add_post_property_settings_fields( 'pods_color', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Color: User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'color',
