@@ -127,7 +127,7 @@ FLPageData::add_post_property_settings_fields( 'pods_template', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'string',
@@ -280,7 +280,7 @@ FLPageData::add_post_property_settings_fields( 'pods_multiple_photos_manual', $f
  * Pods Settings Photo (Image)
  */
 $data = array(
-	'label'  => __( 'Image: User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Image: Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'photo',
@@ -306,7 +306,7 @@ FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
  * Pods Settings Multiple Photos (Images)
  */
 $data = array(
-	'label'  => __( 'Images: User or Settings Fields', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Images: Settings Fields', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'multiple-photos',
@@ -371,7 +371,7 @@ FLPageData::add_post_property_settings_fields( 'pods_url', $form );
  * Pods Settings / User
  */
 $data = array(
-	'label'  => __( 'URL: User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'URL: Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'url',
@@ -433,7 +433,7 @@ FLPageData::add_post_property_settings_fields( 'pods_color', $form );
  * Pods Settings
  */
 $data = array(
-	'label'  => __( 'Color: User or Settings Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'  => __( 'Color: Settings Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'  => 'pods',
 	'type'   => array(
 		'color',
