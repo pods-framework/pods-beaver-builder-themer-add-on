@@ -1,6 +1,4 @@
 <?php
-// @todo Revisit label and description text
-
 /**
  * ***************************Documentation****************************
  * string, html, Properties
@@ -22,7 +20,6 @@ $data = array(
 		'custom_field',
 	),
 	'getter'       => 'PodsBeaverPageData::get_field_display',
-	'js'           => '',
 );
 
 $form = array(
@@ -39,34 +36,45 @@ FLPageData::add_post_property( 'pods_display', $data );
 FLPageData::add_post_property_settings_fields( 'pods_display', $form );
 
 /**
- * Author
+ * Author, Modified Author, Logged in User.
  *
  * @since 1.3
  */
 $data = array(
-	'label'        => __( 'Author Field', 'pods-beaver-builder-themer-add-on' ),
+	'label'        => __( 'User/Author Field', 'pods-beaver-builder-themer-add-on' ),
 	'group'        => 'pods',
 	'type'         => array(
 		'string',
 		'html',
 		'custom_field',
 	),
-	'getter'       => 'PodsBeaverPageData::get_field_display_author',
-	'js'           => '',
+	'getter'       => 'PodsBeaverPageData::get_field_display_user',
 );
 
 $form = array(
+	'type' => array(
+		'type'        => 'select',
+		'label'       => __( 'User', 'pods-beaver-builder-themer-add-on' ),
+		'options'     => array(
+			'author'            => __( 'Author (post_author)', 'pods-beaver-builder-themer-add-on' ),
+			'modified'   => __( 'Author (last modified) ', 'pods-beaver-builder-themer-add-on' ),
+			'logged_in'   => __( 'Logged in User', 'pods-beaver-builder-themer-add-on' ),
+		),
+	),
 	'field' => array(
 		'type'        => 'select',
-		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
-		'options'     => 'PodsBeaverPageData::pods_get_author_fields',
-		'help'        => __( 'Author (User) Field List', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Author (User) Field List', 'pods-beaver-builder-themer-add-on' ),
+		'label'       => __( 'Field', 'pods-beaver-builder-themer-add-on' ),
+		'options'     => 'PodsBeaverPageData::pods_get_user_fields',
+	),
+	'default' => array(
+		'type'  => 'text',
+		'label' => __( 'Default Output', 'pods-beaver-builder-themer-add-on' ),
+		'description' =>  __( 'Default Output', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
-FLPageData::add_post_property( 'pods_author', $data );
-FLPageData::add_post_property_settings_fields( 'pods_author', $form );
+FLPageData::add_post_property( 'pods_user', $data );
+FLPageData::add_post_property_settings_fields( 'pods_user', $form );
 
 /**
  * Pods Templates / Magic Tag

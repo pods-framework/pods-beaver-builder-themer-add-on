@@ -128,6 +128,7 @@ final class PodsBeaverPageData {
 				if ( ! empty( $settings->pod_name ) ) {
 					$pod_name = $settings->pod_name;
 
+					// Backwards compatibility ( user moved to separate property )
 					if ( 'user' === $pod_name ) {
 						if ( is_user_logged_in() ) {
 							$item_id = get_current_user_id();
@@ -220,11 +221,39 @@ final class PodsBeaverPageData {
 	 *
 	 * @since 1.3
 	 */
-	public static function get_field_display_author( $settings, $property ) {
+	public static function get_field_display_user( $settings, $property ) {
 
-		$settings->item_id = get_the_author_meta( 'ID' );
-		$settings->pod_name = "user";
-		$content = self::get_field_display( $settings, $property );
+		if ( isset( $settings->type ) ) {
+			$user_id = 0;
+
+			switch ( $settings->type ) {
+				case 'author':
+					if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+						$user_id = get_the_author_meta( 'ID' );
+					}
+					break;
+				case 'modified':
+					if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+						$user_id = get_post_meta( get_post()->ID, '_edit_last', true );
+					}
+					break;
+				case 'logged_in':
+					if ( is_user_logged_in() ) {
+						$user_id = get_current_user_id();
+					}
+					break;
+			}
+			$settings->item_id = $user_id;
+		}
+
+		if ( ! empty( $settings->item_id ) ) {
+			$settings->pod_name = "user";
+			$content            = self::get_field_display( $settings, $property );
+		}
+
+		if ( empty( $content ) ) {
+			$content = ! empty( $settings->default ) ? $settings->default : 'doing it wrong - no default provided, post_author not supported or no user logged in';
+		}
 
 		return $content;
 
@@ -436,7 +465,7 @@ final class PodsBeaverPageData {
 	 *
 	 * @since    1.3
 	 */
-	public static function pods_get_author_fields( $field_options = array() ) {
+	public static function pods_get_user_fields( $field_options = array() ) {
 
 		$pod_name = 'user';
 		$fields   = self::recurse_pod_fields( $pod_name, $field_options );
@@ -563,7 +592,7 @@ final class PodsBeaverPageData {
 	 */
 	public static function pods_get_settings_fields( $field_options = array() ) {
 
-		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings', 'user' ), 'names' => true ) );
+		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings' ), 'names' => true ) );
 
 		$field_options['add_pod_name'] = 'true';
 
