@@ -640,6 +640,9 @@ final class PodsBeaverPageData {
 	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', $pods_fields_visited = array() ) {
 		
 		$fields = array();
+		if ( ! isset( $field_options['base_pod_name'] ) ) {
+			$field_options['base_pod_name'] = $pod_name;
+		}
 
 		if ( empty( $pod_name ) ) {
 			return $fields;
@@ -650,6 +653,7 @@ final class PodsBeaverPageData {
 		);
 
 		$pod = self::get_pod( $args );
+
 
 		if ( $pod ) {
 
@@ -710,20 +714,15 @@ final class PodsBeaverPageData {
 					}
 				}
 
+				$base_pod_name = $field_options['base_pod_name'];
 				$option_name = $prefix . $field_name;
 
-				if ( isset( $field_options['add_pod_name'] ) && isset( $field_options['base_pod_name'] ) ) {
-					$base_pod_name = $field_options['base_pod_name'];
-					$option_name   = $base_pod_name . ':' . $option_name;
-
-					$option_value = sprintf( '%s: %s%s (%s)', $base_pod_name, $prefix, $field_name, $field['type'] );
-				} else {
-					$option_value = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
+				if ( isset( $field_options['add_pod_name'] ) ) {
+					$option_name = $base_pod_name . ':' . $option_name;
 				}
 
-				$fields[ $prefix . $pod_name ]['label'] = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
-
-				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = $option_value;
+				$fields[ $prefix . $pod_name ]['label'] = sprintf( '%s -> %s', $base_pod_name, $pod_name );
+				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
 			}
 
 
