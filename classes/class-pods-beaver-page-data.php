@@ -544,7 +544,7 @@ final class PodsBeaverPageData {
 		$fields = array(
 			'settings_field' => array(
 				'type'    => 'select',
-				'label'   => __( 'Setting/User Field', 'pods-beaver-builder-themer-add-on' ),
+				'label'   => __( 'Settings/Author/User', 'pods-beaver-builder-themer-add-on' ),
 				'options' => array(
 					'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
 				)
