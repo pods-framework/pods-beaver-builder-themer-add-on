@@ -24,7 +24,7 @@ final class PodsBeaverPageData {
 	public static function init() {
 
 		FLPageData::add_group( 'pods', array(
-			'label' => __( 'Pods', 'pods-beaver-builder-themer-add-on' ),
+			'label' => __( 'Pods Field from:', 'pods-beaver-builder-themer-add-on' ),
 		) );
 
 	}
@@ -103,44 +103,66 @@ final class PodsBeaverPageData {
 
 			$settings = null;
 		} elseif ( is_object( $settings ) ) {
-			$location = array();
 
-			if ( ! empty( $settings->data_source ) && 'pods_relationship' === $settings->data_source
-			     && ! empty( $settings->pods_source_type ) && 'pods_settings_relation' === $settings->pods_source_type ) {
-
-				if ( ! empty( $settings->pods_source_settings_relation ) ) {
-					$location = explode( ':', $settings->pods_source_settings_relation );
-				}
-			} elseif ( ! empty( $settings->settings_field ) ) {
-				$location = explode( ':', $settings->settings_field );
-			}
-
-			if ( 2 <= count( $location ) ) {
-				$settings->name  = $location[0];
-				$settings->field = $location[1];
-			}
-
-			if ( ! empty( $settings->name ) ) {
-				$pod_name = $settings->name;
-
-				if ( 'user' === $settings->name ) {
-					if ( is_user_logged_in() ) {
-						$item_id = get_current_user_id();
-					} else {
-						// User is not logged in, cannot return data
-						return false;
-					}
-				}
-			} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
-				// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
-				$pod_name  = get_post_type();
-				$item_id = get_the_ID();
+			if ( ! empty( $settings->item_id ) && ! empty( $settings->pod_name ) ) {
+				$item_id  = $settings->item_id;
+				$pod_name = $settings->pod_name;
 			} else {
-				$info = self::get_current_pod_info();
+				$location = array();
 
-				if ( ! empty( $info['pod'] ) ) {
-					$pod_name = $info['pod'];
-					$item_id  = $info['id'];
+				if ( ! empty( $settings->data_source ) && 'pods_relationship' === $settings->data_source
+				     && ! empty( $settings->pods_source_type ) && 'pods_settings_relation' === $settings->pods_source_type ) {
+
+					if ( ! empty( $settings->pods_source_settings_relation ) ) {
+						$location = explode( ':', $settings->pods_source_settings_relation );
+					}
+				} elseif ( ! empty( $settings->settings_field ) ) {
+					$location = explode( ':', $settings->settings_field );
+				}
+
+				if ( 2 <= count( $location ) ) {
+					$settings->pod_name = $location[0];
+					$settings->field    = $location[1];
+				}
+
+				if ( ! empty( $settings->pod_name ) ) {
+					$pod_name = $settings->pod_name;
+
+					// Backwards compatibility ( user moved to separate property )
+					if ( 'user' === $pod_name && isset( $settings->type )) {
+						switch ( $settings->type ) {
+							case 'author':
+								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = get_the_author_meta( 'ID' );
+								}
+								break;
+							case 'modified':
+								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = get_post_meta( get_post()->ID, '_edit_last', true );
+								}
+								break;
+							case 'logged_in':
+							case '': // For backwards compatibility
+								if ( is_user_logged_in() ) {
+									$item_id = get_current_user_id();
+								} else {
+									// User is not logged in, cannot return data
+									return false;
+								};
+								break;
+						}
+					}
+				} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
+					// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
+					$pod_name = get_post_type();
+					$item_id  = get_the_ID();
+				} else {
+					$info = self::get_current_pod_info();
+
+					if ( ! empty( $info['pod'] ) ) {
+						$pod_name = $info['pod'];
+						$item_id  = $info['id'];
+					}
 				}
 			}
 		}
@@ -515,17 +537,27 @@ final class PodsBeaverPageData {
 	 */
 	public static function pods_get_settings_fields( $field_options = array() ) {
 
-		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings', 'user' ), 'names' => true ) );
+		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'user', 'settings' ), 'names' => true ) );
 
 		$field_options['add_pod_name'] = 'true';
 
 		$fields = array(
 			'settings_field' => array(
 				'type'    => 'select',
-				'label'   => __( 'Settings or User Field', 'pods-beaver-builder-themer-add-on' ),
+				'label'   => __( 'Settings, Author, User...', 'pods-beaver-builder-themer-add-on' ),
 				'options' => array(
 					'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
 				)
+			),
+			'type' => array(
+				'type'        => 'select',
+				'label'       => __( 'User "type"', 'pods-beaver-builder-themer-add-on' ),
+				'options'     => array(
+					'author'            => __( 'Author (post_author)', 'pods-beaver-builder-themer-add-on' ),
+					'modified'   => __( 'Author (last modified) ', 'pods-beaver-builder-themer-add-on' ),
+					'logged_in'   => __( 'Logged in User', 'pods-beaver-builder-themer-add-on' ),
+				),
+				'description' =>  __( 'Only affects user fields', 'pods-beaver-builder-themer-add-on' ),
 			),
 		);
 
@@ -563,6 +595,9 @@ final class PodsBeaverPageData {
 	private static function recurse_pod_fields( $pod_name, $field_options = array(), $prefix = '', $pods_fields_visited = array() ) {
 		
 		$fields = array();
+		if ( ! isset( $field_options['base_pod_name'] ) ) {
+			$field_options['base_pod_name'] = $pod_name;
+		}
 
 		if ( empty( $pod_name ) ) {
 			return $fields;
@@ -573,6 +608,7 @@ final class PodsBeaverPageData {
 		);
 
 		$pod = self::get_pod( $args );
+
 
 		if ( $pod ) {
 
@@ -633,20 +669,15 @@ final class PodsBeaverPageData {
 					}
 				}
 
+				$base_pod_name = $field_options['base_pod_name'];
 				$option_name = $prefix . $field_name;
 
-				if ( isset( $field_options['add_pod_name'] ) && isset( $field_options['base_pod_name'] ) ) {
-					$base_pod_name = $field_options['base_pod_name'];
-					$option_name   = $base_pod_name . ':' . $option_name;
-
-					$option_value = sprintf( '%s: %s%s (%s)', $base_pod_name, $prefix, $field_name, $field['type'] );
-				} else {
-					$option_value = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
+				if ( isset( $field_options['add_pod_name'] ) ) {
+					$option_name = $base_pod_name . ':' . $option_name;
 				}
 
-				$fields[ $prefix . $pod_name ]['label'] = sprintf( '%s (%s)', $pod_name, $pod->pod_data['type'] );
-
-				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = $option_value;
+				$fields[ $prefix . $pod_name ]['label'] = sprintf( '%s -> %s', $base_pod_name, $pod_name );
+				$fields[ $prefix . $pod_name ]['options'][ $option_name ] = sprintf( '%s%s (%s)', $prefix, $field_name, $field['type'] );
 			}
 
 
