@@ -258,6 +258,17 @@ $form = array(
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 );
 
+$form['fields']['image_size'] = array(
+	'type'    => 'photo-sizes',
+	'label'   => __( 'Image Size', 'pods-beaver-builder-themer-add-on' ),
+	'default' => 'full-size',
+);
+
+$form['fields']['default_img'] = array(
+	'type'  => 'photo',
+	'label' => __( 'Default Image', 'pods-beaver-builder-themer-add-on' ),
+);
+
 FLPageData::add_site_property( 'pods_settings_photo', $data );
 FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
 
