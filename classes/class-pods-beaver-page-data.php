@@ -129,12 +129,27 @@ final class PodsBeaverPageData {
 					$pod_name = $settings->pod_name;
 
 					// Backwards compatibility ( user moved to separate property )
-					if ( 'user' === $pod_name ) {
-						if ( is_user_logged_in() ) {
-							$item_id = get_current_user_id();
-						} else {
-							// User is not logged in, cannot return data
-							return false;
+					if ( 'user' === $pod_name && isset( $settings->type )) {
+						switch ( $settings->type ) {
+							case 'author':
+								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = get_the_author_meta( 'ID' );
+								}
+								break;
+							case 'modified':
+								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = get_post_meta( get_post()->ID, '_edit_last', true );
+								}
+								break;
+							case 'logged_in':
+							case '': // For backwards compatibility
+								if ( is_user_logged_in() ) {
+									$item_id = get_current_user_id();
+								} else {
+									// User is not logged in, cannot return data
+									return false;
+								};
+								break;
 						}
 					}
 				} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
@@ -207,53 +222,6 @@ final class PodsBeaverPageData {
 		}
 
 		$content = $pod->display( $settings->field );
-
-		return $content;
-
-	}
-	/**
-	 * Display field from the author.
-	 *
-	 * @param object $settings
-	 * @param string $property
-	 *
-	 * @return string
-	 *
-	 * @since 1.3
-	 */
-	public static function get_field_display_user( $settings, $property ) {
-
-		if ( isset( $settings->type ) ) {
-			$user_id = 0;
-
-			switch ( $settings->type ) {
-				case 'author':
-					if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
-						$user_id = get_the_author_meta( 'ID' );
-					}
-					break;
-				case 'modified':
-					if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
-						$user_id = get_post_meta( get_post()->ID, '_edit_last', true );
-					}
-					break;
-				case 'logged_in':
-					if ( is_user_logged_in() ) {
-						$user_id = get_current_user_id();
-					}
-					break;
-			}
-			$settings->item_id = $user_id;
-		}
-
-		if ( ! empty( $settings->item_id ) ) {
-			$settings->pod_name = "user";
-			$content            = self::get_field_display( $settings, $property );
-		}
-
-		if ( empty( $content ) ) {
-			$content = ! empty( $settings->default ) ? $settings->default : 'doing it wrong - no default provided, post_author not supported or no user logged in';
-		}
 
 		return $content;
 
@@ -458,29 +426,6 @@ final class PodsBeaverPageData {
 	}
 
 	/**
-	 *
-	 * @param array $field_options
-	 *
-	 * @return string[]
-	 *
-	 * @since    1.3
-	 */
-	public static function pods_get_user_fields( $field_options = array() ) {
-
-		$pod_name = 'user';
-		$fields   = self::recurse_pod_fields( $pod_name, $field_options );
-
-		if ( empty( $fields ) ) {
-			$fields = array(
-				'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-builder-themer-add-on' ), $pod_name ),
-			);
-		}
-
-		return $fields;
-
-	}
-
-	/**
 	 * Limit fields from pods to url fields ( -> file_format = 'url' )
 	 *
 	 * @return string[]
@@ -592,17 +537,27 @@ final class PodsBeaverPageData {
 	 */
 	public static function pods_get_settings_fields( $field_options = array() ) {
 
-		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'settings' ), 'names' => true ) );
+		$pod_names = (array) pods_api()->load_pods( array( 'type' => array( 'user', 'settings' ), 'names' => true ) );
 
 		$field_options['add_pod_name'] = 'true';
 
 		$fields = array(
 			'settings_field' => array(
 				'type'    => 'select',
-				'label'   => __( 'Settings or User Field', 'pods-beaver-builder-themer-add-on' ),
+				'label'   => __( 'Setting/User Field', 'pods-beaver-builder-themer-add-on' ),
 				'options' => array(
 					'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
 				)
+			),
+			'type' => array(
+				'type'        => 'select',
+				'label'       => __( 'User "type"', 'pods-beaver-builder-themer-add-on' ),
+				'options'     => array(
+					'author'            => __( 'Author (post_author)', 'pods-beaver-builder-themer-add-on' ),
+					'modified'   => __( 'Author (last modified) ', 'pods-beaver-builder-themer-add-on' ),
+					'logged_in'   => __( 'Logged in User', 'pods-beaver-builder-themer-add-on' ),
+				),
+				'description' =>  __( 'Only affects user fields', 'pods-beaver-builder-themer-add-on' ),
 			),
 		);
 
