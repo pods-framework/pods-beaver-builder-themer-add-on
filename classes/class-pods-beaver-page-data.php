@@ -201,7 +201,7 @@ final class PodsBeaverPageData {
 	/**
 	 * Just Basic Field Display.
 	 *
-	 * @todo  add settings/code for output_type ( e.g IMAGES as url, image-link, ...)
+	 * @todo  add settings/code for output_type ( e.g IMAGES as url, image-link, …)
 	 * @todo  add settings/code for image_size
 	 *
 	 * @param object $settings
@@ -544,7 +544,7 @@ final class PodsBeaverPageData {
 		$fields = array(
 			'settings_field' => array(
 				'type'    => 'select',
-				'label'   => __( 'Settings, Author, User...', 'pods-beaver-builder-themer-add-on' ),
+				'label'   => __( 'Settings, Author, User…', 'pods-beaver-builder-themer-add-on' ),
 				'options' => array(
 					'' => __( 'No fields found', 'pods-beaver-builder-themer-add-on' ),
 				)
