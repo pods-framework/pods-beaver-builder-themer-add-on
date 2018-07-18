@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3-a-1
+ * Version: 1.3.0
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3-a-1' );
+define( 'PODS_BEAVER_VERSION', '1.3.0' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -183,7 +183,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 		$location = explode( ':', $location );
 
 		if ( ! empty( $location[0] ) && 'archive' !== $location[0] ) {
-			$options['pods_relation'] = __( 'Pod from Main Query', 'pods-beaver-builder-themer-add-on' );
+			$options['pods_relation'] = __( 'Main Query (Post, Page, Term…)', 'pods-beaver-builder-themer-add-on' );
 			$toggle['pods_relation']  = array(
 				'fields' => array(
 					'pods_source_relation',
@@ -191,7 +191,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			);
 			$pods_source_relation     = array(
 				'type'    => 'select',
-				'label'   => __( 'Main Query Pod Field', 'pods-beaver-builder-themer-add-on' ),
+				'label'   => __( 'Pods Field', 'pods-beaver-builder-themer-add-on' ),
 				'help'    => __( 'Only Relationship fields that connect to a custom post type work.', 'pods-beaver-builder-themer-add-on' ),
 				'options' => PodsBeaverPageData::pods_get_fields( array( 'type' => 'pick' ) ),
 			);

@@ -4,7 +4,7 @@ Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,13 +71,17 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.3 - TBD 2018 =
-*
+= 1.3 - July 18th, 2018 =
+* Added Support for quthor, last modified author  #64
+* Added Default Image for settings field connections
+* Improved data-source selection in Post Modules for selecting related items
+* Improved labels all around - i hope you like it
+* Fixed Post Module UABB minor incompatibilities
 
 = 1.2.2 - June 7th, 2018 =
 * Added: Option to use MagicTags for URLs, #39
 * Fixed: Default Image Option not working, #67
-* Fixed: Minor Code quality improvments and some labels
+* Fixed: Minor Code quality improvements and some labels
 
 
 = 1.2.1 - November 10th, 2017 =

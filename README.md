@@ -12,7 +12,7 @@ Big Thank you to @Jonathan!
 ## Requirements
 
 * [Pods](http://pods.io/) 2.4+
-* [Beaver Builder](http://pods.io/beaver-builder/) 1.10+
+* [Beaver Builder](http://pods.io/beaver-builder/) 2.0+
 * [Beaver Themer](http://pods.io/beaver-themer/) 1.0+
 
 Check out [pods.io](http://pods.io/) for our User Guide, Forums, and other resources to help you develop with Pods.
@@ -27,9 +27,7 @@ Or to pull in a Template: `[pods name="your_pod" template="your_template"]`
 [Join the Pods Slack](https://pods.io/chat) and look for the channel _#beaver-themer_
 You will be automatically added to some channels. Please take a look at other channels too.
 
-## Beta - use in production at your own risk!
-
-#### Field connectors for photo and multiple-photo working:
+#### Field connectors for photo and multiple-photo:
 - Select dropdown only list's matching Fields (it lists all "Media" fields)
 - Choose Size
 - Set default image
@@ -40,9 +38,6 @@ You will be automatically added to some channels. Please take a look at other ch
 - images fields are only output as url for magic tag style use advanced ...
 - fields with multiple relations (pick_field) still need some ideas / use cases best to go and use Templates for it!
 
-## Planned:
-- add settings/code for output_type ( e.g IMAGES as url, image-link, ...)
-
 
 Help / Feedback Welcome - Thank You!!!
-- Bernhard aka Quasel
+- Bernhard Gronau (Quasel)
