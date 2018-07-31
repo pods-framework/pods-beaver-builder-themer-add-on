@@ -243,7 +243,15 @@ function pods_beaver_loop_settings_before_form( $settings ) {
     </script>
 	<?php
 
-	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
+    /**
+     * Same functionality added with BB 2.1.4 ( Selection Order )
+     *
+     * @deprecated 1.3.1
+     *
+     */
+	if ( defined( 'FL_BUILDER_VERSION' ) && version_compare( FL_BUILDER_VERSION, '2.1.4', '<' ) ) {
+		add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
+	}
 
 }
 
@@ -387,6 +395,8 @@ function pods_beaver_empty_query() {
  * @return array
  *
  * @since 1.1
+ * @deprecated 1.3.1 same functionality added with BB 2.1.4
+ *
  */
 function pods_beaver_render_settings_field_order_by( $field, $name, $settings ) {
 
