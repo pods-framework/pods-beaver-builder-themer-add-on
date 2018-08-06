@@ -70,6 +70,11 @@ function pods_beaver_init() {
 	add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3 );
 
+	if ( defined( 'FL_THEME_BUILDER_VERSION' ) && version_compare( FL_THEME_BUILDER_VERSION, '1.1', '>' ) ) {
+		add_action( 'bb_logic_init', 'pods_beaver_bb_logic_init');
+		add_action( 'bb_logic_enqueue_scripts', 'pods_beaver_bb_logic_enqueue_scripts' );
+	}
+
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
@@ -157,6 +162,22 @@ function pods_beaver_fake_loop_false() {
 	remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
+
+
+function pods_beaver_bb_logic_init() {
+	require_once PODS_BEAVER_DIR . 'includes/rules.php';
+}
+
+function pods_beaver_bb_logic_enqueue_scripts() {
+	wp_enqueue_script(
+		'bb-logic-rules-pods',
+		PODS_BEAVER_URL . 'assets/js/rules.js',
+		array( 'bb-logic-core' ),
+		'',
+		true
+	);
+}
+
 
 /**
  * Adds the custom code settings for custom post  module layouts.
