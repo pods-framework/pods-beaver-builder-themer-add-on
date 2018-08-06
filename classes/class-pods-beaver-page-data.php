@@ -614,6 +614,10 @@ final class PodsBeaverPageData {
 
 			$all_pod_fields = $pod->fields();
 
+/*			if ( isset( $pod->pod_data['object_fields'] ) ) {
+				$all_pod_fields = array_merge( $all_pod_fields, $pod->pod_data['object_fields'] );
+			}*/
+
 			/*if ( isset( $pod->pod_data['object_fields']['post_author'] ) ) {
 				$all_pod_fields['post_author'] = $pod->pod_data['object_fields']['post_author'];
 			}*/

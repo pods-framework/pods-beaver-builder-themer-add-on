@@ -1,20 +1,5 @@
 <?php
 
-BB_Logic_Rules::register( array(
-    'bb-logic-example/user-post-count' => 'bb_logic_example_user_post_count',
-) );
-
-function bb_logic_example_user_post_count( $rule ) {
-    $user = wp_get_current_user();
-
-    return BB_Logic_Rules::evaluate_rule( array(
-		'value' 	=> count_user_posts( $user->ID ),
-		'operator' 	=> $rule->operator,
-		'compare' 	=> $rule->count,
-	) );
-}
-
-
 /**
  * Server side processing for ACF rules.
  *
