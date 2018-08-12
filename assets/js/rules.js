@@ -1,11 +1,10 @@
 
 console.log( 'TEST');
 
-var _BBLogic$api = BBLogic.api,
-    addRuleTypeCategory = BBLogic.api.addRuleTypeCategory,
+var addRuleTypeCategory = BBLogic.api.addRuleTypeCategory,
     addRuleType = BBLogic.api.addRuleType,
-    getFormPreset = BBLogic.api.getFormPreset;
-var __ = BBLogic.i18n.__;
+    getFormPreset = BBLogic.api.getFormPreset,
+    __ = BBLogic.i18n.__;
 
 
 addRuleTypeCategory('pods', {
@@ -13,8 +12,8 @@ addRuleTypeCategory('pods', {
 });
 
 
-addRuleType('pods/option-field', {
-    label: __('Pods Option Field'),
+addRuleType('pods/settings-field', {
+    label: __('Pods Settings Field'),
     category: 'pods',
     form: getFormPreset('key-value'),  // string,date,number,string
 });
