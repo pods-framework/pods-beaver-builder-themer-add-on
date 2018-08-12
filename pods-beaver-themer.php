@@ -70,14 +70,22 @@ function pods_beaver_init() {
 	add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3 );
 
-	if ( defined( 'FL_THEME_BUILDER_VERSION' ) && version_compare( FL_THEME_BUILDER_VERSION, '1.1', '>' ) ) {
-		add_action( 'bb_logic_init', 'pods_beaver_bb_logic_init');
-		add_action( 'bb_logic_enqueue_scripts', 'pods_beaver_bb_logic_enqueue_scripts' );
-	}
-
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
+
+/**
+ * Add support for the new bb_logic
+ * Server Side Rule Processing
+ * Frontend Rule Registration
+ *
+ * @since 1.4
+ */
+if ( defined( 'FL_THEME_BUILDER_VERSION' ) && version_compare( FL_THEME_BUILDER_VERSION, '1.1', '>' ) ) {
+	add_action( 'bb_logic_init', 'pods_beaver_bb_logic_init');
+	add_action( 'bb_logic_enqueue_scripts', 'pods_beaver_bb_logic_enqueue' );
+}
+
 
 /**
  * Admin nag if Pods or Beaver Builder are not activated.
@@ -163,12 +171,24 @@ function pods_beaver_fake_loop_false() {
 
 }
 
-
+/**
+ * Server Side Rule Processing
+ *
+ * @return void
+ * @since 1.4
+ */
 function pods_beaver_bb_logic_init() {
 	require_once PODS_BEAVER_DIR . 'includes/rules.php';
 }
 
-function pods_beaver_bb_logic_enqueue_scripts() {
+/**
+ * Frontend Rule Registration
+ * Handles enqueuing css and js assets
+ *
+ * @return void
+ * @since 1.4
+ */
+function pods_beaver_bb_logic_enqueue() {
 	wp_enqueue_script(
 		'bb-logic-rules-pods',
 		PODS_BEAVER_URL . 'assets/js/rules.js',
