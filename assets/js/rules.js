@@ -19,6 +19,44 @@ addRuleType('pods/settings-field', {
 });
 
 
+addRuleType('pods/date-field', {
+    label: __('Pods Date Field'),
+    category: 'pods',
+    form: function ( props ) {
+        var rule = props.rule;
+        var post_type = rule.post_type;
+        var taxonomy = rule.taxonomy;
+
+        console.log( props );
+
+        return {
+            post_type: {
+                type: 'select',
+                route: 'bb-logic/v1/wordpress/post-types'
+            },
+            key: {
+                type: 'text',
+                placeholder: __('Key')
+            },
+            operator: {
+                type: 'operator',
+                operators: ['equals', 'does_not_equal']
+            },
+            taxonomy: {
+                type: 'select',
+                route: 'bb-logic/v1/wordpress/taxonomies'
+            },
+            term: {
+                type: 'select',
+                route: taxonomy ? 'bb-logic/v1/wordpress/terms?taxonomy=' + taxonomy : null,
+                visible: taxonomy
+            }
+        };
+    }  // string,date,number,string
+});
+
+
+// Test / Example
 addRuleType( 'pods/user-post-count', {
     label: __( 'User Post Count' ),
     category: 'user',
