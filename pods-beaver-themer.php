@@ -284,6 +284,9 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	$find_params  = array();
 	$field_params = array();
 
+	// we need to define the type of user due to the addition of author and modified user in the field connections @todo: add the same option to post modules
+    $settings->pods_user_type = "logged_in";
+
 	$pod = PodsBeaverPageData::get_pod( $settings );
 
 	if ( 'pods_relation' === $settings->pods_source_type && ! empty( $settings->pods_source_relation ) ) {

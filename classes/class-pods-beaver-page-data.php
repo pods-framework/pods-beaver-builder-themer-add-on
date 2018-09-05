@@ -129,6 +129,9 @@ final class PodsBeaverPageData {
 					$pod_name = $settings->pod_name;
 
 					// Backwards compatibility ( user moved to separate property )
+					if ( isset( $settings->pods_user_type ) ) {
+						$settings->type = $settings->pods_user_type;
+					}
 					if ( 'user' === $pod_name && isset( $settings->type )) {
 						switch ( $settings->type ) {
 							case 'author':
