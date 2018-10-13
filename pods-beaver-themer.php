@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.0' );
+define( 'PODS_BEAVER_VERSION', '1.3.1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -247,7 +247,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
      * Same functionality added with BB 2.1.4 ( Selection Order )
      *
      * @deprecated 1.3.1
-     *
      */
 	if ( defined( 'FL_BUILDER_VERSION' ) && version_compare( FL_BUILDER_VERSION, '2.1.4', '<' ) ) {
 		add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field_order_by', 10, 3 );
