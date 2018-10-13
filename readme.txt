@@ -71,6 +71,10 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
+= 1.3.1 - October 13th, 2018 =
+* Fixed relations to logged in users working again
+* Removed post_in support as of 2.1.4 this is part of BB Core
+
 = 1.3 - July 18th, 2018 =
 * Added Support for quthor, last modified author  #64
 * Added Default Image for settings field connections
