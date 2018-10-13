@@ -554,13 +554,13 @@ final class PodsBeaverPageData {
 			),
 			'type' => array(
 				'type'        => 'select',
-				'label'       => __( 'User "type"', 'pods-beaver-builder-themer-add-on' ),
+				'label'       => __( 'Select User "type"', 'pods-beaver-builder-themer-add-on' ),
 				'options'     => array(
 					'author'            => __( 'Author (post_author)', 'pods-beaver-builder-themer-add-on' ),
 					'modified'   => __( 'Author (last modified) ', 'pods-beaver-builder-themer-add-on' ),
 					'logged_in'   => __( 'Logged in User', 'pods-beaver-builder-themer-add-on' ),
 				),
-				'description' =>  __( 'Only affects user fields', 'pods-beaver-builder-themer-add-on' ),
+				'description' =>  __( 'Not needed for Settings Pod', 'pods-beaver-builder-themer-add-on' ),
 			),
 		);
 
