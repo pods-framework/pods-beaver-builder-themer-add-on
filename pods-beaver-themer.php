@@ -110,9 +110,9 @@ function pods_beaver_enqueue_assets() {
 }
 
 /**
- * Register functions to fake the loop.
+ * Register function to start the fake loop.
  *
- * @since 1.1.1
+ * @since 1.3.3
  */
 function pods_beaver_fake_loop_start() {
 
@@ -121,9 +121,9 @@ function pods_beaver_fake_loop_start() {
 }
 
 /**
- * Register functions to fake the loop.
+ * Register function to end the fake loop.
  *
- * @since 1.1.1
+ * @since 1.3.3
  */
 function pods_beaver_fake_loop_end() {
 
