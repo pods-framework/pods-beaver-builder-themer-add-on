@@ -52,8 +52,9 @@ function pods_beaver_init() {
 
 	PodsBeaverPageData::init();
 
-	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
-	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
+	// Fake being "in the loop" for any module using FLBuilderLoop::query() (see #15)
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_start');
+	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_end');
 
 	// Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
 	// add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0 );
@@ -113,10 +114,20 @@ function pods_beaver_enqueue_assets() {
  *
  * @since 1.1.1
  */
-function pods_beaver_fake_loop_add_actions() {
+function pods_beaver_fake_loop_start() {
 
-	add_action( 'loop_start', 'pods_beaver_fake_loop_true');
-	add_action( 'loop_end', 'pods_beaver_fake_loop_false');
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_true');
+
+}
+
+/**
+ * Register functions to fake the loop.
+ *
+ * @since 1.1.1
+ */
+function pods_beaver_fake_loop_end() {
+
+	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_false');
 
 }
 
@@ -132,7 +143,7 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-    // Fake being in the loop.
+	// Fake being in the loop.
 	$wp_query->in_the_loop = true;
 
 }
@@ -151,10 +162,6 @@ function pods_beaver_fake_loop_false() {
 
 	// Stop faking being in the loop.
 	$wp_query->in_the_loop = false;
-
-	// cleanup - keep fake as close to beaver as possible
-	remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
-	remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
 
