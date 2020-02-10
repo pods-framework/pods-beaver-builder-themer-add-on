@@ -3,7 +3,7 @@ Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer,
 Requires at least: 4.4
-Tested up to: 4.8
+Tested up to: 5.1
 Stable tag: 1.4-a-1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -71,7 +71,12 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.3.1 - October 13th, 2018 =
+= 1.3.2 - February 5th, 2019 =
+* Fixed "Plugin does not have a header"
+* Updated Tested up to: 5.0
+
+
+= 1.3.1 - October 26th, 2018 =
 * Fixed relations to logged in users working again
 * Removed post_in support as of 2.1.4 this is part of BB Core
 
