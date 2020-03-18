@@ -487,3 +487,41 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 	return $data;
 }
 
+/**
+ * Register add-on with Pods Freemius connection.
+ */
+function pods_beaver_freemius() {
+	try {
+		fs_dynamic_init( [
+			'id'               => '5349',
+			'slug'             => 'pods-beaver-builder-themer-add-on',
+			'type'             => 'plugin',
+			'public_key'       => 'pk_d8a10a25a662419add4ff3fbcc493',
+			'is_premium'       => false,
+			'has_paid_plans'   => false,
+			'is_org_compliant' => true,
+			'parent'           => [
+				'id'         => '5347',
+				'slug'       => 'pods',
+				'public_key' => 'pk_737105490825babae220297e18920',
+				'name'       => 'Pods',
+			],
+			'menu'             => [
+				'slug'        => 'pods-settings',
+				'contact'     => false,
+				'support'     => false,
+				'affiliation' => false,
+				'account'     => true,
+				'pricing'     => false,
+				'addons'      => true,
+				'parent'      => [
+					'slug' => 'pods',
+				],
+			],
+		] );
+	} catch ( \Exception $exception ) {
+		return;
+	}
+}
+add_action( 'pods_freemius_init', 'pods_beaver_freemius' );
+
