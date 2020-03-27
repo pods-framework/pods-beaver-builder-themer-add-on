@@ -73,6 +73,7 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 == Changelog ==
 
 = 1.3.3 - March 26th, 2020 =
+* Added: Now requiring PHP 5.4+
 * Added: Freemius support when running Pods 2.7.17
 * Updated WordPress compatibility up to WP 5.4
 
