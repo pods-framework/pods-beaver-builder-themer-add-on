@@ -350,6 +350,8 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 
 		// Add pod name as the post type query.
 		$settings->post_type = $pod->pod;
+		// Add pod context to the settings so other filters can make use of this.
+		$settings->pod = $pod;
 	}
 
 	if ( empty( $ids ) ) {
@@ -427,6 +429,12 @@ function pods_beaver_uabb_blog_posts( $args ) {
 
 	$args['post_type'] = 'any';
 	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
+
+	// Set post type correctly if a Pod is found.
+	$pod = pods_v( 'pod', pods_v( 'settings', $args, array() ), null );
+	if ( $pod ) {
+		$args['post_type'] = $pod->pod;
+	}
 
 	return $args;
 }
