@@ -325,6 +325,9 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 	 */
 	$field_params = apply_filters( 'pods_beaver_loop_settings_field_params', $field_params, $settings, $pod );
 
+	// Use post type wildcard by default.
+	$settings->post_type = 'any';
+
 	if ( $pod ) {
 		if ( $find_params ) {
 			// Optimized select only gets the ID
@@ -344,15 +347,15 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		    $field_params['output'] = 'id';
 			$ids = $pod->field( $field_params );
 		}
+
+		// Add pod name as the post type query.
+		$settings->post_type = $pod->pod;
 	}
 
 	if ( empty( $ids ) ) {
 	    // No Fields found make sure the end result is an empty WP_Query
 		add_filter( 'fl_builder_loop_query', 'pods_beaver_empty_query' );
 	}
-
-	// we have id's no need to specify the type
-	$settings->post_type = 'any';
 
 	add_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts', 10, 1 );
 
