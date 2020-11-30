@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.3' );
+define( 'PODS_BEAVER_VERSION', '1.3.4' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -83,14 +83,14 @@ function pods_beaver_admin_nag() {
 
 	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
 		printf(
-			'<div id="message" class="error"><p>%s</p></div>',
+			'<div class="notice notice-error"><p>%s</p></div>',
 			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
 		);
 	}
 
 }
 
-add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
+add_action( 'admin_notices', 'pods_beaver_admin_nag' );
 
 /**
  * Post modules:  JS for setting data_source to custom_query if a relationship field is selected as source
