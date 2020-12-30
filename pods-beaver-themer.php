@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.4
+ * Version: 1.4-a-1
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.4' );
+define( 'PODS_BEAVER_VERSION', '1.4-a-1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -74,6 +74,19 @@ function pods_beaver_init() {
 }
 
 add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
+
+/**
+ * Add support for the new bb_logic
+ * Server Side Rule Processing
+ * Frontend Rule Registration
+ *
+ * @since 1.4
+ */
+if ( defined( 'FL_THEME_BUILDER_VERSION' ) && version_compare( FL_THEME_BUILDER_VERSION, '1.1', '>' ) ) {
+	add_action( 'bb_logic_init', 'pods_beaver_bb_logic_init');
+	add_action( 'bb_logic_enqueue_scripts', 'pods_beaver_bb_logic_enqueue' );
+}
+
 
 /**
  * Admin nag if Pods or Beaver Builder are not activated.
@@ -164,6 +177,34 @@ function pods_beaver_fake_loop_false() {
 	$wp_query->in_the_loop = false;
 
 }
+
+/**
+ * Server Side Rule Processing
+ *
+ * @return void
+ * @since 1.4
+ */
+function pods_beaver_bb_logic_init() {
+	require_once PODS_BEAVER_DIR . 'includes/rules.php';
+}
+
+/**
+ * Frontend Rule Registration
+ * Handles enqueuing css and js assets
+ *
+ * @return void
+ * @since 1.4
+ */
+function pods_beaver_bb_logic_enqueue() {
+	wp_enqueue_script(
+		'bb-logic-rules-pods',
+		PODS_BEAVER_URL . 'assets/js/rules.js',
+		array( 'bb-logic-core' ),
+		'',
+		true
+	);
+}
+
 
 /**
  * Adds the custom code settings for custom post  module layouts.
