@@ -50,16 +50,16 @@ final class PodsBeaverPageData {
 		if ( $queried_object ) {
 			$id_lookup = true;
 
-			if ( isset( $queried_object->post_type ) ) {
+			if ( $queried_object instanceof WP_Post ) {
 				// Post Type Singular
 				$info['pod'] = $queried_object->post_type;
-			} elseif ( isset( $queried_object->taxonomy ) ) {
+			} elseif ( $queried_object instanceof WP_Term ) {
 				// Term Archive
 				$info['pod'] = $queried_object->taxonomy;
-			} elseif ( isset( $queried_object->user_login ) ) {
+			} elseif ( $queried_object instanceof WP_User ) {
 				// Author Archive
 				$info['pod'] = 'user';
-			} elseif ( isset( $queried_object->public ) && isset( $queried_object->name ) ) {
+			} elseif ( $queried_object instanceof WP_Post_Type ) {
 				// Post Type Archive
 				$info['pod'] = $queried_object->name;
 
