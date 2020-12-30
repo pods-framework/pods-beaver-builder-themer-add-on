@@ -72,8 +72,9 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.3.4 - November 30th, 2020 =
-* Fixed: Admin notices are now using the correct action for showing the message that Pods and Beaver Themer plugins (if not available) are required to use this plugin.
+= 1.3.4 - December 30th, 2020 =
+* Fixed: Admin notices are now using the correct action for showing the message that Pods and Beaver Themer plugins (if not available) are required to use this plugin. #110
+* Fixed: Properly set post type parameter (if we have it) to fix issues with Polylang and other plugin compatibility. #109
 
 = 1.3.3 - March 26th, 2020 =
 * Added: Now requiring PHP 5.4+
