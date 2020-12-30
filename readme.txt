@@ -3,9 +3,9 @@ Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 4.4
-Tested up to: 5.4
+Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,10 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.3.4 - December 30th, 2020 =
+* Fixed: Admin notices are now using the correct action for showing the message that Pods and Beaver Themer plugins (if not available) are required to use this plugin. #110
+* Fixed: Properly set post type parameter (if we have it) to fix issues with Polylang and other plugin compatibility. #109
 
 = 1.3.3 - March 26th, 2020 =
 * Added: Now requiring PHP 5.4+

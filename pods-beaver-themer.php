@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.3
+ * Version: 1.3.4
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.3' );
+define( 'PODS_BEAVER_VERSION', '1.3.4' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -52,8 +52,9 @@ function pods_beaver_init() {
 
 	PodsBeaverPageData::init();
 
-	// Beaver Themer sets up a "virtual reality" fake being in the Loop #15 for any module using FLBuilderLoop::query()
-	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_add_actions');
+	// Fake being "in the loop" for any module using FLBuilderLoop::query() (see #15)
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_start');
+	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_end');
 
 	// Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
 	// add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0 );
@@ -83,14 +84,14 @@ function pods_beaver_admin_nag() {
 
 	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
 		printf(
-			'<div id="message" class="error"><p>%s</p></div>',
+			'<div class="notice notice-error"><p>%s</p></div>',
 			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
 		);
 	}
 
 }
 
-add_action( 'plugins_loaded', 'pods_beaver_admin_nag' );
+add_action( 'admin_notices', 'pods_beaver_admin_nag' );
 
 /**
  * Post modules:  JS for setting data_source to custom_query if a relationship field is selected as source
@@ -109,14 +110,24 @@ function pods_beaver_enqueue_assets() {
 }
 
 /**
- * Register functions to fake the loop.
+ * Register function to start the fake loop.
  *
- * @since 1.1.1
+ * @since 1.3.3
  */
-function pods_beaver_fake_loop_add_actions() {
+function pods_beaver_fake_loop_start() {
 
-	add_action( 'loop_start', 'pods_beaver_fake_loop_true');
-	add_action( 'loop_end', 'pods_beaver_fake_loop_false');
+	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_true');
+
+}
+
+/**
+ * Register function to end the fake loop.
+ *
+ * @since 1.3.3
+ */
+function pods_beaver_fake_loop_end() {
+
+	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_false');
 
 }
 
@@ -132,7 +143,7 @@ function pods_beaver_fake_loop_true() {
 
 	global $wp_query;
 
-    // Fake being in the loop.
+	// Fake being in the loop.
 	$wp_query->in_the_loop = true;
 
 }
@@ -151,10 +162,6 @@ function pods_beaver_fake_loop_false() {
 
 	// Stop faking being in the loop.
 	$wp_query->in_the_loop = false;
-
-	// cleanup - keep fake as close to beaver as possible
-	remove_action( 'loop_start', 'pods_beaver_fake_loop_true');
-	remove_action( 'loop_end', 'pods_beaver_fake_loop_false');
 
 }
 
