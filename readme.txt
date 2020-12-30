@@ -3,7 +3,7 @@ Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 4.4
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.4
 Stable tag: 1.3.4
 License: GPLv2 or later
