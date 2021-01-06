@@ -136,6 +136,7 @@ function pods_beaver_fake_loop_end() {
  * add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
  *
  * @since 1.0
+ * @deprecated deprecated since version 1.3.5
  */
 function pods_beaver_fake_loop_true() {
 
@@ -153,6 +154,7 @@ function pods_beaver_fake_loop_true() {
  * add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
  *
  * @since 1.0
+ * @deprecated deprecated since version 1.3.5
  */
 function pods_beaver_fake_loop_false() {
 
