@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.4' );
+define( 'PODS_BEAVER_VERSION', '1.3.5' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -81,10 +81,10 @@ add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
  */
 function pods_beaver_admin_nag() {
 
-	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
+	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) || version_compare( PODS_VERSION, '2.7.26', '<' ) ) {
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
+			esc_html__( 'Pods Beaver Themer requires that the Pods (2.7.26+) and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
 		);
 	}
 
