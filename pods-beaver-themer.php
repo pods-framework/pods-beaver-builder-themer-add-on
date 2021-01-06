@@ -81,7 +81,7 @@ add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
  */
 function pods_beaver_admin_nag() {
 
-	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) || version_compare( PODS_VERSION, '2.7.26', '<' ) ) {
+	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) || version_compare( PODS_VERSION, '2.7.26', '<' ) ) ) {
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
 			esc_html__( 'Pods Beaver Themer requires that the Pods (2.7.26+) and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
