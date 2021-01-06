@@ -110,25 +110,21 @@ function pods_beaver_enqueue_assets() {
 }
 
 /**
- * Register function to start the fake loop.
+ * Register function to tell Pods shortcodes to start detecting from the current post.
  *
  * @since 1.3.3
  */
 function pods_beaver_fake_loop_start() {
-
-	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_true');
-
+	add_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
 }
 
 /**
- * Register function to end the fake loop.
+ * Register function to tell Pods shortcodes to stop detecting from the current post.
  *
  * @since 1.3.3
  */
 function pods_beaver_fake_loop_end() {
-
-	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_false');
-
+	remove_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
 }
 
 /**
