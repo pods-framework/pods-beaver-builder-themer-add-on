@@ -115,6 +115,7 @@ function pods_beaver_enqueue_assets() {
  */
 function pods_beaver_fake_loop_start() {
 	add_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
+	PodsBeaverPageData::pods_beaver_loop_true();
 
 	// Remove the hook after the end of the loop.
 	add_action( 'loop_end', 'pods_beaver_fake_loop_end' );
@@ -127,6 +128,7 @@ function pods_beaver_fake_loop_start() {
  */
 function pods_beaver_fake_loop_end() {
 	remove_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
+	PodsBeaverPageData::pods_beaver_loop_false();
 }
 
 /**
