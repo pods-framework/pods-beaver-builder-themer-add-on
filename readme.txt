@@ -72,9 +72,10 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.3.5 - January 6th, 2021 =
+= 1.3.5 - January 7th, 2021 =
 * Required: This add-on now requires Pods 2.7.26+ in order to function fully with the latest fixes.
 * Fixed: Properly hook into the Beaver Themer loop functionality to tell the Pods shortcode to reference the current post in the loop.
+* Updated: Fixed Branch for Afragen Github Updater
 
 = 1.3.4 - December 30th, 2020 =
 * Fixed: Admin notices are now using the correct action for showing the message that Pods and Beaver Themer plugins (if not available) are required to use this plugin. #110
