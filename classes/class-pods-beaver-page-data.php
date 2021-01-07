@@ -17,6 +17,15 @@ final class PodsBeaverPageData {
 	static $pods = array();
 
 	/**
+	* Track the state similar to $query->fl_builder_loop, in_the_loop().
+	*
+	* @var array
+	*
+	* @since 1.3.5
+	*/
+	static private $pods_beaver_loop;
+	
+	/**
 	 * Add Beaver Builder group for Pods.
 	 *
 	 * @since 1.0
@@ -26,8 +35,27 @@ final class PodsBeaverPageData {
 		FLPageData::add_group( 'pods', array(
 			'label' => __( 'Pods Field from:', 'pods-beaver-builder-themer-add-on' ),
 		) );
-
+		
+		self::pods_beaver_loop_false();
 	}
+
+	/**
+	 * Set $pods_beaver_loop
+	 *
+	 * @since 1.3.5
+	 */
+	public static function pods_beaver_loop_true() {
+		self::$pods_beaver_loop = true;
+	}
+
+	/**
+	 * Set $pods_beaver_loop
+	 *
+	 * @since 1.3.5
+	 */
+	public static function pods_beaver_loop_false() {
+		self::$pods_beaver_loop = false;
+	}	
 
 	/**
 	 * Get current pod info.
@@ -44,6 +72,15 @@ final class PodsBeaverPageData {
 			'pod' => null,
 			'id'  => null,
 		);
+		
+		if ( self::$pods_beaver_loop ) {
+			// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
+			$info = array(
+				'pod' => get_post_type(),
+				'id'  => get_the_ID(),
+			);
+			return $info;
+		}		
 
 		$queried_object = get_queried_object();
 
@@ -155,10 +192,6 @@ final class PodsBeaverPageData {
 								break;
 						}
 					}
-				} elseif ( 'fl_builder_node_settings' !== current_filter() && in_the_loop() ) {
-					// We are in a loop not caused by FLThemeBuilderFieldConnections::connect_all_layout_settings to trigger connect_settings()
-					$pod_name = get_post_type();
-					$item_id  = get_the_ID();
 				} else {
 					$info = self::get_current_pod_info();
 
