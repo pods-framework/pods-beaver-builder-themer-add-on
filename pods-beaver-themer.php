@@ -3,7 +3,7 @@
  * Plugin Name: Pods Beaver Themer Add-On
  * Plugin URI: http://pods.io/
  * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: Quasel, Pods Framework Team
  * Author URI: http://pods.io/about/
  * Text Domain: pods-beaver-builder-themer-add-on
@@ -30,7 +30,7 @@
  * @package Pods\Beaver Themer
  */
 
-define( 'PODS_BEAVER_VERSION', '1.3.4' );
+define( 'PODS_BEAVER_VERSION', '1.3.5' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -54,7 +54,6 @@ function pods_beaver_init() {
 
 	// Fake being "in the loop" for any module using FLBuilderLoop::query() (see #15)
 	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_start');
-	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_end');
 
 	// Priority 0 to run before  FLThemeBuilderRulesLocation::set_preview_query() - Beaver Themer
 	// add_action( 'wp_enqueue_scripts', 'pods_beaver_enqueue_assets', 0 );
@@ -82,10 +81,10 @@ add_action( 'fl_page_data_add_properties', 'pods_beaver_init' );
  */
 function pods_beaver_admin_nag() {
 
-	if ( is_admin() && ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) ) ) {
+	if ( ! class_exists( 'FLBuilder' ) || ! defined( 'PODS_VERSION' ) || version_compare( PODS_VERSION, '2.7.26', '<' ) ) {
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'Pods Beaver Themer requires that the Pods and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
+			esc_html__( 'Pods Beaver Themer requires that the Pods (2.7.26+) and Beaver Builder Themer plugins be installed and activated.', 'pods-beaver-builder-themer-add-on' )
 		);
 	}
 
@@ -110,25 +109,26 @@ function pods_beaver_enqueue_assets() {
 }
 
 /**
- * Register function to start the fake loop.
+ * Register function to tell Pods shortcodes to start detecting from the current post.
  *
  * @since 1.3.3
  */
 function pods_beaver_fake_loop_start() {
+	add_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
+	PodsBeaverPageData::pods_beaver_loop_true();
 
-	add_action( 'fl_builder_loop_before_query', 'pods_beaver_fake_loop_true');
-
+	// Remove the hook after the end of the loop.
+	add_action( 'loop_end', 'pods_beaver_fake_loop_end' );
 }
 
 /**
- * Register function to end the fake loop.
+ * Register function to tell Pods shortcodes to stop detecting from the current post.
  *
  * @since 1.3.3
  */
 function pods_beaver_fake_loop_end() {
-
-	add_action( 'fl_builder_loop_after_query', 'pods_beaver_fake_loop_false');
-
+	remove_filter( 'pods_shortcode_detect_from_current_post', '__return_true', 9 );
+	PodsBeaverPageData::pods_beaver_loop_false();
 }
 
 /**
@@ -138,6 +138,7 @@ function pods_beaver_fake_loop_end() {
  * add_action( 'loop_start', 'pods_beaver_fake_loop_true' );
  *
  * @since 1.0
+ * @deprecated since version 1.3.5
  */
 function pods_beaver_fake_loop_true() {
 
@@ -155,6 +156,7 @@ function pods_beaver_fake_loop_true() {
  * add_action( 'loop_end', 'pods_beaver_fake_loop_false' );
  *
  * @since 1.0
+ * @deprecated since version 1.3.5
  */
 function pods_beaver_fake_loop_false() {
 
@@ -533,4 +535,3 @@ function pods_beaver_freemius() {
 	}
 }
 add_action( 'pods_freemius_init', 'pods_beaver_freemius' );
-

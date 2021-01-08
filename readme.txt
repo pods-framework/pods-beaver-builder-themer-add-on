@@ -1,11 +1,11 @@
 === Pods Beaver Themer Add-On ===
-Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd
+Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford,
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 4.4
 Tested up to: 5.6
 Requires PHP: 5.4
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,11 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.3.5 - January 8th, 2021 =
+* Required: This add-on now requires Pods 2.7.26+ in order to function fully with the latest fixes.
+* Fixed: Properly hook into the Beaver Themer loop functionality to tell the Pods shortcode to reference the current post in the loop. #112 (@sc0ttkclark)
+* Updated: Fixed Branch for Afragen Github Updater.
 
 = 1.3.4 - December 30th, 2020 =
 * Fixed: Admin notices are now using the correct action for showing the message that Pods and Beaver Themer plugins (if not available) are required to use this plugin. #110
