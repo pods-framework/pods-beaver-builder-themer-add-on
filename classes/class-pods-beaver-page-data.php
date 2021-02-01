@@ -128,7 +128,7 @@ final class PodsBeaverPageData {
 	 */
 	public static function get_pod( $settings = array() ) {
 
-		$item_id  = 0;
+		$item_id  = null;
 		$pod_name = null;
 
 		if ( is_array( $settings ) && ! empty( $settings['pod'] ) ) {
@@ -172,25 +172,26 @@ final class PodsBeaverPageData {
 					if ( 'user' === $pod_name && isset( $settings->type )) {
 						switch ( $settings->type ) {
 							case 'author':
-								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
-									$item_id = get_the_author_meta( 'ID' );
+								if ( ( ! is_archive() || self::$pods_beaver_loop || is_author() ) && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = (int) get_the_author_meta( 'ID' );
 								}
 								break;
 							case 'modified':
-								if ( ! is_archive() && post_type_supports( get_post_type(), 'author' ) ) {
-									$item_id = get_post_meta( get_post()->ID, '_edit_last', true );
+								if ( ( ! is_archive() || self::$pods_beaver_loop || is_author() ) && post_type_supports( get_post_type(), 'author' ) ) {
+									$item_id = (int) get_post_meta( get_post()->ID, '_edit_last', true );
 								}
 								break;
 							case 'logged_in':
 							case '': // For backwards compatibility
 								if ( is_user_logged_in() ) {
 									$item_id = get_current_user_id();
-								} else {
-									// User is not logged in, cannot return data
-									return false;
-								};
+								}
 								break;
 						}
+						if ( $item_id < 1 ) {
+							// No user found - return early to avoid getting wrong $pod! 
+							return false;
+						}						
 					}
 				} else {
 					$info = self::get_current_pod_info();
