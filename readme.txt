@@ -71,7 +71,10 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
-= 1.3.6 - tbd =
+
+= 1.3.6 - February 1st, 2021 =
+
+* Fixed: Prevent the wrong pod data from unintentionally loading for user-related queries when user ID can not be determined.
 
 
 = 1.3.5 - January 8th, 2021 =
