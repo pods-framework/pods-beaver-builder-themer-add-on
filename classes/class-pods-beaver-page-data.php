@@ -173,12 +173,12 @@ final class PodsBeaverPageData {
 						switch ( $settings->type ) {
 							case 'author':
 								if ( ( ! is_archive() || self::$pods_beaver_loop || is_author() ) && post_type_supports( get_post_type(), 'author' ) ) {
-									$item_id = get_the_author_meta( 'ID' );
+									$item_id = (int) get_the_author_meta( 'ID' );
 								}
 								break;
 							case 'modified':
 								if ( ( ! is_archive() || self::$pods_beaver_loop || is_author() ) && post_type_supports( get_post_type(), 'author' ) ) {
-									$item_id = get_post_meta( get_post()->ID, '_edit_last', true );
+									$item_id = (int) get_post_meta( get_post()->ID, '_edit_last', true );
 								}
 								break;
 							case 'logged_in':
