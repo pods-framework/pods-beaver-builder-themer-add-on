@@ -352,6 +352,14 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 		$settings->post_type = $pod->pod;
 		// Add pod context to the settings so other filters can make use of this.
 		$settings->pod = $pod;
+		// Add relationship context.
+		if ( 'pods_relation' === $settings->pods_source_type && ! empty( $settings->pods_source_relation ) ) {
+			$field = $pod->fields( $settings->pods_source_relation );
+			if ( $field && ! empty( $field->pick_val ) ) {
+				$settings->post_type = $field->pick_val;
+				$settings->rel_pod = pods( $field->pick_val );
+			}
+		}
 	}
 
 	if ( empty( $ids ) ) {
@@ -431,7 +439,9 @@ function pods_beaver_uabb_blog_posts( $args ) {
 	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
 
 	// Set post type correctly if a Pod is found.
-	$pod = pods_v( 'pod', pods_v( 'settings', $args, array() ), null );
+	$settings = pods_v( 'settings', $args, array() );
+	$pod      = pods_v( 'pod', $settings, null );
+	$pod      = pods_v( 'rel_pod', $settings, $pod ); // Field relationship.
 	if ( $pod ) {
 		$args['post_type'] = $pod->pod;
 	}
