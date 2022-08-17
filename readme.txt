@@ -2,10 +2,10 @@
 Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford,
 Donate link: https://pods.io/friends-of-pods/
 Tags: pods, beaver builder, beaver themer
-Requires at least: 4.4
-Tested up to: 5.6
-Requires PHP: 5.4
-Stable tag: 1.3.6
+Requires at least: 5.7
+Tested up to: 6.1
+Requires PHP: 5.6
+Stable tag: 1.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.3.7 - August 18th, 2022 =
+
+* Fixed: Properly set post type param to fix issues with Polylang and possibly others.
+* Updated WordPress compatibility up to WP 6.1 and set Requirements based on pods
+
 
 = 1.3.6 - February 1st, 2021 =
 
