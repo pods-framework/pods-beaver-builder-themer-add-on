@@ -5,7 +5,7 @@ Tags: pods, beaver builder, beaver themer
 Requires at least: 5.7
 Tested up to: 6.1
 Requires PHP: 5.6
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.3.8 - tbd =
+
 
 = 1.3.7 - August 18th, 2022 =
 
