@@ -9,10 +9,10 @@
  */
 
 /**
- * Pods CPT / TAX / …
+ * Pods CPT / Taxonomy / Term as a $pod->display() value
  */
 $data = array(
-	'label'        => __( 'Post, Page, Term…', 'pods-beaver-builder-themer-add-on' ),
+	'label'        => __( 'Post, Page, or Term (Display Value)', 'pods-beaver-builder-themer-add-on' ),
 	'group'        => 'pods',
 	'type'         => array(
 		'string',
