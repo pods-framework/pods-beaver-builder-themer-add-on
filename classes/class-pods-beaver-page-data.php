@@ -17,14 +17,14 @@ final class PodsBeaverPageData {
 	static $pods = array();
 
 	/**
-	* Track the state similar to $query->fl_builder_loop, in_the_loop().
-	*
-	* @var array
-	*
-	* @since 1.3.5
-	*/
+	 * Track the state similar to $query->fl_builder_loop, in_the_loop().
+	 *
+	 * @var array
+	 *
+	 * @since 1.3.5
+	 */
 	static private $pods_beaver_loop;
-	
+
 	/**
 	 * Add Beaver Builder group for Pods.
 	 *
@@ -80,7 +80,7 @@ final class PodsBeaverPageData {
 				'id'  => get_the_ID(),
 			);
 			return $info;
-		}		
+		}
 
 		$queried_object = get_queried_object();
 
@@ -261,7 +261,31 @@ final class PodsBeaverPageData {
 		$content = $pod->display( $settings->field );
 
 		return $content;
+	}
 
+	/**
+	 * Just Basic Field Value.
+	 *
+	 * @param object $settings
+	 * @param string $property
+	 *
+	 * @return string
+	 *
+	 * @since 1.3.8
+	 */
+	public static function get_field_value( $settings, $property ) {
+
+		$content = '';
+
+		$pod = self::get_pod( $settings );
+
+		if ( ! $pod || ! $pod->exists() ) {
+			return $content;
+		}
+
+		$content = $pod->field( $settings->field );
+
+		return $content;
 	}
 
 	/**
