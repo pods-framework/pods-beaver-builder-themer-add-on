@@ -36,6 +36,33 @@ FLPageData::add_post_property( 'pods_display', $data );
 FLPageData::add_post_property_settings_fields( 'pods_display', $form );
 
 /**
+ * Pods CPT / Taxonomy / Term as a $pod->field() value
+ */
+$data = array(
+	'label'        => __( 'Post, Page, or Term (Field Value)', 'pods-beaver-builder-themer-add-on' ),
+	'group'        => 'pods',
+	'type'         => array(
+		'string',
+		'html',
+		'custom_field',
+	),
+	'getter'       => 'PodsBeaverPageData::get_field_value',
+);
+
+$form = array(
+	'field' => array(
+		'type'        => 'select',
+		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
+		'options'     => 'PodsBeaverPageData::pods_get_fields',
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location. <br /><br />Not sure what a field value is? Check out the <a style="text-decoration: underline" href="https://docs.pods.io/code/pods/field/">Pods field() docs</a>.', 'pods-beaver-builder-themer-add-on' ),
+	),
+);
+
+FLPageData::add_post_property( 'pods_field', $data );
+FLPageData::add_post_property_settings_fields( 'pods_field', $form );
+
+/**
  * Pods Templates / Magic Tag
  */
 $data = array(
