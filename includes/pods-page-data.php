@@ -27,8 +27,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
 		'options'     => 'PodsBeaverPageData::pods_get_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Based on preview location', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location. <br /><br />Not sure what a display value is? Check out the <a style="text-decoration: underline" href="https://docs.pods.io/code/pods/display/">Pods display() docs</a>.', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
@@ -156,8 +156,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
 		'options'     => 'PodsBeaverPageData::pods_get_image_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Based on preview location', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location.', 'pods-beaver-builder-themer-add-on' ),
 	),
 	'image_size'  => array(
 		'type'    => 'photo-sizes',
@@ -224,8 +224,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
 		'options'     => 'PodsBeaverPageData::pods_get_multiple_images_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Based on preview location', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location.', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
@@ -352,8 +352,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
 		'options'     => 'PodsBeaverPageData::pods_get_url_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Based on preview location', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location.', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
@@ -414,8 +414,8 @@ $form = array(
 		'type'        => 'select',
 		'label'       => __( 'Field Name', 'pods-beaver-builder-themer-add-on' ),
 		'options'     => 'PodsBeaverPageData::pods_get_color_fields',
-		'help'        => __( 'Field list is based on current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
-		'description' => __( 'Based on preview location', 'pods-beaver-builder-themer-add-on' ),
+		'help'        => __( 'Field list options are based on the current "Preview as:" settings in the top left.', 'pods-beaver-builder-themer-add-on' ),
+		'description' => __( 'List options are based on your current preview location.', 'pods-beaver-builder-themer-add-on' ),
 	),
 );
 
