@@ -1,11 +1,11 @@
 === Pods Beaver Themer Add-On ===
 Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford,
-Donate link: https://pods.io/friends-of-pods/
+Donate link: https://friends.pods.io/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 5.7
-Tested up to: 6.1
+Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 1.3.7
+Stable tag: 1.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,16 +72,18 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
+= 1.3.8 - March 30th, 2025 =
+
+* Tested and updated WordPress compatibility up to WP 6.8 (@sc0ttkclark)
+
 = 1.3.7 - August 18th, 2022 =
 
 * Fixed: Properly set post type param to fix issues with Polylang and possibly others.
 * Updated WordPress compatibility up to WP 6.1 and set Requirements based on pods
 
-
 = 1.3.6 - February 1st, 2021 =
 
 * Fixed: Prevent the wrong pod data from unintentionally loading for user-related queries when user ID can not be determined.
-
 
 = 1.3.5 - January 8th, 2021 =
 * Required: This add-on now requires Pods 2.7.26+ in order to function fully with the latest fixes.
