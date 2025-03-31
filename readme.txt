@@ -1,5 +1,5 @@
 === Pods Beaver Themer Add-On ===
-Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford,
+Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford
 Donate link: https://friends.pods.io/
 Tags: pods, beaver builder, beaver themer
 Requires at least: 5.7
