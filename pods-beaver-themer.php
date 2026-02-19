@@ -470,7 +470,7 @@ function pods_beaver_uabb_blog_posts( $args ) {
  * @return array
  */
 function pods_beaver_render_settings_field( $field, $name, $settings ) {
-	if ( 'data_source' != $name ) {
+	if (  !  ( str_ends_with( $name, '_data_source' ) ||  'data_source' === $name  ) ) {
 		return $field;
 	}
 
