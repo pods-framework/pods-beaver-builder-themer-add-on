@@ -1,0 +1,57 @@
+{
+  "name": "pods-framework/pods-beaver-builder-themer-add-on",
+  "description": "Integration with Beaver Builder Themer. Provides a UI for mapping Field Connections with Pods.",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "pods",
+    "wordpress",
+    "beaver-builder",
+    "beaver-themer"
+  ],
+  "homepage": "https://github.com/pods-framework/pods-beaver-builder-themer-add-on",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "Scott Kingsley Clark",
+      "email": "lol@scottkclark.com",
+      "homepage": "http://scottkclark.com",
+      "role": "Lead Developer"
+    },
+    {
+      "name": "Pods Framework Team",
+      "email": "contact@pods.io",
+      "homepage": "http://pods.io/"
+    },
+    {
+      "name": "Quasel",
+      "role": "Original Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues",
+    "source": "https://github.com/pods-framework/pods-beaver-builder-themer-add-on"
+  },
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "automattic/vipwpcs": "^3.0.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "phpstan/extension-installer": "^1.4",
+    "phpstan/phpstan": "^1.12",
+    "phpstan/phpstan-deprecation-rules": "^1.2",
+    "stellarwp/coding-standards": "dev-main",
+    "szepeviktor/phpstan-wordpress": "*",
+    "wp-coding-standards/wpcs": "^3.1"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    }
+  }
+}

@@ -2,10 +2,10 @@
 Contributors: quasel, sc0ttkclark, jimtrue, smarterdigitalltd, keraweb, nicdford
 Donate link: https://friends.pods.io/
 Tags: pods, beaver builder, beaver themer
-Requires at least: 5.7
-Tested up to: 6.8
-Requires PHP: 5.6
-Stable tag: 1.3.8
+Requires at least: 6.3
+Tested up to: 7.0
+Requires PHP: 7.2
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,12 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 5. Example for Templates or Magic Tags.
 
 == Changelog ==
+
+= 1.4.0 - February 24th, 2026 =
+
+* New minimum requirements: WordPress 6.3 and PHP 7.2
+* Fixed: Pods Relationship now showing correctly in component fields with support for Beaver Themer 1.5.2.2. #122 #123 (@codente)
+* Tested and updated WordPress compatibility up to WP 7.0 (@sc0ttkclark)
 
 = 1.3.8 - March 30th, 2025 =
 

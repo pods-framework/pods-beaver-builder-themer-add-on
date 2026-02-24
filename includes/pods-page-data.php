@@ -1,4 +1,12 @@
 <?php
+
+// Don't load directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
+// phpcs:ignoreFile WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 /**
  * ***************************Documentation****************************
  * string, html, Properties
@@ -32,7 +40,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_display', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_display', $form );
 
 /**
@@ -75,7 +85,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_template', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_template', $form );
 
 /**
@@ -100,7 +112,9 @@ $form = [
 	'fields' => PodsBeaverPageData::pods_get_settings_fields(),
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_site_property( 'pods_settings', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_site_property_settings_fields( 'pods_settings', $form );
 
 /**
@@ -143,7 +157,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_photo', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_photo', $form );
 
 /**
@@ -177,7 +193,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_photo_manual', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_photo_manual', $form );
 
 /**
@@ -202,7 +220,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_multiple_photos', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos', $form );
 
 
@@ -228,7 +248,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_multiple_photos_manual', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_multiple_photos_manual', $form );
 
 /**
@@ -269,7 +291,9 @@ $form['fields']['default_img'] = [
 	'label' => __( 'Default Image', 'pods-beaver-builder-themer-add-on' ),
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_site_property( 'pods_settings_photo', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_site_property_settings_fields( 'pods_settings_photo', $form );
 
 /**
@@ -295,7 +319,9 @@ $form = [
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_site_property( 'pods_settings_multiple_photos', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_site_property_settings_fields( 'pods_settings_multiple_photos', $form );
 
 /**
@@ -330,7 +356,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_url', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_url', $form );
 
 /**
@@ -358,7 +386,9 @@ $form = [
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_site_property( 'pods_settings_url', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_site_property_settings_fields( 'pods_settings_url', $form );
 
 /**
@@ -392,7 +422,9 @@ $form = [
 	],
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_post_property( 'pods_color', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_post_property_settings_fields( 'pods_color', $form );
 
 /**
@@ -419,5 +451,7 @@ $form = [
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
+// @phpstan-ignore-next-line
 FLPageData::add_site_property( 'pods_settings_color', $data );
+// @phpstan-ignore-next-line
 FLPageData::add_site_property_settings_fields( 'pods_settings_color', $form );

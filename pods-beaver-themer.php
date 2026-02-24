@@ -1,36 +1,49 @@
 <?php
 /**
- * Plugin Name: Pods Beaver Themer Add-On
- * Plugin URI: http://pods.io/
- * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 1.3.8
- * Author: Quasel, Pods Framework Team
- * Author URI: http://pods.io/about/
- * Text Domain: pods-beaver-builder-themer-add-on
+ * Pods Beaver Themer Add-On
+ *
+ * @package   Pods_Beaver_Themer
+ * @author    Pods Framework Team
+ * @copyright 2026 Pods Foundation, Inc
+ * @license   GPL v2 or later
+ *
+ * Plugin Name:       Pods Beaver Themer Add-On
+ * Plugin URI:        https://pods.io/
+ * Requires Plugins:  pods
+ * Description:       Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
+ * Version:           1.4.0
+ * Author:            Quasel, Pods Framework Team
+ * Author URI:        https://pods.io/about/
+ * Text Domain:       pods-beaver-builder-themer-add-on
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires at least: 6.3
+ * Requires PHP:      7.2
  * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-builder-themer-add-on
- *
- * Copyright 2025  Pods Foundation, Inc  (email : contact@podsfoundation.org)
- *
- * This program is free software; you can redistribute it and/or modify
+ * Primary Branch:    main
+ */
+
+/*
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with this program. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
  */
 
-/**
- * @package Pods\Beaver Themer
- */
+// Don't load directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
-define( 'PODS_BEAVER_VERSION', '1.3.8' );
+define( 'PODS_BEAVER_VERSION', '1.4.0' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -65,7 +78,7 @@ function pods_beaver_init() {
 	add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 
-	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
+	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 1 );
 
 	add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3 );
@@ -188,6 +201,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	}
 
 	if ( 'fl-theme-layout' === get_post_type() ) {
+		// @phpstan-ignore-next-line
 		$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
 		$location = explode( ':', $location );
 
@@ -220,7 +234,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			'label'       => __( 'Relation Source', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
-			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
 			'options'     => $options,
 			'toggle'      => $toggle,
 		],
@@ -233,6 +246,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			<?php
 			foreach ( $setting_fields as $setting_name => $setting_data ) {
 				if ( $setting_data ) {
+					// @phpstan-ignore-next-line
 					FLBuilder::render_settings_field( $setting_name, $setting_data, $settings );
 				}
 			}
@@ -366,6 +380,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 			$field = $pod->fields( $settings->pods_source_relation );
 			if ( $field && ! empty( $field->pick_val ) ) {
 				$settings->post_type = $field->pick_val;
+				// @phpstan-ignore-next-line
 				$settings->rel_pod   = pods( $field->pick_val );
 			}
 		}
@@ -448,8 +463,11 @@ function pods_beaver_uabb_blog_posts( $args ) {
 	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
 
 	// Set post type correctly if a Pod is found.
+	// @phpstan-ignore-next-line
 	$settings = pods_v( 'settings', $args, [] );
+	// @phpstan-ignore-next-line
 	$pod      = pods_v( 'pod', $settings, null );
+	// @phpstan-ignore-next-line
 	$pod      = pods_v( 'rel_pod', $settings, $pod ); // Field relationship.
 	if ( $pod ) {
 		$args['post_type'] = $pod->pod;
@@ -470,7 +488,7 @@ function pods_beaver_uabb_blog_posts( $args ) {
  * @return array
  */
 function pods_beaver_render_settings_field( $field, $name, $settings ) {
-	if ( 'data_source' != $name ) {
+	if (  !  ( str_ends_with( $name, '_data_source' ) ||  'data_source' === $name  ) ) {
 		return $field;
 	}
 
@@ -518,43 +536,28 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 	return $data;
 }
 
-/**
- * Register add-on with Pods Freemius connection.
- *
- * @since 1.3.3
- */
-function pods_beaver_freemius() {
-	try {
-		fs_dynamic_init( [
-			'id'               => '5349',
-			'slug'             => 'pods-beaver-builder-themer-add-on',
-			'type'             => 'plugin',
-			'public_key'       => 'pk_d8a10a25a662419add4ff3fbcc493',
-			'is_premium'       => false,
-			'has_paid_plans'   => false,
-			'is_org_compliant' => true,
-			'parent'           => [
-				'id'         => '5347',
-				'slug'       => 'pods',
-				'public_key' => 'pk_737105490825babae220297e18920',
-				'name'       => 'Pods',
-			],
-			'menu'             => [
-				'slug'        => 'pods-settings',
-				'contact'     => false,
-				'support'     => false,
-				'affiliation' => false,
-				'account'     => true,
-				'pricing'     => false,
-				'addons'      => true,
-				'parent'      => [
-					'slug' => 'pods',
-				],
-			],
-		] );
-	} catch ( \Exception $exception ) {
-		return;
-	}
-}
+add_filter( 'wp_plugin_check_ignore_files', static function ( $ignored_files ) {
+	$pods_dev_files = [
+			'.distignore',
+			'.gitattributes',
+			'.gitignore',
+			'.phpcs.compat.xml',
+			'.phpcs.xml',
+			'composer.json',
+			'phpcs.xml.dist',
+			'phpstan.neon',
+	];
 
-add_action( 'pods_freemius_init', 'pods_beaver_freemius' );
+	return array_merge( $ignored_files, $pods_dev_files );
+} );
+
+add_filter( 'wp_plugin_check_ignore_directories', static function ( $ignored_dirs ) {
+	$pods_dev_dirs = [
+			'.git',
+			'.github',
+			'.wordpress-org',
+			'assets',
+	];
+
+	return array_merge( $ignored_dirs, $pods_dev_dirs );
+} );
