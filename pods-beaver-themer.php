@@ -11,7 +11,7 @@
  * Plugin URI:        https://pods.io/
  * Requires Plugins:  pods
  * Description:       Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            Quasel, Pods Framework Team
  * Author URI:        https://pods.io/about/
  * Text Domain:       pods-beaver-builder-themer-add-on
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-define( 'PODS_BEAVER_VERSION', '1.4.0' );
+define( 'PODS_BEAVER_VERSION', '1.4.1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
@@ -201,7 +201,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	}
 
 	if ( 'fl-theme-layout' === get_post_type() ) {
-		// @phpstan-ignore-next-line
 		$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
 		$location = explode( ':', $location );
 
@@ -246,7 +245,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			<?php
 			foreach ( $setting_fields as $setting_name => $setting_data ) {
 				if ( $setting_data ) {
-					// @phpstan-ignore-next-line
 					FLBuilder::render_settings_field( $setting_name, $setting_data, $settings );
 				}
 			}
@@ -380,7 +378,6 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 			$field = $pod->fields( $settings->pods_source_relation );
 			if ( $field && ! empty( $field->pick_val ) ) {
 				$settings->post_type = $field->pick_val;
-				// @phpstan-ignore-next-line
 				$settings->rel_pod   = pods( $field->pick_val );
 			}
 		}
@@ -463,11 +460,8 @@ function pods_beaver_uabb_blog_posts( $args ) {
 	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
 
 	// Set post type correctly if a Pod is found.
-	// @phpstan-ignore-next-line
 	$settings = pods_v( 'settings', $args, [] );
-	// @phpstan-ignore-next-line
 	$pod      = pods_v( 'pod', $settings, null );
-	// @phpstan-ignore-next-line
 	$pod      = pods_v( 'rel_pod', $settings, $pod ); // Field relationship.
 	if ( $pod ) {
 		$args['post_type'] = $pod->pod;
