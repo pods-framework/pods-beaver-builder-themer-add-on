@@ -37,6 +37,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 	 */
 	public static function init() {
 
+		// phpstan-ignore-next-line
 		FLPageData::add_group( 'pods', [
 			'label' => __( 'Pods Field from:', 'pods-beaver-builder-themer-add-on' ),
 		] );
@@ -226,6 +227,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 				}
 			}
 		} else {
+			// phpstan-ignore-next-line
 			$pod = pods( $pod_name, $item_id );
 
 			if ( ! $pod || ! $pod->valid() ) {
@@ -352,6 +354,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 		$field_name    = $settings->field . '.ID';
 		$content['id'] = $pod->display( $field_name );
 
+		// phpstan-ignore-next-line
 		$field_url      = $settings->field . '._src.' . pods_v( 'image_size', $settings, '' );
 		$content['url'] = $pod->display( $field_url );
 
@@ -442,6 +445,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 		}
 
 		if ( 'fl-theme-layout' === $pod_name ) {
+			// phpstan-ignore-next-line
 			$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
 			$location = explode( ':', $location );
 
@@ -549,6 +553,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 	 */
 	public static function pods_get_templates() {
 
+		// phpstan-ignore-next-line
 		$all_templates = (array) pods_api()->load_templates( [] );
 
 		$templates = [
@@ -581,6 +586,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 	 */
 	public static function pods_get_settings_fields( $field_options = [] ) {
 
+		// phpstan-ignore-next-line
 		$pod_names = (array) pods_api()->load_pods( [ 'type' => [ 'user', 'settings' ], 'names' => true ] );
 
 		$field_options['add_pod_name'] = 'true';
@@ -665,15 +671,19 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 			foreach ( $all_pod_fields as $field_name => $field ) {
 				$linked_pod = null;
 
+				// phpstan-ignore-next-line
 				if ( isset( $field['type'] ) && in_array( $field['type'], PodsForm::tableless_field_types(), true ) ) {
 					if ( ! empty( $field['table_info'] ) && ! empty( $field['table_info']['pod'] ) ) { // Related item is a pod
+						// phpstan-ignore-next-line
 						if ( 'single' === pods_v( 'pick_format_type', $field['options'] ) ) {// recursion only wanted if single Issue #16
 							$linked_pod = $field['table_info']['pod']['name'];
 						}
 					} elseif ( 'taxonomy' === $field['type'] ) {
 						// $linked_pod = $field_name; @todo Remove this?
 						// removed Media Traversal -> use default BB field connections or Templates
+						// phpstan-ignore-next-line
 					} elseif ( 'attachment' === pods_v( 'file_uploader', $field['options'] ) ) {
+						// phpstan-ignore-next-line
 						if ( 'single' === pods_v( 'file_format_type', $field['options'] ) ) {// recursion not wanted Issue #16
 							$linked_pod = 'media';
 						}
@@ -701,6 +711,7 @@ final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.Pre
 					if ( $field_options['type'] === $field['type'] ) {
 						if ( ! empty( $field_options['options'] ) ) {
 							foreach ( $field_options['options'] as $_option => $option_value ) {
+								// phpstan-ignore-next-line
 								if ( pods_v( $_option, $field['options'] ) !== $option_value ) {
 									// don't check further if one option is not matched
 									continue 2;

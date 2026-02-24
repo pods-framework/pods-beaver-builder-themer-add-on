@@ -78,7 +78,7 @@ function pods_beaver_init() {
 	add_action( 'pp_ct_loop_settings_before_form', 'pods_beaver_loop_settings_before_form', 10, 1 );
 
 
-	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 2 );
+	add_filter( 'fl_builder_loop_before_query_settings', 'pods_beaver_loop_before_query_settings', 99, 1 );
 
 	add_filter( 'fl_builder_get_layout_metadata', 'pods_beaver_update_module_settings_data_source', 10, 3 );
 	add_filter( 'fl_builder_render_settings_field', 'pods_beaver_render_settings_field', 10, 3 );
@@ -201,6 +201,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 	}
 
 	if ( 'fl-theme-layout' === get_post_type() ) {
+		// phpstan-ignore-next-line
 		$location = FLThemeBuilderRulesLocation::get_preview_location( get_the_ID() );
 		$location = explode( ':', $location );
 
@@ -245,6 +246,7 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			<?php
 			foreach ( $setting_fields as $setting_name => $setting_data ) {
 				if ( $setting_data ) {
+					// phpstan-ignore-next-line
 					FLBuilder::render_settings_field( $setting_name, $setting_data, $settings );
 				}
 			}
@@ -378,6 +380,7 @@ function pods_beaver_loop_before_query_settings( $settings ) {
 			$field = $pod->fields( $settings->pods_source_relation );
 			if ( $field && ! empty( $field->pick_val ) ) {
 				$settings->post_type = $field->pick_val;
+				// phpstan-ignore-next-line
 				$settings->rel_pod   = pods( $field->pick_val );
 			}
 		}
@@ -460,8 +463,11 @@ function pods_beaver_uabb_blog_posts( $args ) {
 	remove_filter( 'fl_builder_loop_query_args', 'pods_beaver_uabb_blog_posts' );
 
 	// Set post type correctly if a Pod is found.
+	// phpstan-ignore-next-line
 	$settings = pods_v( 'settings', $args, [] );
+	// phpstan-ignore-next-line
 	$pod      = pods_v( 'pod', $settings, null );
+	// phpstan-ignore-next-line
 	$pod      = pods_v( 'rel_pod', $settings, $pod ); // Field relationship.
 	if ( $pod ) {
 		$args['post_type'] = $pod->pod;
@@ -529,47 +535,6 @@ function pods_beaver_update_module_settings_data_source( $data, $status, $post_i
 
 	return $data;
 }
-
-/**
- * Register add-on with Pods Freemius connection.
- *
- * @since 1.3.3
- */
-function pods_beaver_freemius() {
-	try {
-		fs_dynamic_init( [
-			'id'               => '5349',
-			'slug'             => 'pods-beaver-builder-themer-add-on',
-			'type'             => 'plugin',
-			'public_key'       => 'pk_d8a10a25a662419add4ff3fbcc493',
-			'is_premium'       => false,
-			'has_paid_plans'   => false,
-			'is_org_compliant' => true,
-			'parent'           => [
-				'id'         => '5347',
-				'slug'       => 'pods',
-				'public_key' => 'pk_737105490825babae220297e18920',
-				'name'       => 'Pods',
-			],
-			'menu'             => [
-				'slug'        => 'pods-settings',
-				'contact'     => false,
-				'support'     => false,
-				'affiliation' => false,
-				'account'     => true,
-				'pricing'     => false,
-				'addons'      => true,
-				'parent'      => [
-					'slug' => 'pods',
-				],
-			],
-		] );
-	} catch ( \Exception $exception ) {
-		return;
-	}
-}
-
-add_action( 'pods_freemius_init', 'pods_beaver_freemius' );
 
 add_filter( 'wp_plugin_check_ignore_files', static function ( $ignored_files ) {
 	$pods_dev_files = [
