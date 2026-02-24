@@ -109,7 +109,6 @@ $data = [
 ];
 
 $form = [
-	// @phpstan-ignore-next-line
 	'fields' => PodsBeaverPageData::pods_get_settings_fields(),
 ];
 
@@ -278,7 +277,6 @@ $setting_field_args = [
 ];
 
 $form = [
-	// @phpstan-ignore-next-line
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
@@ -318,7 +316,6 @@ $setting_field_args = [
 ];
 
 $form = [
-	// @phpstan-ignore-next-line
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
@@ -386,7 +383,6 @@ $setting_field_args = [
 ];
 
 $form = [
-	// @phpstan-ignore-next-line
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
@@ -452,7 +448,6 @@ $setting_field_args = [
 ];
 
 $form = [
-	// @phpstan-ignore-next-line
 	'fields' => PodsBeaverPageData::pods_get_settings_fields( $setting_field_args ),
 ];
 
