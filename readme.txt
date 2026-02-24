@@ -75,7 +75,7 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 = 1.4.0 - February 24th, 2026 =
 
 * New minimum requirements: WordPress 6.3 and PHP 7.2
-* Fixed: Pods Relationship now showing correctly in component fields with support for Beaver Themer 1.5.2.2. (@codente)
+* Fixed: Pods Relationship now showing correctly in component fields with support for Beaver Themer 1.5.2.2. #122 #123 (@codente)
 * Tested and updated WordPress compatibility up to WP 7.0 (@sc0ttkclark)
 
 = 1.3.8 - March 30th, 2025 =
