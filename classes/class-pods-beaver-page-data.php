@@ -1,11 +1,16 @@
 <?php
 
+// Don't load directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
+
 /**
  * Handles logic for page data Pods properties.
  *
  * @since 1.0
  */
-final class PodsBeaverPageData {
+final class PodsBeaverPageData { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * Static cache for the Pods objects we need to call.
@@ -454,6 +459,7 @@ final class PodsBeaverPageData {
 
 			if ( empty( $fields ) ) {
 				$fields = [
+					// translators: %s is the name of the pod.
 					'' => sprintf( __( 'No fields found for pod "%s"', 'pods-beaver-builder-themer-add-on' ), $pod_name ),
 				];
 			}

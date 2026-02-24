@@ -1,34 +1,47 @@
 <?php
 /**
- * Plugin Name: Pods Beaver Themer Add-On
- * Plugin URI: http://pods.io/
- * Description: Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version: 2.0.0-a-1
- * Author: Quasel, Pods Framework Team
- * Author URI: http://pods.io/about/
- * Text Domain: pods-beaver-builder-themer-add-on
+ * Pods Beaver Themer Add-On
+ *
+ * @package   Pods_Beaver_Themer
+ * @author    Pods Framework Team
+ * @copyright 2026 Pods Foundation, Inc
+ * @license   GPL v2 or later
+ *
+ * Plugin Name:       Pods Beaver Themer Add-On
+ * Plugin URI:        https://pods.io/
+ * Requires Plugins:  pods
+ * Description:       Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
+ * Version:           2.0.0-a-1
+ * Author:            Quasel, Pods Framework Team
+ * Author URI:        https://pods.io/about/
+ * Text Domain:       pods-beaver-builder-themer-add-on
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Requires at least: 6.3
+ * Requires PHP:      7.2
  * GitHub Plugin URI: https://github.com/pods-framework/pods-beaver-builder-themer-add-on
- *
- * Copyright 2025  Pods Foundation, Inc  (email : contact@podsfoundation.org)
- *
- * This program is free software; you can redistribute it and/or modify
+ * Primary Branch:    main
+ */
+
+/*
+ * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ * along with this program. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
  */
 
-/**
- * @package Pods\Beaver Themer
- */
+// Don't load directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 define( 'PODS_BEAVER_VERSION', '2.0.0-a-1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
@@ -220,7 +233,6 @@ function pods_beaver_loop_settings_before_form( $settings ) {
 			'label'       => __( 'Relation Source', 'pods-beaver-builder-themer-add-on' ),
 			'default'     => 'no',
 			'help'        => __( 'Modify the custom query to use data from a pods relationship field', 'pods-beaver-builder-themer-add-on' ),
-			'description' => __( '', 'pods-beaver-builder-themer-add-on' ),
 			'options'     => $options,
 			'toggle'      => $toggle,
 		],
@@ -558,3 +570,28 @@ function pods_beaver_freemius() {
 }
 
 add_action( 'pods_freemius_init', 'pods_beaver_freemius' );
+
+add_filter( 'wp_plugin_check_ignore_files', static function ( $ignored_files ) {
+	$pods_dev_files = [
+			'.distignore',
+			'.gitattributes',
+			'.phpcs.compat.xml',
+			'.phpcs.xml',
+			'composer.json',
+			'phpcs.xml.dist',
+			'phpstan.neon',
+	];
+
+	return array_merge( $ignored_files, $pods_dev_files );
+} );
+
+add_filter( 'wp_plugin_check_ignore_directories', static function ( $ignored_dirs ) {
+	$pods_dev_dirs = [
+			'.git',
+			'.github',
+			'.wordpress-org',
+			'assets',
+	];
+
+	return array_merge( $ignored_dirs, $pods_dev_dirs );
+} );
