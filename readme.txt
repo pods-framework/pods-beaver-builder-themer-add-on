@@ -5,7 +5,7 @@ Tags: pods, beaver builder, beaver themer
 Requires at least: 6.3
 Tested up to: 7.0
 Requires PHP: 7.2
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,11 +72,15 @@ You can use [GitHub Updater](https://github.com/afragen/github-updater). A simpl
 
 == Changelog ==
 
-= 1.4.0 - February 24th, 2026 =
+= 1.4.1 - February 24th, 2026 =
 
 * New minimum requirements: WordPress 6.3 and PHP 7.2
 * Fixed: Pods Relationship now showing correctly in component fields with support for Beaver Themer 1.5.2.2. #122 #123 (@codente)
 * Tested and updated WordPress compatibility up to WP 7.0 (@sc0ttkclark)
+
+= 1.4.0 - February 24th, 2026 =
+
+* Deployment issue happened for this release, this is the same code as 1.4.1
 
 = 1.3.8 - March 30th, 2025 =
 

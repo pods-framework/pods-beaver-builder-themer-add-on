@@ -11,7 +11,7 @@
  * Plugin URI:        https://pods.io/
  * Requires Plugins:  pods
  * Description:       Integration with Beaver Builder Themer (https://www.wpbeaverbuilder.com). Provides a UI for mapping Field Connections with Pods
- * Version:           1.4.0
+ * Version:           1.4.1
  * Author:            Quasel, Pods Framework Team
  * Author URI:        https://pods.io/about/
  * Text Domain:       pods-beaver-builder-themer-add-on
@@ -43,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-define( 'PODS_BEAVER_VERSION', '1.4.0' );
+define( 'PODS_BEAVER_VERSION', '1.4.1' );
 define( 'PODS_BEAVER_FILE', __FILE__ );
 define( 'PODS_BEAVER_DIR', plugin_dir_path( PODS_BEAVER_FILE ) );
 define( 'PODS_BEAVER_URL', plugin_dir_url( PODS_BEAVER_FILE ) );
