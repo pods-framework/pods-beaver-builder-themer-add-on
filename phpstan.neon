@@ -3,6 +3,7 @@ parameters:
   paths:
     - classes
     - includes
+    - pods-beaver-themer.php
   excludePaths:
     - tests
     - vendor/vendor-prefixed
