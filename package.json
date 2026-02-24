@@ -1,0 +1,14 @@
+{
+  "name": "pods-beaver-builder-themer-add-on",
+  "version": "1.3.8",
+  "description": "Integration with Beaver Builder Themer. Provides a UI for mapping Field Connections with Pods",
+  "author": "Pods Foundation, Inc",
+  "homepage": "https://pods.io",
+  "bugs": "https://github.com/pods-framework/pods-beaver-builder-themer-add-on/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pods-framework/pods-beaver-builder-themer-add-on.git"
+  },
+  "license": "GPL-2.0+",
+  "contributors": "https://github.com/pods-framework/pods-beaver-builder-themer-add-on/graphs/contributors"
+}

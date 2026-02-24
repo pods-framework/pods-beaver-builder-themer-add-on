@@ -1,0 +1,12 @@
+name: 'PHP Static Analysis'
+on:
+  pull_request:
+    paths:
+      - 'classes/**.php'
+      - 'includes/**.php'
+      - '*.php'
+      - 'composer.json'
+      - '.github/workflows/php-phpstan.yml'
+jobs:
+  phpstan:
+    uses: pods-framework/.github/.github/workflows/php-phpstan.yml@main
