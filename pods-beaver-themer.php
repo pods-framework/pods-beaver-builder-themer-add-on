@@ -575,6 +575,7 @@ add_filter( 'wp_plugin_check_ignore_files', static function ( $ignored_files ) {
 	$pods_dev_files = [
 			'.distignore',
 			'.gitattributes',
+			'.gitignore',
 			'.phpcs.compat.xml',
 			'.phpcs.xml',
 			'composer.json',
