@@ -3,16 +3,8 @@ parameters:
   paths:
     - classes
     - includes
-    - components
-    - deprecated
-    - sql
-    - src
-    - ui/admin
-    - ui/fields
-    - ui/forms
-    - ui/front
-    - init.php
   excludePaths:
-    - vendor/vendor-prefixed
-    - src/Pods/Integrations
     - tests
+    - vendor/vendor-prefixed
+  scanDirectories:
+    - vendor/wordpress-plugin

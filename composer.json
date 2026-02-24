@@ -36,17 +36,26 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^3.0.0",
+    "beaver-builder/bb-plugin-pro": "*",
+    "beaver-builder/bb-theme-builder": "*",
     "dealerdirect/phpcodesniffer-composer-installer": "^1.1",
     "phpcompatibility/phpcompatibility-wp": "*",
     "phpstan/extension-installer": "^1.4",
     "phpstan/phpstan": "^1.12",
     "phpstan/phpstan-deprecation-rules": "^1.2",
+    "pods-framework/pods": "dev-main",
     "stellarwp/coding-standards": "dev-main",
     "szepeviktor/phpstan-wordpress": "*",
     "wp-coding-standards/wpcs": "^3.1"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
+  "extra": {
+    "installer-name": "pods-beaver-builder-themer-add-on",
+    "installer-paths": {
+      "vendor/wordpress-plugin/{$name}/": ["type:wordpress-plugin"]
+    }
+  },
   "config": {
     "allow-plugins": {
       "composer/installers": true,
